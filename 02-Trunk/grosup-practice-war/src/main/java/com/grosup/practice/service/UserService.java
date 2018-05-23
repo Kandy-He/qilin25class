@@ -15,4 +15,13 @@ public class UserService {
 	public User queryTest(int id) {
 		return userDao.queryTest(id);
 	}
+	
+	/**
+	 * 人员注册
+	 * @param user
+	 * @return 变化条数
+	 */
+	public int userRegister(User user) {
+		return userDao.userRegister(user);
+	}
 }
