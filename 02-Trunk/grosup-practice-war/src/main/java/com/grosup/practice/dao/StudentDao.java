@@ -18,6 +18,8 @@ public class StudentDao extends AbstractDao {
 		}
 	}
 	
-	//查询学生信息
-	
+	//测试查询学生信息
+	public Student selectTest(int id) {
+		return this.getSession().selectOne("com.grosup.practice.student.selectTest", id);
+	} 
 }

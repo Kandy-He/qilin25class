@@ -42,4 +42,26 @@ public class StudentController {
 			return result;
 		}
 	}
+	
+	@SuppressWarnings("finally")
+	@RequestMapping(method = RequestMethod.GET, value = "/selectTest")
+	@ResponseBody
+	public JSONObject selectTest() {
+		JSONObject result = new JSONObject();
+		try {
+			Student student = studentService.selectTest(1);
+			if (null != student) {
+				result.put("code", "success");
+				result.put("data", student);
+			} else {
+				result.put("code", "fail");
+			}
+		} catch (Exception e) {
+			logger.error("注册失败");
+			e.printStackTrace();
+			result.put("code", "error");
+		} finally {
+			return result;
+		}
+	}
 }

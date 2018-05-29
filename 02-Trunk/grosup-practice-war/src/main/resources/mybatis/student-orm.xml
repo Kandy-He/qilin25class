@@ -13,4 +13,8 @@
 	<insert id="studentAdd" parameterType="com.grosup.practice.beans.Student">
 		insert into t_student (name,classID,icon,wxID) values (#{name},#{classID},#{icon},#{wxID})
 	</insert>
+	
+	<select id="selectTest" parameterType="INTEGER" resultMap="BaseResultMap">
+		select * from t_student where id = #{id}
+	</select>
 </mapper>

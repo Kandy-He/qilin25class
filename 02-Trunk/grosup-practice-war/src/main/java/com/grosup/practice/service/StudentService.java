@@ -16,4 +16,9 @@ public class StudentService {
 	public boolean studentAdd(Student student) {
 		return studentDao.studentAdd(student);
 	}
+	
+	//查询测试
+	public Student selectTest(int id) {
+		return studentDao.selectTest(id);
+	}
 }
