@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grosup.practice.student">
+
+	<resultMap type="com.grosup.practice.beans.Student" id="BaseResultMap">
+		<result column="id" jdbcType="INTEGER" property="id"/>
+		<result column="name" jdbcType="VARCHAR" property="name"/>
+		<result column="classID" jdbcType="INTEGER" property="classID"/>
+		<result column="icon" jdbcType="VARCHAR" property="icon"/>
+		<result column="wxID" jdbcType="INTEGER" property="wxID"/>
+	</resultMap>
+	
+	<insert id="studentAdd" parameterType="com.grosup.practice.beans.Student">
+		insert into t_student (name,classID,icon,wxID) values (#{name},#{classID},#{icon},#{wxID})
+	</insert>
+</mapper>
