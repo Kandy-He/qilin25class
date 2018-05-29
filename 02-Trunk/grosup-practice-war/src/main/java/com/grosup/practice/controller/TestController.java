@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.grosup.practice.beans.User;
 import com.grosup.practice.service.UserService;
@@ -33,7 +34,8 @@ public class TestController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET,value = "test")
-	public void test(HttpServletRequest request,HttpServletResponse response) throws IOException {
+	@ResponseBody
+	public JSONObject test(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		JSONObject result = new JSONObject();
 		JSONObject obj = new JSONObject();
 		obj.put("imgUrl", "1");
@@ -42,13 +44,13 @@ public class TestController {
 		result.put("data", obj);
 		result.put("code", "success");
 		
-		ActionUtil.writeResponse(response, result);
+		return result;
 		
 	}
 	
 	@RequestMapping(method = RequestMethod.POST,name= "register")
 	public void register (@ModelAttribute("pojo")User user) throws IOException {
-		//Êý¾Ý¿âÖ´ÐÐÍê±Ï½á¹û
+		//ï¿½ï¿½Ý¿ï¿½Ö´ï¿½ï¿½ï¿½ï¿½Ï½ï¿½ï¿½
 		boolean status = true;
 		try {
 			int count = userService.userRegister(user);
@@ -56,7 +58,7 @@ public class TestController {
 				status = false;
 			}
 		} catch (Exception e) {
-			logger.error("ÈËÔ±×¢²áÊ§°Ü");
+			logger.error("ï¿½ï¿½Ô±×¢ï¿½ï¿½Ê§ï¿½ï¿½");
 		} finally {
 
 		}

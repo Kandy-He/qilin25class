@@ -3,6 +3,9 @@ package com.grosup.weixin.login;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import net.sf.json.JSONObject;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,78 +18,81 @@ import com.grosup.practice.util.HttpRequest;
 public class WeixinInfo {
 	/**
 	 * @Title: decodeUserInfo
-	 * @author£∫xuelifei
-	 * @date£∫2018ƒÍ3‘¬25»’
-	 * @Description: Ω‚√‹”√ªß√Ù∏– ˝æ›
+	 * @authorÔøΩÔøΩxuelifei
+	 * @dateÔøΩÔøΩ2018ÔøΩÔøΩ3ÔøΩÔøΩ25ÔøΩÔøΩ
+	 * @Description: ÔøΩÔøΩÔøΩÔøΩÔøΩ√ªÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
 	 * @param encryptedData
-	 *            √˜Œƒ,º”√‹ ˝æ›
+	 *            ÔøΩÔøΩÔøΩÔøΩ,ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
 	 * @param iv
-	 *            º”√‹À„∑®µƒ≥ı ºœÚ¡ø
+	 *            ÔøΩÔøΩÔøΩÔøΩÔøΩ„∑®ÔøΩƒ≥ÔøΩ ºÔøΩÔøΩÔøΩÔøΩ
 	 * @param code
-	 *            ”√ªß‘ –Ìµ«¬º∫Û£¨ªÿµ˜ƒ⁄»›ª·¥¯…œ code£®”––ß∆⁄ŒÂ∑÷÷”£©£¨ø™∑¢’ﬂ–Ë“™Ω´ code ∑¢ÀÕµΩø™∑¢’ﬂ∑˛ŒÒ∆˜∫ÛÃ®£¨ π”√code ªª»°
-	 *            session_key api£¨Ω´ code ªª≥… openid ∫Õ session_key
+	 *            ÔøΩ√ªÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ¬ºÔøΩÛ£¨ªÿµÔøΩÔøΩÔøΩÔøΩ›ªÔøΩÔøΩÔøΩÔøΩ codeÔøΩÔøΩÔøΩÔøΩ–ßÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ”£ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ“™ÔøΩÔøΩ code ÔøΩÔøΩÔøΩÕµÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩﬂ∑ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÃ®ÔøΩÔøΩ πÔøΩÔøΩcode ÔøΩÔøΩ»°
+	 *            session_key apiÔøΩÔøΩÔøΩÔøΩ code ÔøΩÔøΩÔøΩÔøΩ openid ÔøΩÔøΩ session_key
 	 * @return
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/decodeUserInfo", method = RequestMethod.POST)
 	@ResponseBody
-	public Map decodeUserInfo(String encryptedData, String iv, String code) {
+	public Map decodeUserInfo(HttpServletRequest request,String encryptedData, String iv, String code) {
+		
+		HttpSession session = request.getSession();
 
 		Map map = new HashMap();
-
-		// µ«¬º∆æ÷§≤ªƒ‹Œ™ø’
+		// ÔøΩÔøΩ¬º∆æ÷§ÔøΩÔøΩÔøΩÔøΩŒ™ÔøΩÔøΩtt
 		if (code == null || code.length() == 0) {
 			map.put("status", 0);
-			map.put("msg", "code ≤ªƒ‹Œ™ø’");
+			map.put("msg", "code ÔøΩÔøΩÔøΩÔøΩŒ™ÔøΩÔøΩ");
 			return map;
 		}
 
-		// –°≥Ã–ÚŒ®“ª±Í ∂ (‘⁄Œ¢–≈–°≥Ã–Úπ‹¿Ì∫ÛÃ®ªÒ»°)
+		// –°ÔøΩÔøΩÔøΩÔøΩŒ®“ªÔøΩÔøΩ ∂ (ÔøΩÔøΩŒ¢ÔøΩÔøΩ–°ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÃ®ÔøΩÔøΩ»°)
 		String wxspAppid = "wx18385lalalala";
-		// –°≥Ã–Úµƒ app secret (‘⁄Œ¢–≈–°≥Ã–Úπ‹¿Ì∫ÛÃ®ªÒ»°)
+		// –°ÔøΩÔøΩÔøΩÔøΩÔøΩ app secret (ÔøΩÔøΩŒ¢ÔøΩÔøΩ–°ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÃ®ÔøΩÔøΩ»°)
 		String wxspSecret = "bef47459d81a6eflalalalal";
-		//  ⁄»®£®±ÿÃÓ£©
+		// ÔøΩÔøΩ»®ÔøΩÔøΩÔøΩÔøΩÔøΩÓ£©
 		String grant_type = "authorization_code";
 
-		// ////////////// 1°¢œÚŒ¢–≈∑˛ŒÒ∆˜  π”√µ«¬º∆æ÷§ code ªÒ»° session_key ∫Õ openid
+		// ////////////// 1ÔøΩÔøΩÔøΩÔøΩŒ¢ÔøΩ≈∑ÔøΩÔøΩÔøΩÔøΩÔøΩ  πÔøΩ√µÔøΩ¬º∆æ÷§ code ÔøΩÔøΩ»° session_key ÔøΩÔøΩ openid
 		// ////////////// ////////////////
-		// «Î«Û≤Œ ˝
+		// ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
 		String params = "appid=" + wxspAppid + "&secret=" + wxspSecret
 				+ "&js_code=" + code + "&grant_type=" + grant_type;
-		// ∑¢ÀÕ«Î«Û
+		// ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
 		String sr = HttpRequest.sendGet(
 				"https://api.weixin.qq.com/sns/jscode2session", params);
-		// Ω‚Œˆœ‡”¶ƒ⁄»›£®◊™ªª≥…json∂‘œÛ£©
+		// ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ”¶ÔøΩÔøΩÔøΩ›£ÔøΩ◊™ÔøΩÔøΩÔøΩÔøΩjsonÔøΩÔøΩÔøΩÔøΩ
 		JSONObject json = JSONObject.fromObject(sr);
-		// ªÒ»°ª·ª∞√‹‘ø£®session_key£©
+		// ÔøΩÔøΩ»°ÔøΩ·ª∞ÔøΩÔøΩ‘øÔøΩÔøΩsession_keyÔøΩÔøΩ
 		String session_key = json.get("session_key").toString();
-		// ”√ªßµƒŒ®“ª±Í ∂£®openid£©
+		// ÔøΩ√ªÔøΩÔøΩÔøΩŒ®“ªÔøΩÔøΩ ∂ÔøΩÔøΩopenidÔøΩÔøΩ
 		String openid = (String) json.get("openid");
 
-		// ////////////// 2°¢∂‘encryptedDataº”√‹ ˝æ›Ω¯––AESΩ‚√‹ ////////////////
+		// ////////////// 2ÔøΩÔøΩÔøΩÔøΩencryptedDataÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ›ΩÔøΩÔøΩÔøΩAESÔøΩÔøΩÔøΩÔøΩ ////////////////
 		try {
 			String result = AesCbcUtil.decrypt(encryptedData, session_key, iv,
 					"UTF-8");
 			if (null != result && result.length() > 0) {
 				map.put("status", 1);
-				map.put("msg", "Ω‚√‹≥…π¶");
+				map.put("msg", "ÔøΩÔøΩÔøΩ‹≥…πÔøΩ");
 
 				JSONObject userInfoJSON = JSONObject.fromObject(result);
 				Map userInfo = new HashMap();
-				userInfo.put("openId", userInfoJSON.get("openId"));
+//				userInfo.put("openId", userInfoJSON.get("openId"));
 				userInfo.put("nickName", userInfoJSON.get("nickName"));
 				userInfo.put("gender", userInfoJSON.get("gender"));
 				userInfo.put("city", userInfoJSON.get("city"));
 				userInfo.put("province", userInfoJSON.get("province"));
 				userInfo.put("country", userInfoJSON.get("country"));
 				userInfo.put("avatarUrl", userInfoJSON.get("avatarUrl"));
-				// Ω‚√‹unionId & openId;
-
-				userInfo.put("unionId", userInfoJSON.get("unionId"));
+				// ÔøΩÔøΩÔøΩÔøΩunionId & openId;
+				map.put("sessionID", session.getId());
+//				userInfo.put("unionId", userInfoJSON.get("unionId"));
 				map.put("userInfo", userInfo);
+				//session‰øùÂ≠ò
+				session.setAttribute("sessionID", session_key+"|"+openid);
 			} else {
 				map.put("status", 0);
-				map.put("msg", "Ω‚√‹ ß∞‹");
+				map.put("msg", "ÔøΩÔøΩÔøΩÔøΩ ßÔøΩÔøΩ");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

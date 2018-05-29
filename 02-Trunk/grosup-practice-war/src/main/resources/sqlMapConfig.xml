@@ -5,5 +5,6 @@
 	<mappers>
 		<!-- <mapper resource="mybatis/xxxx-orm.xml" /> -->
 		<mapper resource="mybatis/test-orm.xml"/>
+		<mapper resource="mybatis/student-orm.xml"/>
 	</mappers>
 </configuration>
