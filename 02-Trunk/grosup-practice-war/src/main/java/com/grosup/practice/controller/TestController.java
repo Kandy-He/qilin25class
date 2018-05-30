@@ -1,6 +1,7 @@
 package com.grosup.practice.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.grosup.practice.beans.User;
+import com.grosup.practice.beans.ClassInfoBean;
+import com.grosup.practice.beans.UserBean;
+import com.grosup.practice.service.ClassInfoService;
 import com.grosup.practice.service.UserService;
 import com.grosup.practice.util.ActionUtil;
 
@@ -27,6 +30,8 @@ public class TestController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ClassInfoService classInfoService;
 	
 	@RequestMapping(method = RequestMethod.GET,value = "helloword")
 	public void helloworld(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -38,7 +43,7 @@ public class TestController {
 	public JSONObject test(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		JSONObject result = new JSONObject();
 		JSONObject obj = new JSONObject();
-		obj.put("imgUrl", "1");
+		obj.put("imgUrl", "51");
 		obj.put("achievement", "2");
 		obj.put("flowerNum", "3");
 		result.put("data", obj);
@@ -48,8 +53,19 @@ public class TestController {
 		
 	}
 	
+	@RequestMapping(method = RequestMethod.GET,value = "query")
+	@ResponseBody
+	public JSONObject queryClass(HttpServletRequest request,HttpServletResponse response) throws IOException {
+		JSONObject result = new JSONObject();
+		List<ClassInfoBean> list = classInfoService.queryClass();
+		result.put("data", list);
+		result.put("code", "success");
+		return result;
+		
+	}
+	
 	@RequestMapping(method = RequestMethod.POST,name= "register")
-	public void register (@ModelAttribute("pojo")User user) throws IOException {
+	public void register (@ModelAttribute("pojo")UserBean user) throws IOException {
 		//��ݿ�ִ����Ͻ��
 		boolean status = true;
 		try {

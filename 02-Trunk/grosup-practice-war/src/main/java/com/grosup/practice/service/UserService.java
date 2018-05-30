@@ -3,7 +3,7 @@ package com.grosup.practice.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.grosup.practice.beans.User;
+import com.grosup.practice.beans.UserBean;
 import com.grosup.practice.dao.UserDao;
 
 @Service
@@ -12,16 +12,16 @@ public class UserService {
 	@Autowired
 	private UserDao userDao;
 	
-	public User queryTest(int id) {
+	public UserBean queryTest(int id) {
 		return userDao.queryTest(id);
 	}
 	
 	/**
-	 * ÈËÔ±×¢²á
+	 * ï¿½ï¿½Ô±×¢ï¿½ï¿½
 	 * @param user
-	 * @return ±ä»¯ÌõÊý
+	 * @return ï¿½ä»¯ï¿½ï¿½ï¿½ï¿½
 	 */
-	public int userRegister(User user) {
+	public int userRegister(UserBean user) {
 		return userDao.userRegister(user);
 	}
 }

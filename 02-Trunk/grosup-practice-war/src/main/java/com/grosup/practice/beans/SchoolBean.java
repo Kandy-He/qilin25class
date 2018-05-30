@@ -1,6 +1,6 @@
 package com.grosup.practice.beans;
 
-public class School {
+public class SchoolBean {
 	
 	private int id;
 	

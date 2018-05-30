@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.grosup.practice.beans.Student;
+import com.grosup.practice.beans.StudentBean;
 import com.grosup.practice.service.StudentService;
 
 @Controller
@@ -25,7 +25,7 @@ public class StudentController {
 	@SuppressWarnings("finally")
 	@RequestMapping(method = RequestMethod.POST, value = "/add")
 	@ResponseBody
-	public JSONObject studentAdd(Student student) {
+	public JSONObject studentAdd(StudentBean student) {
 		JSONObject result = new JSONObject();
 		try {
 			boolean status = studentService.studentAdd(student);
@@ -49,7 +49,7 @@ public class StudentController {
 	public JSONObject selectTest() {
 		JSONObject result = new JSONObject();
 		try {
-			Student student = studentService.selectTest(1);
+			StudentBean student = studentService.selectTest(1);
 			if (null != student) {
 				result.put("code", "success");
 				result.put("data", student);

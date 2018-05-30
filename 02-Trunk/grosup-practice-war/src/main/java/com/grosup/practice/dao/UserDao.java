@@ -2,20 +2,20 @@ package com.grosup.practice.dao;
 
 import org.springframework.stereotype.Repository;
 
-import com.grosup.practice.beans.User;
+import com.grosup.practice.beans.UserBean;
 import com.grosup.practice.util.AbstractDao;
 
 @Repository
 public class UserDao extends AbstractDao{
 	
-	public User queryTest(int id) {
+	public UserBean queryTest(int id) {
 		return this.getSession().selectOne("com.practice.test.queryTest", id);
 	}
 	/**
-	 * ÈËÔ±×¢²á
-	 * ²ÎÊý£ºÈËÔ±bean
+	 * ï¿½ï¿½Ô±×¢ï¿½ï¿½
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±bean
 	 */
-	public int userRegister(User user) {
+	public int userRegister(UserBean user) {
 		return this.getSession().insert("com.grosup.practice.user.register", user);
 	}
 }

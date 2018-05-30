@@ -5,7 +5,7 @@ package com.grosup.practice.beans;
  * @author xuelifei
  *
  */
-public class Student {
+public class StudentBean {
 	
 	private int id;
 	

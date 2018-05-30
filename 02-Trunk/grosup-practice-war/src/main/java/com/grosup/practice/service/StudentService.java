@@ -3,7 +3,7 @@ package com.grosup.practice.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.grosup.practice.beans.Student;
+import com.grosup.practice.beans.StudentBean;
 import com.grosup.practice.dao.StudentDao;
 
 @Service
@@ -13,12 +13,12 @@ public class StudentService {
 	private StudentDao studentDao;
 	
 	//学生注册
-	public boolean studentAdd(Student student) {
+	public boolean studentAdd(StudentBean student) {
 		return studentDao.studentAdd(student);
 	}
 	
 	//查询测试
-	public Student selectTest(int id) {
+	public StudentBean selectTest(int id) {
 		return studentDao.selectTest(id);
 	}
 }

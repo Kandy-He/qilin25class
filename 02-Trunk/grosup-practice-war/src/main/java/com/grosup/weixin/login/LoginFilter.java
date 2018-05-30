@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.grosup.practice.beans.StudentBean;
+
 public class LoginFilter implements Filter {
 
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -30,6 +32,7 @@ public class LoginFilter implements Filter {
 		if (null == obj) {
 			//重新登录
 		} else {
+			this.afterLogin(sRequest, sResponse);
 			chain.doFilter(sRequest, sResponse);
 		}
 	}
@@ -38,5 +41,13 @@ public class LoginFilter implements Filter {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	//判断用户，并刷新用户角色
+	private void afterLogin(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession(true);
+		StudentBean student = (StudentBean) session.getAttribute("user");
+		if (null == student) {
+			session.setAttribute("user", student);
+		}
+	}
 }
