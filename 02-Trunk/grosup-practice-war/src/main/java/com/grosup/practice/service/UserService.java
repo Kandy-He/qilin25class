@@ -3,6 +3,7 @@ package com.grosup.practice.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.grosup.practice.beans.StudentBean;
 import com.grosup.practice.beans.UserBean;
 import com.grosup.practice.dao.UserDao;
 

@@ -28,9 +28,10 @@ public class LoginFilter implements Filter {
 		HttpServletResponse sResponse = (HttpServletResponse) response;
 		HttpSession session = sRequest.getSession();
 		//根据sessionID判断用户是否登录
-		Object obj = session.getAttribute("sessionID");
-		if (null == obj) {
+		String sessionID = (String) session.getAttribute("sessionID");
+		if (null == sessionID) {
 			//重新登录
+			return;
 		} else {
 			this.afterLogin(sRequest, sResponse);
 			chain.doFilter(sRequest, sResponse);

@@ -21,5 +21,10 @@ public class StudentDao extends AbstractDao {
 	//测试查询学生信息
 	public StudentBean selectTest(int id) {
 		return this.getSession().selectOne("com.grosup.practice.student.selectTest", id);
-	} 
+	}
+	
+	//根据unionId查询用户信息
+	public StudentBean queryUserByUnionId(String unionId) {
+		return this.getSession().selectOne("com.grosup.practice.student.queryUserByUnionId", "unionId");
+	}
 }

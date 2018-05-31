@@ -8,6 +8,7 @@
 		<result column="classID" jdbcType="INTEGER" property="classID"/>
 		<result column="icon" jdbcType="VARCHAR" property="icon"/>
 		<result column="wxID" jdbcType="INTEGER" property="wxID"/>
+		<result column="status" jdbcType="VARCHAR" property="status"/>
 	</resultMap>
 	
 	<insert id="studentAdd" parameterType="com.grosup.practice.beans.StudentBean">
@@ -16,5 +17,9 @@
 	
 	<select id="selectTest" parameterType="INTEGER" resultMap="BaseResultMap">
 		select * from t_student where id = #{id}
+	</select>
+	<!-- 通过wxID即unionID获取用户信息 -->
+	<select id="queryUserByUnionId" resultMap="BaseResultMap">
+		select * from t_student where wxID = #{unionID}
 	</select>
 </mapper>

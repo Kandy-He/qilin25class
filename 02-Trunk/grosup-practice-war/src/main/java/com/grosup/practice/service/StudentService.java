@@ -21,4 +21,12 @@ public class StudentService {
 	public StudentBean selectTest(int id) {
 		return studentDao.selectTest(id);
 	}
+	
+
+	/**
+	 * 根据unionId查询用户信息
+	 */
+	public StudentBean queryUserByUnionId(String unionId) {
+		return studentDao.queryUserByUnionId(unionId);
+	}
 }

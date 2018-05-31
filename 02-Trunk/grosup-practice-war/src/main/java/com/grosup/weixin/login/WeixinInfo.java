@@ -8,14 +8,21 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.grosup.practice.beans.StudentBean;
+import com.grosup.practice.service.StudentService;
+import com.grosup.practice.service.UserService;
 import com.grosup.practice.util.AesCbcUtil;
 import com.grosup.practice.util.HttpRequest;
 
 public class WeixinInfo {
+	
+	@Autowired
+	private StudentService studentService;
 	/**
 	 * @Title: decodeUserInfo
 	 * @author��xuelifei
@@ -86,10 +93,23 @@ public class WeixinInfo {
 				userInfo.put("avatarUrl", userInfoJSON.get("avatarUrl"));
 				// ����unionId & openId;
 				map.put("sessionID", session.getId());
-//				userInfo.put("unionId", userInfoJSON.get("unionId"));
+				userInfo.put("unionId", userInfoJSON.get("unionId"));
+				//***根据unionId去数据库查询用户是否注册，如果未注册，session返回用户标识未注册
+				//并返回用户注册状态----未注册/注册还未通过审核，如果已经注册并通过审核，返回用户信息并写入session
+				StudentBean student = studentService.queryUserByUnionId((String) userInfoJSON.get("unionId"));
+				if (student == null) {
+					//用户为注册
+					userInfo.put("studentStatus", "unRegister");
+				} else if ("1".equals(student.getStatus())) {
+					//用户已经注册还未通过审核
+					userInfo.put("studentStatus", "unChecked");
+				} else {
+					userInfo.put("studentStatus", "checked");
+					session.setAttribute("studentInfo", student);
+				}
 				map.put("userInfo", userInfo);
 				//session保存
-				session.setAttribute("sessionID", session_key+"|"+openid);
+				session.setAttribute(session.getId(), session_key+"|"+openid);
 			} else {
 				map.put("status", 0);
 				map.put("msg", "����ʧ��");

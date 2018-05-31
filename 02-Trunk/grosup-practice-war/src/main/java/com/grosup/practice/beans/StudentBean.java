@@ -16,6 +16,8 @@ public class StudentBean {
 	private String icon;
 	//微信ID
 	private long wxID;
+	//用户状态：注册是否通过审核
+	private String status;
 
 	public int getId() {
 		return id;
@@ -55,5 +57,13 @@ public class StudentBean {
 
 	public void setWxID(long wxID) {
 		this.wxID = wxID;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }
