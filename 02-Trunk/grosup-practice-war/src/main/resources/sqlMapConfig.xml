@@ -7,5 +7,6 @@
 		<mapper resource="mybatis/test-orm.xml"/>
 		<mapper resource="mybatis/student-orm.xml"/>
 		<mapper resource="mybatis/class-orm.xml"/>
+		<mapper resource="mybatis/user-orm.xml"/>
 	</mappers>
 </configuration>

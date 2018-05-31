@@ -1,17 +1,33 @@
 package com.grosup.practice.beans;
 
+/**
+ * 人员基础类
+ * @author xuelifei
+ *
+ */
 public class UserBean {
 	
-	private int id;
+    private int id;
 	
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", age=" + age + "]";
+	private String name;
+	//班级id
+	private int classID;
+	//头像
+	private String icon;
+	//微信ID
+	private long wxID;
+	//用户状态：注册是否通过审核
+	private int status;
+	//用户角色类别 :0 学生 1老师
+	private int userType;
+
+	public int getId() {
+		return id;
 	}
 
-	private String name;
-	
-	private int age;
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -21,19 +37,43 @@ public class UserBean {
 		this.name = name;
 	}
 
-	public int getAge() {
-		return age;
+	public int getClassID() {
+		return classID;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setClassID(int classID) {
+		this.classID = classID;
 	}
 
-	public int getId() {
-		return id;
+	public String getIcon() {
+		return icon;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public long getWxID() {
+		return wxID;
+	}
+
+	public void setWxID(long wxID) {
+		this.wxID = wxID;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public int getUserType() {
+		return userType;
+	}
+
+	public void setUserType(int userType) {
+		this.userType = userType;
 	}
 }

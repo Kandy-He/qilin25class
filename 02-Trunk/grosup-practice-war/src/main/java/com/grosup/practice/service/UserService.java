@@ -18,11 +18,11 @@ public class UserService {
 	}
 	
 	/**
-	 * ��Աע��
+	 * 人员注册
 	 * @param user
-	 * @return �仯����
+	 * @return 
 	 */
-	public int userRegister(UserBean user) {
+	public boolean userRegister(UserBean user) {
 		return userDao.userRegister(user);
 	}
 }

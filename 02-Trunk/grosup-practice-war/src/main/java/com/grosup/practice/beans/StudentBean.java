@@ -16,9 +16,11 @@ public class StudentBean {
 	private String icon;
 	//微信ID
 	private long wxID;
-	//用户状态：注册是否通过审核
-	private String status;
-
+	//用户状态：0未审核 ，1 已审核
+	private int status;
+	//用户角色类别 :0 学生 1老师
+	private int userType;
+	
 	public int getId() {
 		return id;
 	}
@@ -59,11 +61,19 @@ public class StudentBean {
 		this.wxID = wxID;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public int getUserType() {
+		return userType;
+	}
+
+	public void setUserType(int userType) {
+		this.userType = userType;
 	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
@@ -55,28 +56,22 @@ public class TestController {
 	
 	@RequestMapping(method = RequestMethod.GET,value = "query")
 	@ResponseBody
-	public JSONObject queryClass(HttpServletRequest request,HttpServletResponse response) throws IOException {
+	public JSONObject queryClass() throws IOException {
 		JSONObject result = new JSONObject();
+		JSONArray data = new JSONArray();
 		List<ClassInfoBean> list = classInfoService.queryClass();
-		result.put("data", list);
+		for (ClassInfoBean classInfoBean : list) {
+			JSONObject obj = new JSONObject();
+			obj.put("classID", classInfoBean.getClassBean().getId());
+			obj.put("className", classInfoBean.getClassBean().getName());
+			obj.put("gradeID", classInfoBean.getClassBean().getGradeID());
+			obj.put("gradeName", classInfoBean.getGradeBean().getName());
+			data.add(obj);
+		}
+		
+		result.put("data", data);
 		result.put("code", "success");
 		return result;
 		
-	}
-	
-	@RequestMapping(method = RequestMethod.POST,name= "register")
-	public void register (@ModelAttribute("pojo")UserBean user) throws IOException {
-		//��ݿ�ִ����Ͻ��
-		boolean status = true;
-		try {
-			int count = userService.userRegister(user);
-			if (count != 1) {
-				status = false;
-			}
-		} catch (Exception e) {
-			logger.error("��Աע��ʧ��");
-		} finally {
-
-		}
 	}
 }

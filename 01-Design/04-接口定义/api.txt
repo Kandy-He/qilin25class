@@ -3,15 +3,14 @@
 接口路径：https://www.grosup.com/practice/user/query.do
 接口参数：无参数
 接口返回值：
-{"data":[{"classBean":{"coordinator":"班主任11","description":"麒麟二五班","gradeID":1,"id":1,"name":"麒麟二五班"},"gradeBean":{"description":"麒麟小学二年级","id":0,"name":"二年级"}},
-{"classBean":{"coordinator":"班主任22","description":"麒麟二六班","gradeID":1,"id":2,"name":"麒麟二六班"},"gradeBean":{"description":"麒麟小学二年级","id":0,"name":"二年级"}}],"code":"success"}
+{"data":[{"classID":1,"className":"五班","gradeID":1,"gradeName":"二年级"},{"classID":2,"className":"六班","gradeID":2,"gradeName":"三年级"}],"code":"success"}
 
 2、
 
 
 1、
 接口描述：人员注册接口
-接口路径：https://www.grosup.com/practice/student/add
-接口参数：{"name":"1";"classID";"icon";"wxID"}
+接口路径：https://www.grosup.com/practice/user/add
+接口参数：{"name":"1";"classID";"icon";"wxID";roleType(0:学生 1、老师)}
 接口返回值：{"code":"success"}
 h

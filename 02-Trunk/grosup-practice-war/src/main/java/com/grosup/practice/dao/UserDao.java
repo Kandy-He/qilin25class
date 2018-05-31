@@ -12,10 +12,14 @@ public class UserDao extends AbstractDao{
 		return this.getSession().selectOne("com.practice.test.queryTest", id);
 	}
 	/**
-	 * ��Աע��
-	 * ������Աbean
+	 * 人员注册
 	 */
-	public int userRegister(UserBean user) {
-		return this.getSession().insert("com.grosup.practice.user.register", user);
+	public boolean userRegister(UserBean user) {
+		int rows = this.getSession().insert("com.grosup.practice.user.register", user);
+		if (rows > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

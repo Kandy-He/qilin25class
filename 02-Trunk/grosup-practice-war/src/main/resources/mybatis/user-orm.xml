@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.grosup.practice.student">
+<mapper namespace="com.grosup.practice.user">
 
-	<resultMap type="com.grosup.practice.beans.StudentBean" id="BaseResultMap">
+	<resultMap type="com.grosup.practice.beans.UserBean" id="BaseResultMap">
 		<result column="id" jdbcType="INTEGER" property="id"/>
 		<result column="name" jdbcType="VARCHAR" property="name"/>
 		<result column="classID" jdbcType="INTEGER" property="classID"/>
@@ -11,13 +11,10 @@
 		<result column="status" jdbcType="VARCHAR" property="status"/>
 	</resultMap>
 	
-	<insert id="studentAdd" parameterType="com.grosup.practice.beans.StudentBean">
-		insert into t_student (name,classID,icon,wxID,status) values (#{name},#{classID},#{icon},#{wxID},#{status})
+	<insert id="userAdd" parameterType="com.grosup.practice.beans.UserBean">
+		insert into t_student (name,classID,icon,wxID,status,userType) values (#{name},#{classID},#{icon},#{wxID},#{status},#{userType})
 	</insert>
 	
-	<select id="selectTest" parameterType="INTEGER" resultMap="BaseResultMap">
-		select * from t_student where id = #{id}
-	</select>
 	<!-- 通过wxID即unionID获取用户信息 -->
 	<select id="queryUserByUnionId" resultMap="BaseResultMap">
 		select * from t_student where wxID = #{unionID}
