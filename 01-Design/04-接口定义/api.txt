@@ -1,0 +1,17 @@
+1、
+接口描述：注册的时候要获取学校信息--对应班级信息去进行选择
+接口路径：https://www.grosup.com/practice/user/query.do
+接口参数：无参数
+接口返回值：
+{"data":[{"classBean":{"coordinator":"班主任11","description":"麒麟二五班","gradeID":1,"id":1,"name":"麒麟二五班"},"gradeBean":{"description":"麒麟小学二年级","id":0,"name":"二年级"}},
+{"classBean":{"coordinator":"班主任22","description":"麒麟二六班","gradeID":1,"id":2,"name":"麒麟二六班"},"gradeBean":{"description":"麒麟小学二年级","id":0,"name":"二年级"}}],"code":"success"}
+
+2、
+
+
+1、
+接口描述：人员注册接口
+接口路径：https://www.grosup.com/practice/student/add
+接口参数：{"name":"1";"classID";"icon";"wxID"}
+接口返回值：{"code":"success"}
+h
