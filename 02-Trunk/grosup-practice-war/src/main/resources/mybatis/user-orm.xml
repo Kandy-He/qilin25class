@@ -19,4 +19,21 @@
 	<select id="queryUserByUnionId" resultMap="BaseResultMap">
 		select * from t_student where wxID = #{unionID}
 	</select>
+	
+	<!-- 获取老师对应班级下未注册的学生信息 -->
+	<!-- param：老师ID -->
+	<select id="queryUserUnChecked" parameterType="INTEGER">
+		select * from (select * from t_student ts where ts.status = 0 and ts.userType = 0) as a
+		where a.classID = (select classID from t_student where id = #{userID})
+	</select>
+	
+	<!-- 将注册的状态由0变为1 -->
+	<update id="userCheck" parameterType="INTEGER">
+		update t_student set t_student.status = 1 where id = #{userID}
+	</update>
+	
+	<!-- 通过wxID即unionID获取用户信息 -->
+	<select id="queryUserBywxID" resultMap="BaseResultMap">
+		select * from t_student where wxID = #{wxID}
+	</select>
 </mapper>

@@ -12,16 +12,13 @@ import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.grosup.practice.beans.ClassInfoBean;
-import com.grosup.practice.beans.UserBean;
 import com.grosup.practice.service.ClassInfoService;
 import com.grosup.practice.service.UserService;
-import com.grosup.practice.util.ActionUtil;
 
 @Controller
 @RequestMapping("/user")

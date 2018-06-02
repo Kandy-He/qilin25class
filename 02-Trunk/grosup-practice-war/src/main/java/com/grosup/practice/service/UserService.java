@@ -1,9 +1,9 @@
 package com.grosup.practice.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.grosup.practice.beans.StudentBean;
 import com.grosup.practice.beans.UserBean;
 import com.grosup.practice.dao.UserDao;
 
@@ -24,5 +24,21 @@ public class UserService {
 	 */
 	public boolean userRegister(UserBean user) {
 		return userDao.userRegister(user);
+	}
+	
+	/**
+	 * 注册审核通过
+	 */
+	public boolean userCheck(int userID) {
+		return userDao.userCheck(userID);
+	}
+	/**
+	 * 获取老师对应班级下未注册的学生信息
+	 * @param userID 老师id
+	 * @return
+	 */
+	public List<UserBean> queryUserUnChecked(int userID) {
+		List<UserBean> list = userDao.queryUserUnChecked(userID);
+		return list;
 	}
 }

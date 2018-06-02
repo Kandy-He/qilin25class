@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grosup.practice.session">
+
+	<resultMap type="com.grosup.practice.beans.SessionBean" id="BaseResultMap">
+		<result column="sessionKey" jdbcType="VARCHAR" property="sessionKey"/>
+		<result column="sessionValue" jdbcType="VARCHAR" property="sessionValue"/>
+	</resultMap>
+	
+	<select id="querySessionKey" parameterType="java.util.String">
+		select sessionValue from t_session where sessionKey = #{sessionKey}
+	</select>
+	
+	<insert id="insertSessionValue" parameterType="com.grosup.practice.beans.SessionBean">
+		insert into t_session (sessionKey,sessionValue) values (#{sessionKey},#{sessionValue})
+	</insert>
+</mapper>

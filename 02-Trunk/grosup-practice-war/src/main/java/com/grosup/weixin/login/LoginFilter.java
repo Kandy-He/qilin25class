@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.grosup.practice.beans.StudentBean;
+import com.grosup.practice.util.PracticeUtil;
 
 public class LoginFilter implements Filter {
 
@@ -28,13 +28,17 @@ public class LoginFilter implements Filter {
 		HttpServletResponse sResponse = (HttpServletResponse) response;
 		HttpSession session = sRequest.getSession();
 		//根据sessionID判断用户是否登录
-		String sessionID = (String) session.getAttribute("sessionID");
+		String sessionID = (String) session.getId();
 		if (null == sessionID) {
 			//重新登录
 			return;
 		} else {
-			this.afterLogin(sRequest, sResponse);
-			chain.doFilter(sRequest, sResponse);
+			//用sessionID查询sessionKey，验证是否登录
+			boolean login = PracticeUtil.checkSessionValue(sessionID);
+			if (login) {
+				chain.doFilter(sRequest, sResponse);
+			}
+			return;
 		}
 	}
 
@@ -43,12 +47,4 @@ public class LoginFilter implements Filter {
 
 	}
 	
-	//判断用户，并刷新用户角色
-	private void afterLogin(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession(true);
-		StudentBean student = (StudentBean) session.getAttribute("user");
-		if (null == student) {
-			session.setAttribute("user", student);
-		}
-	}
 }

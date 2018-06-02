@@ -13,4 +13,14 @@
 接口路径：https://www.grosup.com/practice/user/add
 接口参数：{"name":"1";"classID";"icon";"wxID";roleType(0:学生 1、老师)}
 接口返回值：{"code":"success"}
-h
+
+3、
+接口描述：通过code登录并获取信息
+接口路径：https://www.grosup.com/practice/login/decode
+接口参数：{"code":"11111";}
+接口返回值：
+
+4、接口描述：通过code登录并获取信息
+接口路径：https://www.grosup.com/practice/login/decode
+接口参数：{"code":"11111";}
+接口返回值：
