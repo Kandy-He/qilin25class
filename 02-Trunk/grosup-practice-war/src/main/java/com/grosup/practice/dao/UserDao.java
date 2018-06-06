@@ -3,8 +3,6 @@ package com.grosup.practice.dao;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
-
-import com.grosup.practice.beans.StudentBean;
 import com.grosup.practice.beans.UserBean;
 import com.grosup.practice.util.AbstractDao;
 
@@ -37,13 +35,21 @@ public class UserDao extends AbstractDao{
 		}
 	}
 	/**
-	 * 获取老师对应班级下未注册的学生信息
+	 * 获取老师对应班级下所有学生信息
 	 * @param userID 老师id
 	 * @return
 	 */
-	public List<UserBean> queryUserUnChecked(int userID) {
-		return this.getSession().selectList("com.grosup.practice.user.queryUserUnChecked", userID);
+	public List<UserBean> queryStudents(int classID) {
+		return this.getSession().selectList("com.grosup.practice.user.queryStudents", classID);
 	}
+	/**
+	 * 获取老师信息
+	 * @return
+	 */
+	public List<UserBean> queryTeachers() {
+		return this.getSession().selectList("com.grosup.practice.user.queryTeachers");
+	}
+	
 	
 	/**
 	 * 根据wxID查询用户信息

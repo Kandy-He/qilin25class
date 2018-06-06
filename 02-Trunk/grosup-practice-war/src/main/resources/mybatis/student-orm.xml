@@ -15,7 +15,7 @@
 		insert into t_student (name,classID,icon,wxID,status) values (#{name},#{classID},#{icon},#{wxID},#{status})
 	</insert>
 	
-	<select id="selectTest" parameterType="INTEGER" resultMap="BaseResultMap">
+	<select id="selectTest" parameterType="java.lang.Integer" resultMap="BaseResultMap">
 		select * from t_student where id = #{id}
 	</select>
 	<!-- 通过wxID即unionID获取用户信息 -->

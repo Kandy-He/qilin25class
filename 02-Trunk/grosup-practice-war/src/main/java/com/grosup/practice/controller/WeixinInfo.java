@@ -8,9 +8,9 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +27,8 @@ import com.grosup.practice.util.PracticeUtil;
 @RequestMapping("/login")
 @Controller
 public class WeixinInfo {
+	
+	private Logger logger = Logger.getLogger(WeixinInfo.class);
 	
 	@Autowired
 	private StudentService studentService;
@@ -104,8 +106,8 @@ public class WeixinInfo {
 				map.put("sessionID", session.getId());
 				userInfo.put("unionId", userInfoJSON.get("unionId"));
 				//将session保存数据库
-				SessionBean sessionBean = new SessionBean(session.getId(), session_key+"|"+openid);
-				sessionService.insertSessionValue(sessionBean);
+//				SessionBean sessionBean = new SessionBean(session.getId(), session_key+"|"+openid);
+//				sessionService.insertSessionValue(sessionBean);
 				
 //				***根据unionId去数据库查询用户是否注册，如果未注册，session返回用户标识未注册
 //				并返回用户注册状态----未注册/注册还未通过审核，如果已经注册并通过审核，返回用户信息并写入session
@@ -131,12 +133,12 @@ public class WeixinInfo {
 		return map;
 	}
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(value = "/decode", method = RequestMethod.GET)
+	//@RequestMapping(value = "/decode", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST,value = "decode")
 	@ResponseBody
-	public Map loginCheck(HttpServletRequest request, @RequestParam("code") String code) {
-		
+	public Map loginCheck(HttpServletRequest request, @RequestParam String code) {
 		HttpSession session = request.getSession();
-		System.out.println(code);
+		logger.info(code);
 		Map map = new HashMap();
 		// 判断code是否合法
 		if (code == null || code.length() == 0) {
@@ -160,38 +162,43 @@ public class WeixinInfo {
 				"https://api.weixin.qq.com/sns/jscode2session", params);
 		// ������Ӧ���ݣ�ת����json����
 		JSONObject json = JSONObject.fromObject(sr);
+		logger.info(json);
 		// 会话密钥
 		String session_key = json.get("session_key").toString();
 		// 用户唯一标识
 		String openid = (String) json.get("openid");
 		//微信用户在开放平台的唯一标识符
-		String unionid = (String) json.get("unionid");
+//		String unionid = (String) json.get("unionId");
 
 		// ////////////// 2����encryptedData������ݽ���AES���� ////////////////
 		try {
 				// ����unionId & openId;
-				map.put("sessionID", session.getId());
-				map.put("unionId", unionid);
-				//将session保存数据库
-				SessionBean sessionBean = new SessionBean(session.getId(), session_key+"|"+openid);
-				sessionService.insertSessionValue(sessionBean);
+				String third_session = session.getId();
+				map.put("third_session", third_session);
+				SessionBean sessionBean = new SessionBean(third_session, session_key, openid);
+				if (sessionService.checkThirdSession(third_session)) {
+					//更新third_session
+				} else {
+					//将session保存数据库
+					sessionService.insertSessionValue(sessionBean);
+				}
 //				***根据unionId去数据库查询用户是否注册，如果未注册，session返回用户标识未注册
 //				并返回用户注册状态----未注册/注册还未通过审核，如果已经注册并通过审核，返回用户信息并写入session
-				UserBean userBean = PracticeUtil.getUser(unionid);
+				UserBean userBean = PracticeUtil.getUser(openid);
 				if (userBean == null) {
 					//用户为注册
-					map.put("studentStatus", "unRegister");
+					map.put("userStatus", "unRegister");
 				} else if ("1".equals(userBean.getStatus())) {
 					//用户已经注册还未通过审核
-					map.put("studentStatus", "unChecked");
+					map.put("userStatus", "unChecked");
 				} else {
-					map.put("studentStatus", "checked");
-					session.setAttribute("studentInfo", userBean);
+					map.put("userStatus", "checked");
+					session.setAttribute("userId", userBean.getId());
 				}
-				map.put("status", 1);
+				map.put("status", "success");
 				map.put("msg", "校验登录成功");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("校验登录失败");
 		}
 		return map;
 	}

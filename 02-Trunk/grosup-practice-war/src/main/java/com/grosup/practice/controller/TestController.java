@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.grosup.practice.beans.ClassInfoBean;
+import com.grosup.practice.beans.SessionBean;
+import com.grosup.practice.beans.UserBean;
 import com.grosup.practice.service.ClassInfoService;
+import com.grosup.practice.service.SessionService;
 import com.grosup.practice.service.UserService;
+import com.grosup.practice.util.PracticeUtil;
 
 @Controller
 @RequestMapping("/user")
@@ -30,6 +34,8 @@ public class TestController {
 	private UserService userService;
 	@Autowired
 	private ClassInfoService classInfoService;
+	@Autowired
+	private SessionService sessionService;
 	
 	@RequestMapping(method = RequestMethod.GET,value = "helloword")
 	public void helloworld(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -71,4 +77,15 @@ public class TestController {
 		return result;
 		
 	}
+//	@RequestMapping(method = RequestMethod.GET,value = "test1")
+//	@ResponseBody
+//	public void test() {
+//		SessionBean sessionBean = new SessionBean(String.valueOf(Math.random()*100), "22222"+"|"+"33333");
+//		sessionService.insertSessionValue(sessionBean);
+//		UserBean userBean = PracticeUtil.getUser(null);
+//		if (userBean == null) {
+//			//用户为注册
+//			System.out.println("未注册");
+//		}
+//	}
 }

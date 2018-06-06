@@ -5,22 +5,42 @@
 接口返回值：
 {"data":[{"classID":1,"className":"五班","gradeID":1,"gradeName":"二年级"},{"classID":2,"className":"六班","gradeID":2,"gradeName":"三年级"}],"code":"success"}
 
-2、
-
-
 1、
 接口描述：人员注册接口
 接口路径：https://www.grosup.com/practice/user/add
-接口参数：{"name":"1";"classID";"icon";"wxID";roleType(0:学生 1、老师)}
+接口参数：{"name":"1";"classID":"2";"icon":"3";"userType":"444"(0:学生 1、老师)}
 接口返回值：{"code":"success"}
 
 3、
 接口描述：通过code登录并获取信息
 接口路径：https://www.grosup.com/practice/login/decode
 接口参数：{"code":"11111";}
-接口返回值：
+接口返回值：{"status:success","msg":"校验登录成功","third_session":"111","userStatus":"1111" }
+contentType:www那个
 
-4、接口描述：通过code登录并获取信息
-接口路径：https://www.grosup.com/practice/login/decode
-接口参数：{"code":"11111";}
+4.
+接口描述：获取当前用户信息
+接口路径：https://www.grosup.com/practice/user/info (GET)
+接口参数：{"third_session":"111"} (调用decode接口返回给你的sessionId)
 接口返回值：
+{"id":"111","name":"1";"classID";"icon";userType(0:学生 1、老师)，"className":"二班"，"gradeName":"二年级","schoolName":"麒麟小学"}
+ 
+
+5.
+接口描述：获取管理员用户对应权限下所有老师信息(GET)
+接口路径：https://www.grosup.com/practice/user/teachers
+接口参数：
+接口返回值：{"id":"111","name":"1";"classID";"icon";userType(0:学生 1、老师)，"className":"二班"，"gradeName":"二年级","schoolName":"麒麟小学","status":""(0、未审核 1、已审核)}
+
+6.
+接口描述：获取老师用户对应权限下所有老师信息(GET)
+接口路径：https://www.grosup.com/practice/user/students
+接口参数：{"classID"：""}(老师对应的班级ID)
+接口返回值：{"id":"111","name":"1";"classID";"icon";userType(0:学生 1、老师)，"className":"二班"，"gradeName":"二年级","schoolName":"麒麟小学","status":""(0、未审核 1、已审核)}
+ 
+7.
+接口描述：人员审核（PUT）
+接口路径：https://www.grosup.com/practice/user/check
+接口参数：{"userID":"11111";}
+接口返回值：{"code":"success"}
+contentType:www那个

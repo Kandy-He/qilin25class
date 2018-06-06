@@ -15,11 +15,33 @@ public class UserBean {
 	//头像
 	private String icon;
 	//微信ID
-	private long wxID;
+	private String wxID;
 	//用户状态：注册是否通过审核
 	private int status;
 	//用户角色类别 :0 学生 1老师
 	private int userType;
+	
+	private String className;
+	
+	private String gradeName;
+	
+	private String schoolName;
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
+
+	public String getSchoolName() {
+		return schoolName;
+	}
+
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
+	}
 
 	public int getId() {
 		return id;
@@ -53,11 +75,11 @@ public class UserBean {
 		this.icon = icon;
 	}
 
-	public long getWxID() {
+	public String getWxID() {
 		return wxID;
 	}
 
-	public void setWxID(long wxID) {
+	public void setWxID(String wxID) {
 		this.wxID = wxID;
 	}
 
@@ -75,5 +97,13 @@ public class UserBean {
 
 	public void setUserType(int userType) {
 		this.userType = userType;
+	}
+
+	public String getGradeName() {
+		return gradeName;
+	}
+
+	public void setGradeName(String gradeName) {
+		this.gradeName = gradeName;
 	}
 }
