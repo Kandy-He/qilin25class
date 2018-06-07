@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/my/my",
+    "pages/authorization/authorization",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/component/tabbar-fake/tabbar-fake",
+    "pages/practice/practice",
+    "pages/test/test"
+    
+  ],
+  "window": {
+    "backgroundColor": "#0091dc",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  }
+}

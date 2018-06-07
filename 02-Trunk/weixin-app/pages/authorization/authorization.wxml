@@ -1,0 +1,6 @@
+<!--pages/authorization/authorization.wxml-->
+<!-- <view wx:if="{{ifshow}}"> -->
+<view>
+  <button class='operate-button' open-type='getUserInfo' bindgetuserinfo='bindgetuserinfo' type='{{buttonType}}'><text>授权</text></button> 
+  <text>{{warn}}</text>
+</view> 
