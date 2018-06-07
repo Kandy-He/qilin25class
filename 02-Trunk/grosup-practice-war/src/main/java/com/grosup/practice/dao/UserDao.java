@@ -2,12 +2,16 @@ package com.grosup.practice.dao;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
+
 import com.grosup.practice.beans.UserBean;
 import com.grosup.practice.util.AbstractDao;
 
 @Repository
 public class UserDao extends AbstractDao{
+	
+	private static Logger logger = Logger.getLogger(UserDao.class);
 	
 	public UserBean queryTest(int id) {
 		return this.getSession().selectOne("com.practice.test.queryTest", id);
@@ -16,6 +20,7 @@ public class UserDao extends AbstractDao{
 	 * 人员注册
 	 */
 	public boolean userRegister(UserBean user) {
+		logger.info(user.getName());
 		int rows = this.getSession().insert("com.grosup.practice.user.register", user);
 		if (rows > 0) {
 			return true;

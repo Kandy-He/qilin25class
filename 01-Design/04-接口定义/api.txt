@@ -23,7 +23,7 @@ contentType:www那个
 接口路径：https://www.grosup.com/practice/user/info (GET)
 接口参数：{"third_session":"111"} (调用decode接口返回给你的sessionId)
 接口返回值：
-{"id":"111","name":"1";"classID";"icon";userType(0:学生 1、老师)，"className":"二班"，"gradeName":"二年级","schoolName":"麒麟小学"}
+{"id":"111","name":"1";"classID";"icon";userType(0:学生 1、老师)，"className":"二班"，"gradeName":"二年级","schoolName":"麒麟小学","code":(1、未注册 2、正常 0 获取用户信息异常)}
  
 
 5.
@@ -33,7 +33,7 @@ contentType:www那个
 接口返回值：{"id":"111","name":"1";"classID";"icon";userType(0:学生 1、老师)，"className":"二班"，"gradeName":"二年级","schoolName":"麒麟小学","status":""(0、未审核 1、已审核)}
 
 6.
-接口描述：获取老师用户对应权限下所有老师信息(GET)
+接口描述：获取老师用户对应权限下所有学生信息(GET)
 接口路径：https://www.grosup.com/practice/user/students
 接口参数：{"classID"：""}(老师对应的班级ID)
 接口返回值：{"id":"111","name":"1";"classID";"icon";userType(0:学生 1、老师)，"className":"二班"，"gradeName":"二年级","schoolName":"麒麟小学","status":""(0、未审核 1、已审核)}

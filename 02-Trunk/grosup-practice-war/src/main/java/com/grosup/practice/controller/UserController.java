@@ -33,9 +33,11 @@ private static Logger logger = Logger.getLogger(UserController.class);
 	private SessionService sessionService;
 	
 	@SuppressWarnings("finally")
-	@RequestMapping(method = RequestMethod.POST, value = "/add")
+	@RequestMapping(method = RequestMethod.POST, value = "/add",produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public JSONObject studentAdd(HttpServletRequest request ,@RequestBody UserBean userBean) {
+		//打印出前台接收到的学生信息
+		logger.info(userBean.toString());
 		JSONObject result = new JSONObject();
 		String third_session = request.getHeader("third_session");
 		try {
@@ -56,7 +58,7 @@ private static Logger logger = Logger.getLogger(UserController.class);
 		}
 	}
 	/**
-	 * 老师审核
+	 * 人员审核
 	 */
 	@RequestMapping(method = RequestMethod.PUT, value = "/check")
 	@ResponseBody
@@ -105,15 +107,15 @@ private static Logger logger = Logger.getLogger(UserController.class);
 			UserBean userbean = PracticeUtil.getUser(third_session);
 			if (ObjectUtil.isNull(userbean)) {
 				//请求正常(成功)
-				obj.put("status", "1");
+				obj.put("code", "1");
 				obj.put("msg", "当前用户未注册");
 			} else {
 				//请求正常(成功)
-				obj.put("status", "2");
+				obj.put("code", "2");
 				obj.put("data", userbean);
 			}
 		} catch (Exception e) {
-			obj.put("status", "0");
+			obj.put("code", "0");
 			obj.put("msg", "获取用户信息异常");
 			logger.error(e);
 		}

@@ -9,6 +9,15 @@ public class UserBean {
 	
     private int id;
 	
+	@Override
+	public String toString() {
+		return "UserBean [id=" + id + ", name=" + name + ", classID=" + classID
+				+ ", icon=" + icon + ", wxID=" + wxID + ", status=" + status
+				+ ", userType=" + userType + ", className=" + className
+				+ ", gradeName=" + gradeName + ", schoolName=" + schoolName
+				+ "]";
+	}
+
 	private String name;
 	//班级id
 	private int classID;
