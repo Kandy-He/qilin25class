@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grosup.practice.session">
+
+	<resultMap type="com.grosup.practice.beans.SessionBean" id="BaseResultMap">
+		<result column="third_session" jdbcType="VARCHAR" property="third_session"/>
+		<result column="session_key" jdbcType="VARCHAR" property="session_key"/>
+		<result column="openId" jdbcType="VARCHAR" property="openId"/>
+	</resultMap>
+	
+	<select id="checkThirdSession" parameterType="java.lang.String" resultType="int">
+		select count(*) from t_session where third_session = #{third_session}
+	</select>
+	
+	<insert id="insertSessionValue" parameterType="com.grosup.practice.beans.SessionBean">
+		insert into t_session (third_session,session_key,openId) values (#{third_session},#{session_key},#{openId})
+	</insert>
+	
+	<update id="updateThirdSession" parameterType="com.grosup.practice.beans.SessionBean">
+		update t_session set third_session = #{third_session} where openId = #{openId}
+	</update>
+	
+	<select id="getOpenIdByThirdSession" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select third_session,session_key,openId from t_session where third_session = #{third_session}
+	</select>
+</mapper>
