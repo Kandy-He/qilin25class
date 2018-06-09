@@ -71,26 +71,33 @@ Page({
               },
               success: res => {
                 //根据用户状态进行页面的不同显示，只有当用户通过审核时候才会显示个人信息页，否则显示注册页
-                //格式化用户角色
-                let userType = res.data.data.userType
+                
+                let userStatus//找到用户状态
+                let userType//格式化用户角色
                 let userRole//储存用户角色，用于审核通过状态展示对应页面
                 let selectRole //中文格式角色，用于审核时同步当前角色
-                switch (userType) {
-                  case 0:
-                    userRole = "student",
-                    selectRole = "学生"
-                    break;
-                  case 1:
-                    userRole = "teacher",
-                    selectRole = "老师"
-                    break;
-                  default:
-                    userRole = "admin",
-                    selectRole = "管理员"
+                if (res.data.msg == "当前用户未注册"){
+                  userStatus = "未注册"
+                }else{
+                  userStatus = res.data.data.status
+                  // userStatus = 0
+                  userType = res.data.data.userType
+                  switch (userType) {
+                    case 0:
+                      userRole = "student",
+                        selectRole = "学生"
+                      break;
+                    case 1:
+                      userRole = "teacher",
+                        selectRole = "老师"
+                      break;
+                    default:
+                      userRole = "admin",
+                        selectRole = "管理员"
+                  }
                 }
-                let userStatus = res.data.data.status
-                // let userStatus = 3
                 if (userStatus == 1) {//通过审核
+                  
                   //修改app的用户状态
                   app.globalData.userInfoInOurSystem.userStatus = "accessed";
                   //用户个人信息储存
@@ -102,16 +109,14 @@ Page({
                   })
                   
                 }else{//未通过，显示注册页
-                  this.setData({
-                    ifshow: true,
-                    selectRole: selectRole
-                  })
                   switch (userStatus) {
                     case 0://审核中, 同步所选班级
                       this.setData({
+                        ifshow: true,
+                        selectRole: selectRole,
                         ifPushing: true,
-                        username: res.data.name,
-                        selectedClass: res.data.gradeName + res.data.className,
+                        username: res.data.data.name,
+                        selectedClass: res.data.data.gradeName + res.data.data.className,
                         buttonText: "审核中",
                         buttonType: "primary",
                         buttonDisable: true
@@ -158,6 +163,9 @@ Page({
                               console.log(res.data.data)
                               //循环找出所有不重复的年级和班级
                               getInrepeatClasses(res)
+                              this.setData({
+                                ifshow: true
+                              })
                             }
                           })
                         }
@@ -166,6 +174,7 @@ Page({
                       //如果是审核未通过，应该告知用户重新提交
                       if (userStatus == 2){
                         this.setData({
+                          ifshow: true,
                           buttonText: "点击重新提交（审核被拒绝）",
                           buttonType: "warn"
                         })
@@ -291,9 +300,10 @@ Page({
   },
   submitUserMessage: function (e) {//点击提交按钮，弹出是否允许获取用户信息
       let imgUrl = this.data.initImgUrl == "" ? app.globalData.userInfo.avatarUrl : this.data.initImgUrl;
+      let genderKey = this.data.genderListArray[this.data.initSexIndex]=="男"?1:0;
       let sendData = {
         name: this.data.username,
-        gender: this.data.genderListArray[this.data.initSexIndex],
+        gender: genderKey,
         icon: imgUrl,
         schoolName: this.data.schoolListArray[this.data.initSchoolIndex],
         gradeID: this.data.multiIdArrayForAllGradesAndClassed[0][this.data.multiClassIndex[0]],
