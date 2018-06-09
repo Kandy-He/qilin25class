@@ -1,5 +1,5 @@
 <!--pages/my/my.wxml-->
-<import src="../component/tabbar-fake/tabbar-fake.wxml"/>
+<!-- <import src="../template/template-student/template-student.wxml"/> //此处更适合用组件（传参方便）-->
 <view wx:if="{{ifshow}}" class='container'><!-- 见模板注释 -->
   <view wx:if="{{viewForWho == ''}}" class='inner-box'>
 
@@ -57,110 +57,15 @@
   </view>
   <!-- 老师页面 -->
   <view wx:elif="{{viewForWho == 'teacher'}}" class='inner-box'>
-    <view class='items'>
-      <text class='register-title'>老师的信息</text>
-    </view>
-    <view class='items'>
-      <text class='left-label'>学校：</text>
-      <text>麒麟小学</text>
-    </view>
-    <view class='items'>
-      <text class='left-label'>年级：</text>
-      <text>二年级</text>
-    </view>
-    <view class='items'>
-      <text class='left-label'>班级：</text>
-      <text>五班</text>
-    </view>
-    <view class='items'>
-      <text class='left-label'>姓名：</text>
-      <text>王老师</text>
-      <button class='message-item operate-button fr'><text>修改</text></button>
-    </view>
-    <view class='items'>
-      <text class=''>我的学生：</text>
-    </view>
-    <view class='student-list-box'>
-      <block wx:for="{{studentListArray}}">
-        <view class='teacher-items {{item.jurgeStatus?"need-to-jurge":""}}'>
-          <view class='teachers-message'>
-            <image class='message-item teachers-headimg' src="{{item.imgUrl}}"></image>
-            <text class='message-item teachers-name'>{{item.name}}</text>
-            <text class='message-item teachers-gender'>{{item.gender}}</text>
-            <!-- 如果未审核 -->
-            <view wx:if="{{item.jurgeStatus}}" class='your-decision decision-right'>
-              <text class='message-item status'>待审核</text>
-              <button class='message-item operate-button'><text>同意</text></button>
-              <button class='message-item operate-button'><text>拒绝</text></button>
-            </view>
-            <!-- 如果审核已通过 -->
-            <view wx:else="{{item.jurgeStatus}}" class='your-decision decision-right'>
-              <button class='message-item operate-button'><text>查看成绩</text></button>
-            </view>
-          </view>
-          
-        </view>
-      </block>
-    </view>
-    
+    <page-my-teacher></page-my-teacher>
   </view>
   <!-- 学生页面 -->
   <view wx:elif="{{viewForWho == 'student'}}" class='inner-box'>
-    <view class='items'>
-      <text class='register-title'>学生的信息</text>
-    </view>
-    <view class='items'>
-      <text class='left-label'>学校：</text>
-      <text>麒麟小学</text>
-    </view>
-    <view class='items'>
-      <text class='left-label'>年级：</text>
-      <text>二年级</text>
-    </view>
-    <view class='items'>
-      <text class='left-label'>班级：</text>
-      <text>五班</text>
-    </view>
-    <view class='items'>
-      <text class='left-label'>姓名：</text>
-      <text>小宝</text>
-      <button class='message-item operate-button fr'><text>修改</text></button>
-    </view>
-    <view class='items'>
-      <text class=''>我的战绩统计报表：</text>
-    </view>
-    <view class='items'>
-      <text class=''>2018年7月12日0点更新：</text>
-      <button class='message-item operate-button fr'><text>查看</text></button>
-    </view>
+    <page-my-student></page-my-student>
   </view>
   <!-- 管理员页面 -->
   <view wx:elif="{{viewForWho == 'admin'}}" class='inner-box'>
-    <view class='items'>
-      <text class='register-title'>管理员的信息</text>
-    </view>
-    <view class='items'>
-      <text class='teacher-list-title'>老师列表</text>
-    </view>
-    <block wx:for="{{teacherListArray}}">
-      <view class='teacher-items {{item.jurgeStatus?"need-to-jurge":""}}'>
-        <view class='teachers-message'>
-          <image class='message-item teachers-headimg' src="{{item.imgUrl}}"></image>
-          <text class='message-item teachers-name'>{{item.name}}</text>
-          <text class='message-item teachers-gender'>{{item.gender}}</text>
-          <text class='message-item teachers-school'>{{item.schoolName}}</text>
-          <text class='message-item teachers-grade'>{{item.gradeName}}</text>
-          <text class='message-item teachers-class'>{{item.className}}</text>
-        </view>
-        <view wx:if="{{item.jurgeStatus}}" class='your-decision'>
-          <view class=''>
-            <text class='message-item status'>待审核</text>
-            <button class='message-item operate-button'><text>同意</text></button>
-            <button class='message-item operate-button'><text>拒绝</text></button>
-          </view>
-        </view>
-      </view>
-    </block>
+    <page-my-admin></page-my-admin>
   </view>
   
 </view>

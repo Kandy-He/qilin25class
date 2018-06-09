@@ -1,0 +1,2 @@
+/* pages/component/my-teacher/page-my-teacher.wxss */
+@import "../common/common.wxss";

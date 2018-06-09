@@ -28,54 +28,7 @@ Page({
     buttonText: "提交",
     buttonType: "default",
     buttonDisable: false,
-    /**
-     * 以下是管理员页面数据
-     */
-    //角色下老师列表
-    teacherListArray: [
-      {
-        imgUrl: "../../images/practice-choose.png",
-        name: "李建老师",
-        gender: "男",
-        schoolName: "麒麟小学",
-        gradeName: "二年纪",
-        className: "五班",
-        jurgeStatus: true,
-      },
-      {
-        imgUrl: "../../images/test-choose.png",
-        name: "马云老师",
-        gender: "男",
-        schoolName: "麒麟小学",
-        gradeName: "三年纪",
-        className: "四班",
-        jurgeStatus: false,
-      }
-    ],
-    /**
-     * 以下是老师页面数据
-     */
-    //角色下学生列表
-    studentListArray: [
-      {
-        imgUrl: "../../images/my-choose.png",
-        name: "尼加",
-        gender: "男",
-        jurgeStatus: true,
-      },
-      {
-        imgUrl: "../../images/my-choose.png",
-        name: "小宝",
-        gender: "男",
-        jurgeStatus: false,
-      },
-      {
-        imgUrl: "../../images/my-choose.png",
-        name: "云朵",
-        gender: "女",
-        jurgeStatus: false,
-      }
-    ],
+    
   },
   onLoad: function () {
     //由于该页为起始页即使小程序未授权，跳转授权页之前也会先加载本页面，为避免页面跳转中间无谓的js加载，此处加一个判断
@@ -119,9 +72,10 @@ Page({
               success: res => {
                 //根据用户状态进行页面的不同显示，只有当用户通过审核时候才会显示个人信息页，否则显示注册页
                 //格式化用户角色
+                let userType = res.data.data.userType
                 let userRole//储存用户角色，用于审核通过状态展示对应页面
                 let selectRole //中文格式角色，用于审核时同步当前角色
-                switch (res.data.userType) {
+                switch (userType) {
                   case 0:
                     userRole = "student",
                     selectRole = "学生"
@@ -134,15 +88,19 @@ Page({
                     userRole = "admin",
                     selectRole = "管理员"
                 }
-                let userStatus = res.data.status
+                let userStatus = res.data.data.status
                 // let userStatus = 3
                 if (userStatus == 1) {//通过审核
-                  debugger
-                  //判断用户角色，同步页面
+                  //修改app的用户状态
+                  app.globalData.userInfoInOurSystem.userStatus = "accessed";
+                  //用户个人信息储存
+                  app.globalData.userInfoInOurSystem.personInfo = res.data.data;
+                  //判断用户角色，同步页面，放在最后，否则会出发组件页的attached事件
                   this.setData({
                     viewForWho: userRole,
                     ifshow: true
                   })
+                  
                 }else{//未通过，显示注册页
                   this.setData({
                     ifshow: true,
@@ -187,7 +145,6 @@ Page({
                         // //由于app.onlaunch里面请求可能在此页面后，故在此保存函数，谁先加载谁调
                         // app.getUserClassList = ()=>{
                         //向服务器请求班级学生角色列表，动态刷新当前可选班级
-                        let userStatus = app.globalData.userInfoInOurSystem.userStatus;
                         //只有当用户状态为未提交或者审核被拒时候才，需要请求用户class列表
                         if (userStatus == -1 | 2) {
                           wx.request({

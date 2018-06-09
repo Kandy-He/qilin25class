@@ -1,6 +1,9 @@
 {
   "navigationBarTitleText": "我的",
   "usingComponents": {
-    "tabbar-fake": "../component/tabbar-fake/tabbar-fake"
+    "tabbar-fake": "../component/tabbar-fake/tabbar-fake",
+    "page-my-admin": "../component/page-my-admin/page-my-admin",
+    "page-my-teacher": "../component/page-my-teacher/page-my-teacher",
+    "page-my-student": "../component/page-my-student/page-my-student"
   }
 }

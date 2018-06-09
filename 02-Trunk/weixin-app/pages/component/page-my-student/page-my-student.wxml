@@ -1,0 +1,28 @@
+<!--pages/component/page-my-student/page-my-student.wxml-->
+    <view class='items'>
+      <text class='register-title'>学生的信息</text>
+    </view>
+    <view class='items'>
+      <text class='left-label'>学校：</text>
+      <text>麒麟小学</text>
+    </view>
+    <view class='items'>
+      <text class='left-label'>年级：</text>
+      <text>{{studentGrade}}</text>
+    </view>
+    <view class='items'>
+      <text class='left-label'>班级：</text>
+      <text>{{studentClass}}</text>
+    </view>
+    <view class='items'>
+      <text class='left-label'>姓名：</text>
+      <text>{{studentName}}</text>
+      <button class='message-item operate-button fr'><text>修改</text></button>
+    </view>
+    <view class='items'>
+      <text class=''>我的战绩统计报表：</text>
+    </view>
+    <view class='items'>
+      <text class=''>2018年7月12日0点更新：</text>
+      <button class='message-item operate-button fr'><text>查看</text></button>
+    </view>
