@@ -33,6 +33,12 @@ public class UserService {
 		return userDao.userCheck(userID);
 	}
 	/**
+	 * 注册审核拒绝
+	 */
+	public boolean userCheckRefused(int userID) {
+		return userDao.userCheckRefused(userID);
+	}
+	/**
 	 * 获取老师对应班级下所有学生信息
 	 * @param userID 老师id
 	 * @return

@@ -6,6 +6,7 @@
 		<result column="id" jdbcType="INTEGER" property="id"/>
 		<result column="name" jdbcType="VARCHAR" property="name"/>
 		<result column="classID" jdbcType="INTEGER" property="classID"/>
+		<result column="gender" jdbcType="INTEGER" property="gender"/>
 		<result column="icon" jdbcType="VARCHAR" property="icon"/>
 		<result column="wxID" jdbcType="VARCHAR" property="wxID"/>
 		<result column="status" jdbcType="INTEGER" property="status"/>
@@ -16,7 +17,7 @@
 	</resultMap>
 	<!-- 人员注册 -->
 	<insert id="register" parameterType="com.grosup.practice.beans.UserBean">
-		insert into t_student (name,classID,icon,wxID,status,userType) values (#{name},#{classID},#{icon},#{wxID},#{status},#{userType})
+		insert into t_student (name,gender,classID,icon,wxID,status,userType) values (#{name},#{gender},#{classID},#{icon},#{wxID},#{status},#{userType})
 	</insert>
 	
 	<!-- 通过wxID即unionID获取用户信息 -->
@@ -27,13 +28,13 @@
 	<!-- 获取老师对应班级下所有学生信息 -->
 	<!-- param：老师ID -->
 	<select id="queryStudents" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-		select ts.id,ts.classID,ts.`name`,ts.userType,ts.icon,ts.`status`,tc.`name` as className,tg.`name` AS gradeName,tsc.`name` AS schoolName from t_student ts
+		select ts.id,ts.gender,ts.classID,ts.`name`,ts.userType,ts.icon,ts.`status`,tc.`name` as className,tg.`name` AS gradeName,tsc.`name` AS schoolName from t_student ts
 		LEFT JOIN t_class tc ON ts.classID = tc.id LEFT JOIN t_grade tg ON tc.gradeID = tg.id LEFT JOIN t_school tsc ON tg.schoolId = tsc.id
 		WHERE ts.classID =  #{classID} AND ts.userType = 0
 	</select>
 	<!-- 获取所有老师 -->
 	<select id="queryTeachers" resultMap="BaseResultMap">
-		select ts.id,ts.classID,ts.`name`,ts.userType,ts.icon,ts.`status`,tc.`name` as className,tg.`name` AS gradeName,tsc.`name` AS schoolName from t_student ts
+		select ts.id,ts.gender,ts.classID,ts.`name`,ts.userType,ts.icon,ts.`status`,tc.`name` as className,tg.`name` AS gradeName,tsc.`name` AS schoolName from t_student ts
 		LEFT JOIN t_class tc ON ts.classID = tc.id LEFT JOIN t_grade tg ON tc.gradeID = tg.id LEFT JOIN t_school tsc ON tg.schoolId = tsc.id
 		WHERE ts.userType = 1
 	</select>
@@ -43,9 +44,14 @@
 		update t_student set t_student.status = 1 where id = #{userID}
 	</update>
 	
+	<!-- 将注册的状态由0变为2 -->
+	<update id="userCheckRefused" parameterType="INTEGER">
+		update t_student set t_student.status = 2 where id = #{userID}
+	</update>
+	
 	<!-- 通过wxID即unionID获取用户信息 -->
 	<select id="queryUserBywxID" parameterType="java.lang.String" resultMap="BaseResultMap">
-		select ts.id,ts.status,ts.classID,ts.`name`,ts.userType,ts.icon,tc.`name` as className,tg.`name` AS gradeName,tsc.`name` AS schoolName from t_student ts
+		select ts.id,ts.gender,ts.status,ts.classID,ts.`name`,ts.userType,ts.icon,tc.`name` as className,tg.`name` AS gradeName,tsc.`name` AS schoolName from t_student ts
 		LEFT JOIN t_class tc ON ts.classID = tc.id LEFT JOIN t_grade tg ON tc.gradeID = tg.id LEFT JOIN t_school tsc ON tg.schoolId = tsc.id
 		 where ts.wxID = #{wxID}
 	</select>
