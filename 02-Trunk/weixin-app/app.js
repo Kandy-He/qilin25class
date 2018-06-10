@@ -29,7 +29,8 @@ App({
     userInfoInOurSystem: {
       userStatus: -1,//用户状态：未提交审核unpush: -1，提交审核pushing: 0，审核通过accessed: 1，审核被拒refused: 2
       userRole: "",//存用户角色：student/teacher/admin
-      tabbarIndex: 4
+      tabbarIndex: 4,
+      personInfo: {}
     },
     //封装一个数组去重的公共方法, 传入要去重数组，返回去重后的数组
     filterRepeatArray: function (array) {

@@ -2,9 +2,7 @@
 /**
 *自定义class
 */
-.fr{
-  float: right
-}
+@import "./pages/component/common/common.wxss";
 page{
     background-color: #0091dc;  
 }
@@ -14,19 +12,4 @@ page{
   background-repeat: no-repeat;
   color:#fff;
   padding-bottom:150rpx;
-}
-.inner-box{
-  width: 630rpx;
-  margin-left: auto;
-  margin-right: auto;
-}
-.items{
-  padding:7rpx 0;
-}
-.items .register-title{
-  color: #000;
-  font-size: 50rpx;
-  font-weight: 500;
-  line-height:120rpx;
-  vertical-align: middle;
 }
