@@ -1,9 +1,11 @@
 package com.grosup.practice.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.grosup.practice.beans.ClassInfoBean;
 import com.grosup.practice.beans.UserBean;
+import com.grosup.practice.service.ClassInfoService;
 import com.grosup.practice.service.SessionService;
 import com.grosup.practice.service.UserService;
 import com.grosup.practice.util.ObjectUtil;
@@ -31,6 +35,8 @@ private static Logger logger = Logger.getLogger(UserController.class);
 	private UserService userService;
 	@Autowired
 	private SessionService sessionService;
+	@Autowired
+	private ClassInfoService classInfoService;
 	
 	@SuppressWarnings("finally")
 	@RequestMapping(method = RequestMethod.POST, value = "/add",produces="application/json;charset=UTF-8")
@@ -58,9 +64,9 @@ private static Logger logger = Logger.getLogger(UserController.class);
 		}
 	}
 	/**
-	 * 人员审核
+	 * 人员审核通过
 	 */
-	@RequestMapping(method = RequestMethod.PUT, value = "/check")
+	@RequestMapping(method = RequestMethod.POST, value = "/check")
 	@ResponseBody
 	public JSONObject studentCheck(@RequestParam int userID) {
 		JSONObject result = new JSONObject();
@@ -72,7 +78,21 @@ private static Logger logger = Logger.getLogger(UserController.class);
 		}
 		return result;
 	}
-	
+	/**
+	 * 人员审核拒绝
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/checkRefused")
+	@ResponseBody
+	public JSONObject studentCheckRefused(@RequestParam int userID) {
+		JSONObject result = new JSONObject();
+		boolean status = userService.userCheckRefused(userID);
+		if (status) {
+			result.put("code", "success");
+		} else {
+			result.put("code", "fail");
+		}
+		return result;
+	}
 	/**
 	 * 获取管理员权限下对应老师信息
 	 */
@@ -89,6 +109,7 @@ private static Logger logger = Logger.getLogger(UserController.class);
 	@RequestMapping(method = RequestMethod.GET, value = "/students")
 	@ResponseBody
 	public List<UserBean> queryStudents(@RequestParam int classID) {
+		logger.info("传进来的班级ID" + classID);
 		List<UserBean> teachers = userService.queryStudents(classID);
 		return teachers;
 	} 
@@ -120,5 +141,24 @@ private static Logger logger = Logger.getLogger(UserController.class);
 			logger.error(e);
 		}
 		return obj;
+	}
+	@RequestMapping(method = RequestMethod.GET,value = "query")
+	@ResponseBody
+	public JSONObject queryClass() throws IOException {
+		JSONObject result = new JSONObject();
+		JSONArray data = new JSONArray();
+		List<ClassInfoBean> list = classInfoService.queryClass();
+		for (ClassInfoBean classInfoBean : list) {
+			JSONObject obj = new JSONObject();
+			obj.put("classID", classInfoBean.getClassBean().getId());
+			obj.put("className", classInfoBean.getClassBean().getName());
+			obj.put("gradeID", classInfoBean.getClassBean().getGradeID());
+			obj.put("gradeName", classInfoBean.getGradeBean().getName());
+			data.add(obj);
+		}
+		
+		result.put("data", data);
+		result.put("code", "success");
+		return result;
 	}
 }

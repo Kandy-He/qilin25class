@@ -56,36 +56,5 @@ public class TestController {
 		return result;
 		
 	}
-	
-	@RequestMapping(method = RequestMethod.GET,value = "query")
-	@ResponseBody
-	public JSONObject queryClass() throws IOException {
-		JSONObject result = new JSONObject();
-		JSONArray data = new JSONArray();
-		List<ClassInfoBean> list = classInfoService.queryClass();
-		for (ClassInfoBean classInfoBean : list) {
-			JSONObject obj = new JSONObject();
-			obj.put("classID", classInfoBean.getClassBean().getId());
-			obj.put("className", classInfoBean.getClassBean().getName());
-			obj.put("gradeID", classInfoBean.getClassBean().getGradeID());
-			obj.put("gradeName", classInfoBean.getGradeBean().getName());
-			data.add(obj);
-		}
 		
-		result.put("data", data);
-		result.put("code", "success");
-		return result;
-		
-	}
-//	@RequestMapping(method = RequestMethod.GET,value = "test1")
-//	@ResponseBody
-//	public void test() {
-//		SessionBean sessionBean = new SessionBean(String.valueOf(Math.random()*100), "22222"+"|"+"33333");
-//		sessionService.insertSessionValue(sessionBean);
-//		UserBean userBean = PracticeUtil.getUser(null);
-//		if (userBean == null) {
-//			//用户为注册
-//			System.out.println("未注册");
-//		}
-//	}
 }

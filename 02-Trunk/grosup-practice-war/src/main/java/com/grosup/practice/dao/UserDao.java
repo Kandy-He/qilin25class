@@ -40,6 +40,17 @@ public class UserDao extends AbstractDao{
 		}
 	}
 	/**
+	 * 注册审核拒绝
+	 */
+	public boolean userCheckRefused(int userID) {
+		int rows = this.getSession().update("com.grosup.practice.user.userCheckRefused", userID);
+		if (rows > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	/**
 	 * 获取老师对应班级下所有学生信息
 	 * @param userID 老师id
 	 * @return

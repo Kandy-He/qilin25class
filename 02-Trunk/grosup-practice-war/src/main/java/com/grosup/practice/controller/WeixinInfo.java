@@ -186,7 +186,7 @@ public class WeixinInfo {
 //				并返回用户注册状态----未注册/注册还未通过审核，如果已经注册并通过审核，返回用户信息并写入session
 				UserBean userBean = PracticeUtil.getUser(openid);
 				if (userBean == null) {
-					//用户为注册
+					//用户未注册
 					map.put("userStatus", "unRegister");
 				} else if ("1".equals(userBean.getStatus())) {
 					//用户已经注册还未通过审核

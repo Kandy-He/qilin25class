@@ -25,6 +25,8 @@ public class UserBean {
 	private String icon;
 	//微信ID
 	private String wxID;
+	//用户性别 0 女 1男
+	private int gender;
 	//用户状态：注册是否通过审核
 	private int status;
 	//用户角色类别 :0 学生 1老师
@@ -114,5 +116,13 @@ public class UserBean {
 
 	public void setGradeName(String gradeName) {
 		this.gradeName = gradeName;
+	}
+
+	public int getGender() {
+		return gender;
+	}
+
+	public void setGender(int gender) {
+		this.gender = gender;
 	}
 }
