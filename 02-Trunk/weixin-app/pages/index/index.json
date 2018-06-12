@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "首页",
-  "usingComponents": {
-    "tabbar-fake": "../component/tabbar-fake/tabbar-fake"
-  }
-}

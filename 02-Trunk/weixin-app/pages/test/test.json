@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "测试",
-  "usingComponents": {
-    "tabbar-fake": "../component/tabbar-fake/tabbar-fake"
-  }
-}

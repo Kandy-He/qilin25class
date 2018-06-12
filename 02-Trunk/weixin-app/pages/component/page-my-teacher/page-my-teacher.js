@@ -2,6 +2,17 @@
 const app = getApp()
 Component({
   /**
+   * 组件的初始数据
+   */
+  data: {
+    teacherName: "",
+    teacherGrade: "",
+    teacherClass: "",
+    teacherSchool: "",
+    //角色下学生列表
+    studentListArray: []
+  },
+  /**
    * 组件的属性列表
    */
   properties: {
@@ -38,17 +49,7 @@ Component({
       }
     })
   },
-  /**
-   * 组件的初始数据
-   */
-  data: {
-    teacherName: "",
-    teacherGrade: "",
-    teacherClass: "",
-    teacherSchool: "",
-    //角色下学生列表
-    studentListArray: []
-  },
+  
 
   /**
    * 组件的方法列表

@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "联系",
-  "usingComponents": {
-    "tabbar-fake": "../component/tabbar-fake/tabbar-fake"
-  }
-}

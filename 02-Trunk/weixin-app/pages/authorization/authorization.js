@@ -19,7 +19,7 @@ Page({
       app.globalData.userInfo = e.detail.userInfo;
       app.globalData.hasAthurize = true;
       wx.redirectTo({
-        url: '../my/my',
+        url: '../main/main',
       })
     } else {//提示信息未提交，点击重新提交
       this.setData({

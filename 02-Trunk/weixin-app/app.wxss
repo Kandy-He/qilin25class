@@ -12,4 +12,5 @@ page{
   background-repeat: no-repeat;
   color:#fff;
   padding-bottom:150rpx;
+  min-height:11rpx;
 }

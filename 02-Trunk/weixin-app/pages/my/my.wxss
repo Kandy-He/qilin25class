@@ -1,2 +1,0 @@
-/* pages/my/my.wxss */
-/* @import "../component/tabbar-fake/tabbar-fake.wxss"; 用自定义组件引入不需要按页面引入，故不需要单独引入css*/
