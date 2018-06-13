@@ -2,6 +2,8 @@
   "navigationBarTitleText": "小学数学知识学习",
   "usingComponents": {
     "tabbar-fake": "../component/tabbar-fake/tabbar-fake",
+    "page-index": "../component/page-index/page-index",
+    "page-practice": "../component/page-practice/page-practice",
     "page-my-teacher": "../component/page-my-teacher/page-my-teacher",
     "page-my-student": "../component/page-my-student/page-my-student",
     "page-my-admin": "../component/page-my-admin/page-my-admin"

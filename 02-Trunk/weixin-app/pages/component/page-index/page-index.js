@@ -11,7 +11,12 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    userObj: {
+      headImgUrl: "",
+      studentName: "小宝",
+      flowerNum: "1200",
+      overedNum: "35"
+    }
   },
 
   /**

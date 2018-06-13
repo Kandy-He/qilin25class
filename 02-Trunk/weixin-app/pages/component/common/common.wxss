@@ -2,6 +2,9 @@
 .fr{
   float: right
 }
+.align-center{
+  text-align: center;
+}
 .inner-box{
   width: 630rpx;
   margin-left: auto;

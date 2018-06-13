@@ -6,7 +6,7 @@ App({
       success: res => {
         if (!res.authSetting['scope.userInfo']) {// 未授权
           wx.redirectTo({
-            url: '../authorization/authorization',//跳转到授权页
+            url: 'pages/authorization/authorization',//跳转到授权页
           })
         } else {//已经授权，根据用户状态，判断进入哪个页面
           // 登录
