@@ -1,11 +1,8 @@
 {
   "pages": [
-    "pages/my/my",
+    "pages/main/main",
     "pages/authorization/authorization",
-    "pages/index/index",
-    "pages/component/tabbar-fake/tabbar-fake",
-    "pages/practice/practice",
-    "pages/test/test"
+    "pages/register/register"
   ],
   "window": {
     "backgroundColor": "#0091dc",

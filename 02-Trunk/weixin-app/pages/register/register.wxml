@@ -1,8 +1,6 @@
-<!--pages/my/my.wxml-->
-<!-- <import src="../template/template-student/template-student.wxml"/> //此处更适合用组件（传参方便）-->
-<view wx:if="{{ifshow}}" class='container'><!-- 见模板注释 -->
-  <view wx:if="{{viewForWho == ''}}" class='inner-box'>
-
+<!--pages/register/register.wxml-->
+<view class='container'>
+  <view class='inner-box'>
     <view class='items'>
       <text class='register-title'>注册个人信息</text>
     </view>
@@ -55,19 +53,5 @@
        <button class='operate-button' bindtap='submitUserMessage' type='{{buttonType}}' disabled='{{buttonDisable}}'>{{buttonText}}</button> 
     </view> 
   </view>
-  <!-- 老师页面 -->
-  <view wx:elif="{{viewForWho == 'teacher'}}" class='inner-box'>
-    <page-my-teacher></page-my-teacher>
-  </view>
-  <!-- 学生页面 -->
-  <view wx:elif="{{viewForWho == 'student'}}" class='inner-box'>
-    <page-my-student></page-my-student>
-  </view>
-  <!-- 管理员页面 -->
-  <view wx:elif="{{viewForWho == 'admin'}}" class='inner-box'>
-    <page-my-admin></page-my-admin>
-  </view>
-  
 </view>
 
-<tabbar-fake></tabbar-fake>
