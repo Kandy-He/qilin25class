@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grosup.practice.type">
+	
+	<resultMap type="com.grosup.practice.beans.GradeDetail" id="BaseResultMap">
+		<result column="gradeID" jdbcType="INTEGER" property="gradeID"/>
+		<result column="gradeName" jdbcType="VARCHAR" property="gradeName"/>
+		<collection property="subjects" ofType="com.grosup.practice.beans.SubjectDetail">
+			<result column="subID" jdbcType="INTEGER" property="subID"/>
+			<result column="subName" jdbcType="VARCHAR" property="subName"/>
+			<collection property="types" ofType="com.grosup.practice.beans.TypeDetail">
+				<result column="typeID" jdbcType="INTEGER" property="typeID"/>
+				<result column="typeName" jdbcType="VARCHAR" property="typeName"/>
+				<result column="haveDone" jdbcType="INTEGER" property="haveDone"/>
+				<result column="onceRight" jdbcType="INTEGER" property="onceRight"/>
+				<result column="flower" jdbcType="INTEGER" property="flower"/>
+			</collection>
+		</collection>
+	</resultMap>
+	<!-- 查询题型 -->
+	<select id="queryTypeDetail" parameterType="int" resultMap="BaseResultMap">
+		SELECT tty.typeID,tty.`name` AS typeName,tst.haveDone,tst.onceRight,tst.flower,
+	tsu.id AS sunID,tsu.`name` AS subName,tgr.id AS gradeID,tgr.`name` AS gradeName
+	FROM t_type tty LEFT JOIN t_statistics tst ON
+	tty.typeID = tst.typeID AND tst.userID = #{userID},t_subject tsu,t_grade tgr 
+	WHERE tty.subjectID = tsu.id AND tsu.gradeID = tgr.id
+	</select>
+</mapper>

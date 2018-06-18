@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grosup.practice.class">
+
+	<resultMap type="com.grosup.practice.beans.ProblemBean" id="BaseResultMap">
+		<result column="id" jdbcType="INTEGER" property="id"/>
+		<result column="typeID" jdbcType="INTEGER" property="typeID"/>
+		<result column="description" jdbcType="VARCHAR" property="description"/>
+		<result column="answer" jdbcType="VARCHAR" property="answer"/>
+	</resultMap>
+	
+	<select id="getRandomOne" parameterType="int" resultMap="BaseResultMap">
+		SELECT *
+		FROM t_problem
+		WHERE id >= (SELECT FLOOR( MAX(id) * RAND()) FROM t_problem ) AND t_problem.typeID = #{typeID}
+		ORDER BY id LIMIT 1;
+	</select>
+	<!-- 根据题目ID取题目答案 -->
+	<select id="getAnswerByID" parameterType="int" resultType="java.lang.String">
+		select tpr.answer from t_problem tpr where tpr.id = #{id}
+	</select>
+</mapper>

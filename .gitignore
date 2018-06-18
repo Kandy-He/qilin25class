@@ -5,3 +5,6 @@
 02-Trunk/grosup-practice-war/env/dev/jdbc.properties
 02-Trunk/grosup-practice-war/practice.log
 02-Trunk/grosup-practice-war/src/main/resources/applicationContext.xml
+02-Trunk/grosup-practice-war/src/main/resources/jdbc.properties
+02-Trunk/grosup-practice-war/src/main/resources/jdbc.properties
+02-Trunk/grosup-practice-war/src/main/resources/applicationContext.xml
