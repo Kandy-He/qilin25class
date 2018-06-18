@@ -10,5 +10,6 @@
 		<mapper resource="mybatis/session-orm.xml"/>
 		<mapper resource="mybatis/type-orm.xml"/>
 		<mapper resource="mybatis/problem-orm.xml"/>
+		<mapper resource="mybatis/statistics-orm.xml"/>
 	</mappers>
 </configuration>

@@ -15,7 +15,7 @@ public class StatisticsDao extends AbstractDao {
 		Map<String, Integer> paramMap = new HashMap<String, Integer>();
 		paramMap.put("userID", userID);
 		paramMap.put("typeID", typeID);
-		int row = this.getSession().update("com.grosup.practice.class,updateUserDoneByCorrect", paramMap);
+		int row = this.getSession().update("com.grosup.practice.statistics.updateUserDoneByCorrect", paramMap);
 		if (row > 0) {
 			result = true;
 		}
@@ -28,7 +28,7 @@ public class StatisticsDao extends AbstractDao {
 		Map<String, Integer> paramMap = new HashMap<String, Integer>();
 		paramMap.put("userID", userID);
 		paramMap.put("typeID", typeID);
-		int row = this.getSession().update("com.grosup.practice.class,updateUserDoneByUnCorrect",paramMap);
+		int row = this.getSession().update("com.grosup.practice.statistics.updateUserDoneByUnCorrect",paramMap);
 		if (row > 0) {
 			result = true;
 		}

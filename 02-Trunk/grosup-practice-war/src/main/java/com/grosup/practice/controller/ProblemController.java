@@ -1,9 +1,7 @@
 package com.grosup.practice.controller;
 
 import java.io.IOException;
-import java.util.List;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +29,21 @@ public class ProblemController {
 		ProblemBean bean = problemService.getRandomOne(typeID);
 		result.put("code", "success");
 		result.put("data", JSONObject.fromObject(bean));
+		return result;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET,value = "checkAnswer")
+	@ResponseBody
+	public JSONObject checkAnswer(@RequestParam int id,@RequestParam String answer,@RequestParam int userID,
+			@RequestParam int typeID) throws Exception {
+		JSONObject result = new JSONObject();
+		boolean checkResult = problemService.checkAnswer(id, answer, userID, typeID);
+		if (checkResult) {
+			result.put("data", 1);//做对了
+		} else {
+			result.put("data", 0);//做错了
+		}
+		result.put("code", "success");
 		return result;
 	}
 }

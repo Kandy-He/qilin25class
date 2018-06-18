@@ -10,12 +10,12 @@ public class ProblemDao extends AbstractDao {
 	
 	/**获得随机一道题*/
 	public ProblemBean getRandomOne(int typeID) {
-		return this.getSession().selectOne("com.grosup.practice.class.getRandomOne", typeID);
+		return this.getSession().selectOne("com.grosup.practice.problem.getRandomOne", typeID);
 	}
 	
 	/**根据题目ID取题目答案*/
 	public String getAnswerByID(int id) {
-		return this.getSession().selectOne("com.grosup.practice.class.getAnswerByID", id);
+		return this.getSession().selectOne("com.grosup.practice.problem.getAnswerByID", id);
 	}
 	
 }

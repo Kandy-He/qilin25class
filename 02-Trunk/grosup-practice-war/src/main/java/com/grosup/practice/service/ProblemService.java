@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grosup.practice.beans.ProblemBean;
-import com.grosup.practice.beans.UserBean;
 import com.grosup.practice.dao.ProblemDao;
 import com.grosup.practice.dao.StatisticsDao;
 import com.grosup.practice.util.ObjectUtil;
