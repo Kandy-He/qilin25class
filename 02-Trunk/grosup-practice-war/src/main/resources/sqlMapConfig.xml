@@ -11,5 +11,6 @@
 		<mapper resource="mybatis/type-orm.xml"/>
 		<mapper resource="mybatis/problem-orm.xml"/>
 		<mapper resource="mybatis/statistics-orm.xml"/>
+		<mapper resource="mybatis/record-orm.xml"/>
 	</mappers>
 </configuration>

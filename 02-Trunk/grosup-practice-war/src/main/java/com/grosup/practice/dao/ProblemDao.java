@@ -17,5 +17,9 @@ public class ProblemDao extends AbstractDao {
 	public String getAnswerByID(int id) {
 		return this.getSession().selectOne("com.grosup.practice.problem.getAnswerByID", id);
 	}
+	/**根据题目ID取题目*/
+	public ProblemBean getProblemByID(int id) {
+		return this.getSession().selectOne("com.grosup.practice.problem.getProblemByID", id);
+	}
 	
 }

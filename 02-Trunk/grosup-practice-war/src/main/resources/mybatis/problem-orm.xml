@@ -19,4 +19,8 @@
 	<select id="getAnswerByID" parameterType="int" resultType="java.lang.String">
 		select tpr.answer from t_problem tpr where tpr.id = #{id}
 	</select>
+	
+	<select id="getProblemByID" parameterType="int" resultMap="BaseResultMap">
+		select tpr.* from t_problem tpr where tpr.id = #{id}
+	</select>
 </mapper>
