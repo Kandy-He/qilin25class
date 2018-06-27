@@ -27,6 +27,13 @@ public class ProblemController {
 	public JSONObject getRandomOne(@RequestParam int typeID) throws IOException {
 		JSONObject result = new JSONObject();
 		ProblemBean bean = problemService.getRandomOne(typeID);
+//		data.put("id", bean.getId());
+//		//知识点ID
+//		data.put("typeID", bean.getTypeID());
+//		//所属类别关键字(口算、应用)
+//		data.put("categoryKey", bean.getCategoryKey());
+//		data.put
+		
 		result.put("code", "success");
 		result.put("data", JSONObject.fromObject(bean));
 		return result;

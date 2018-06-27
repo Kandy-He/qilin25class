@@ -10,7 +10,11 @@ import com.grosup.practice.util.AbstractDao;
 
 @Repository
 public class RecordDao extends AbstractDao {
-	
+	/**
+	 * 增加一道错题
+	 * @param record
+	 * @return
+	 */
 	public boolean addRecord(RecordBean record) {
 		boolean statu = false;
 		int rows = this.getSession().insert("com.grosup.practice.record.addRecord",record);
@@ -18,6 +22,26 @@ public class RecordDao extends AbstractDao {
 			statu = true;
 		}
 		return statu;
+	}
+	/**
+	 * 查询错题是否已经存在
+	 * @param record
+	 * @return
+	 */
+	public boolean checkIsExist(RecordBean record) {
+		boolean status = false;
+		int rows = this.getSession().selectOne("com.grosup.practice.record.checkIsExist",record);
+		if (rows > 0) {
+			status = true;
+		}
+		return status;
+	}
+	/**
+	 * 更新错题记录
+	 * @param record
+	 */
+	public void updateRecord(RecordBean record) {
+		this.getSession().update("com.grosup.practice.record.updateRecord",record);
 	}
 	
 	public RecordBean getOneRecord(int typeID, int userID) {

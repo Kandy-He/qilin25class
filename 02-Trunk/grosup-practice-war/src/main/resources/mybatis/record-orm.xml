@@ -18,6 +18,15 @@
 		insert into t_record (id,userID,recordTime,typeID,description,options,result,correct,status)
 		values (#{id},#{userID},#{recordTime},#{typeID},#{description},#{options},#{result},#{correct},#{status})
 	</insert>
+	<!-- 	查看错题是否存在 -->
+	<select id="checkIsExist" parameterType="com.grosup.practice.beans.RecordBean" resultType="int">
+		select count(1) from t_record where userID = #{userID} AND id = #{id}
+	</select>
+	<!-- 	更新错题记录 -->
+	<update id="updateRecord" parameterType="com.grosup.practice.beans.RecordBean">
+		update t_record set recordTime = #{recordTime},result = #{result},status = 0
+	</update>
+	
 	<select id="getOneRecord" parameterType="int" resultMap="BaseResultMap">
 		select * from t_record
 		WHERE id >= (SELECT FLOOR( MAX(id) * RAND()) FROM t_record ) AND t_record.typeID = #{typeID} AND t_record.userID = #{userID}

@@ -25,7 +25,7 @@
 	<context:component-scan base-package="com.grosup.practice.dao"></context:component-scan>
 	
 	<!-- 引入jdbc.properties -->
-	<context:property-placeholder location="classpath:jdbc1.properties"/>
+	<context:property-placeholder location="classpath:jdbc.properties"/>
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		 <property name="driverClassName" value="${jdbc.driver}" />

@@ -25,7 +25,7 @@ public class ProblemService {
 		return problemDao.getRandomOne(typeID);
 	}
 	
-	/**根据题目ID取题目答案
+	/**检查是否做对
 	 * @throws Exception */
 	public boolean checkAnswer(int id, String answer, int userID, int typeID) throws Exception {
 		
@@ -42,10 +42,15 @@ public class ProblemService {
 			record.setCorrect(problemBean.getAnswer());
 			record.setTypeID(typeID);
 			record.setUserID(userID);
+			record.setResult(answer);
 			//更新做题记录并添加到错题集
-			recordDao.addRecord(record);
-			statisticsDao.updateUserDoneByUnCorrect(userID, typeID);
-			result = false;
+			if (recordDao.checkIsExist(record)) {//如果错题存在则更新，否则添加一条新记录
+				recordDao.updateRecord(record);
+			} else {
+				recordDao.addRecord(record);
+				statisticsDao.updateUserDoneByUnCorrect(userID, typeID);
+				result = false;
+			}
 			return result;
 		}
 		//TODO 更新做题记录
