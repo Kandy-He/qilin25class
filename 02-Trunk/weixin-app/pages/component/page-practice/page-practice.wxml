@@ -4,20 +4,20 @@
 </view>
 <block wx:for="{{practiceArray}}">
   <view class='practice-items-box'>
-    <view class='item-title align-center'>{{item.title}}</view>
+    <view class='item-title align-center'>{{item.typeName}}</view>
     <view class='align-center'>
-      <button class='operate-button'>开始练习</button>
+      <button class='operate-button' data-typeId='{{item.typeID}}' data-typename='{{item.typeName}}'  bindtap="startPracticeTap">开始练习</button>
     </view>
     <view class='item-text'>
       你已练习 <text class='numBox'>{{item.haveDone}}</text> 题
     </view>
     <view class='item-text'>
-      一次做对 <text class='numBox'>{{item.rightInOneTime}}</text> 题
+      一次做对 <text class='numBox'>{{item.onceRight}}</text> 题
     </view>
     <view class='item-text'>
-      获得小红花 <text class='numBox'>{{item.getFlower}}</text> 朵
+      获得小红花 <text class='numBox'>{{item.flower}}</text> 朵
     </view>
-    <button class='operate-button list-for-wrong'>错题列表</button>
+    <button class='operate-button list-for-wrong' data-typeId='{{item.typeID}}'  data-typename='{{item.typeName}}' bindtap="wrongBookTap">错题列表</button>
   </view>
 </block>
 

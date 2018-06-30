@@ -75,6 +75,8 @@
   padding-left:6px;
   padding-right:6px;
   vertical-align: middle;
+  background-color: #C2C2C2;
+  color: #00f;
 }
 .operate-button text{
   font-size: 35rpx;
@@ -82,6 +84,18 @@
 }
 .right-multi-picker{
   display: inline-block
+}
+.fr{
+  float: right;
+}
+.fl{
+  float: left;
+}
+.green{
+  color: #0d0;
+}
+.red{
+  color: #ac3351;
 }
 /**管理员信息******************************/
 .teacher-items{

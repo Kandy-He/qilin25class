@@ -2,7 +2,9 @@
   "pages": [
     "pages/main/main",
     "pages/authorization/authorization",
-    "pages/register/register"
+    "pages/register/register",
+    "pages/questions/questions",
+    "pages/wrongbook/wrongbook"
   ],
   "window": {
     "backgroundColor": "#0091dc",

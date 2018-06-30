@@ -1,0 +1,30 @@
+<!--pages/wrongbook/wrongbook.wxml-->
+<view class='container'>
+  <view class='inner-box'>
+    <view class='items'>
+      <text class='register-title'>错题列表-{{title}}</text>
+    </view>
+    <view class="question-body">
+      <view class='question-content'>
+        <block wx:for="{{questionBodyArray}}">
+          <input class="short-input"  bindblur='bindInputAnswer' wx:if="{{item == '(?)'}}" value='{{answer}}'/>
+          <text class='question-doc' wx:else>{{item}}</text>
+        </block>
+      </view>
+      <view class='operate-box'>
+        <view wx:if="{{answerStatus == 0}}" class='align-center'>
+          <button  class='operate-button ques-item-submit' bindtap='bindSubmitTap'>提交</button>
+        </view>
+        <view wx:elif="{{answerStatus == 1}}">
+          <text class='returnText green'>回答正确</text>
+          <button class='operate-button fr' bindtap='bindAnotherQuesTap'>再来一题</button>
+        </view>
+        <view wx:else>
+          <text class='returnText red'>回答错误</text>
+          <button class='operate-button fr'>订正</button>
+          <button class='operate-button fr'>再来一题</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
