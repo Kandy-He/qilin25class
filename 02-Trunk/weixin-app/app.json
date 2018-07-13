@@ -4,7 +4,8 @@
     "pages/authorization/authorization",
     "pages/register/register",
     "pages/questions/questions",
-    "pages/wrongbook/wrongbook"
+    "pages/wrongbook/wrongbook",
+    "pages/testPage/testPage"
   ],
   "window": {
     "backgroundColor": "#0091dc",

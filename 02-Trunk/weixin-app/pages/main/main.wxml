@@ -12,9 +12,8 @@
     </view>
     <view wx:if="{{navigatorArray[0] == 'test'}}" class='inner-box'>
       <!-- 测试  -->
-      <view class='items'>
-        <text class='register-title'>测试</text>
-      </view>
+      
+      <page-test></page-test>
     </view>
     <view wx:if="{{navigatorArray[0] == 'my'}}">
       <!-- 老师页面 -->

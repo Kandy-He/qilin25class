@@ -1,8 +1,9 @@
 {
-  "navigationBarTitleText": "小学数学知识学习",
+  "navigationBarTitleText": "小学生数学知识点练习",
   "usingComponents": {
     "tabbar-fake": "../component/tabbar-fake/tabbar-fake",
     "page-index": "../component/page-index/page-index",
+    "page-test": "../component/page-test/page-test",
     "page-practice": "../component/page-practice/page-practice",
     "page-my-teacher": "../component/page-my-teacher/page-my-teacher",
     "page-my-student": "../component/page-my-student/page-my-student",

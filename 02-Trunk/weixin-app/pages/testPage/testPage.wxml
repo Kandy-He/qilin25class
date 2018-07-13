@@ -1,15 +1,15 @@
-<!--pages/wrongbook/wrongbook.wxml-->
+<!--pages/testPage/testPage.wxml-->
 <view class='container'>
   <view class='inner-box'>
     <view class='items'>
-      <text class='register-title'>错题列表-{{title}}</text>
+      <text class='register-title'>{{title}}</text>
     </view>
     <view class="question-body">
-    <form id="form1">
+      <form id="form1">
         <!--题目  -->
         <view class='question-content'>
           <block wx:for="{{questionBodyArray}}">
-            <input class="short-input"  bindblur='bindInputAnswer' disabled='{{inputDisabled}}' wx:if="{{item == '(?)'}}" value="{{wrongAnswerArray[index]}}" data-index="{{index}}"/>
+            <input class="short-input"  bindblur='bindInputAnswer' disabled='{{inputDisabled}}' wx:if="{{item == '(?)'}}" data-index="{{index}}"/>
             <text class='question-doc' wx:else>{{item}}</text>
           </block>
         </view>
@@ -36,24 +36,16 @@
             </block>
           </view>
         </view>
-        <!--错题部分使用的操作  -->
+        <!--测试部分使用的操作  -->
         <view class='operate-box'>
-          <view wx:if="{{answerStatus == -1}}" class='align-center'>
-            <button  class='operate-button ques-item-submit' bindtap='bindSubmitTap'>提交</button>
-          </view>
-          <view wx:elif="{{answerStatus == 1}}">
-            <image src='../../images/answer-right.png'></image>
-            <text class='returnText green'>回答正确</text>
-            <button class='operate-button fr' bindtap='bindAnotherQuesTap' formType="reset">再来一题</button>
-          </view>
-          <view wx:else>
-            <image src='../../images/answer-wrong.png'></image>
-            <text class='returnText red'>回答错误</text>
-            <button class='operate-button fr' formType="reset" bindtap='bindResetQuesTap'>订正</button>
-            <button class='operate-button fr' formType="reset" bindtap='bindAnotherQuesTap'>再来一题</button>
+          <view class='align-center'>
+            <button  class='operate-button ques-item-submit' bindtap='bindSubmitTapForTest'>测试提交</button>
           </view>
         </view>
       </form>
     </view>
   </view>
 </view>
+
+
+

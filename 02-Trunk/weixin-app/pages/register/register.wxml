@@ -1,57 +1,76 @@
 <!--pages/register/register.wxml-->
 <view class='container'>
   <view class='inner-box'>
-    <view class='items'>
-      <text class='register-title'>注册个人信息</text>
-    </view>
-    <view class='items'>
-      <text class='left-label'>昵称：</text>
-      <open-data type="userNickName"></open-data>
-    </view>
-    <view class='items'>
-      <text class='left-label'>姓名：</text>
-      <input class='right-input input-name' type="text" disabled='{{buttonDisable}}' bindblur='bindInputName' placeholder='{{username}}'/>
-    </view>
-    <view class='items'>
-      <text class='left-label'>性别：</text>
-      <picker class="registerPickers" bindchange="bindGenderPickerChange" value="{{initSexIndex}}" range="{{genderListArray}}" disabled='{{buttonDisable}}'>
-          <!-- <input class='right-input' type='text' placeholder='{{genderListArray[initSexIndex]}}' ></input> -->
-          <text class='right-input'>{{genderListArray[initSexIndex]}}</text>
-      </picker>
-    </view>
-    <view class='items head-img' bindtap='bindChooseImg'>
-      <text class='left-label'>头像：</text>
-      <open-data  wx:if="{{!initImgUrl}}" class='choose-img' type="userAvatarUrl"></open-data>
-       <image class='choose-img' wx:else src="{{initImgUrl}}"></image> 
-    </view>
-    <view class='items'>
-      <text class='right-part img-intro'>144*144像素的png,jpg图片</text>
-    </view>
-    <view class='items'>
-      <text class='left-label'>学校：</text>
-      <picker class="registerPickers" bindchange="bindSchoolPickerChange" value="{{initSchoolIndex}}" range="{{schoolListArray}}" disabled='{{buttonDisable}}'>
-          <!-- <input class='right-input' type='text' placeholder='{{schoolListArray[initSchoolIndex]}}'></input> -->
-          <text class='right-input'>{{schoolListArray[initSchoolIndex]}}</text>
-      </picker>
-    </view>
-    <view class='items'>
-      <text class='left-label'>班级：</text>
-      <picker class='right-multi-picker' mode="multiSelector" bindtap='bindTapChooseClass' bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiClassIndex}}" range="{{multiArrayForAllGradesAndClassed}}" disabled='{{buttonDisable}}'>
-      <text wx:if="{{!ifPushing}}" class='right-input'>{{multiArrayForAllGradesAndClassed[0][multiClassIndex[0]]}}{{multiArrayForAllGradesAndClassed[1][multiClassIndex[1]]}}</text>
-      <text wx:else class='right-input'>{{selectedClass}}</text>
-      </picker>
-    </view>
-    <view class='items'>
-      <text class='left-label'>角色：</text>
-      <picker class="registerPickers" bindchange="bindRolePickerChange" value="{{initRoleIndex}}" range="{{roleListArray}}" disabled='{{buttonDisable}}'>
-          <!-- <input class='right-input' type='text' placeholder='{{roleListArray[initRoleIndex]}}'></input> -->
-          <text wx:if="{{!ifPushing}}" class='right-input'>{{roleListArray[initRoleIndex]}}</text>
-          <text wx:else class='right-input'>{{selectRole}}</text>
-      </picker>
-    </view>
-     <view class='items button-box'>
-       <button class='operate-button' bindtap='submitUserMessage' type='{{buttonType}}' disabled='{{buttonDisable}}'>{{buttonText}}</button> 
-    </view> 
+    <!--用户点击的是我的  -->
+    <block wx:if="{{userTabbarClickKey == 'my'}}">
+      <view class='items'>
+        <text class='register-title'>注册个人信息</text>
+      </view>
+      <view class='items'>
+        <text class='left-label'>昵称：</text>
+        <open-data type="userNickName"></open-data>
+      </view>
+      <view class='items'>
+        <text class='left-label'>姓名：</text>
+        <input class='right-input input-name' type="text" disabled='{{buttonDisable}}' bindblur='bindInputName' placeholder='{{username}}'/>
+      </view>
+      <view class='items'>
+        <text class='left-label'>性别：</text>
+        <picker class="registerPickers" bindchange="bindGenderPickerChange" value="{{initSexIndex}}" range="{{genderListArray}}" disabled='{{buttonDisable}}'>
+            <!-- <input class='right-input' type='text' placeholder='{{genderListArray[initSexIndex]}}' ></input> -->
+            <text class='right-input'>{{genderListArray[initSexIndex]}}</text>
+        </picker>
+      </view>
+      <view class='items head-img' bindtap='bindChooseImg'>
+        <text class='left-label'>头像：</text>
+        <open-data  wx:if="{{!initImgUrl}}" class='choose-img' type="userAvatarUrl"></open-data>
+        <image class='choose-img' wx:else src="{{initImgUrl}}"></image> 
+      </view>
+      <view class='items'>
+        <text class='right-part img-intro'>144*144像素的png,jpg图片</text>
+      </view>
+      <view class='items'>
+        <text class='left-label'>学校：</text>
+        <picker class="registerPickers" bindchange="bindSchoolPickerChange" value="{{initSchoolIndex}}" range="{{schoolListArray}}" disabled='{{buttonDisable}}'>
+            <!-- <input class='right-input' type='text' placeholder='{{schoolListArray[initSchoolIndex]}}'></input> -->
+            <text class='right-input'>{{schoolListArray[initSchoolIndex]}}</text>
+        </picker>
+      </view>
+      <view class='items'>
+        <text class='left-label'>班级：</text>
+        <picker class='right-multi-picker' mode="multiSelector" bindtap='bindTapChooseClass' bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiClassIndex}}" range="{{multiArrayForAllGradesAndClassed}}" disabled='{{buttonDisable}}'>
+        <text wx:if="{{!ifPushing}}" class='right-input'>{{multiArrayForAllGradesAndClassed[0][multiClassIndex[0]]}}{{multiArrayForAllGradesAndClassed[1][multiClassIndex[1]]}}</text>
+        <text wx:else class='right-input'>{{selectedClass}}</text>
+        </picker>
+      </view>
+      <view class='items'>
+        <text class='left-label'>角色：</text>
+        <picker class="registerPickers" bindchange="bindRolePickerChange" value="{{initRoleIndex}}" range="{{roleListArray}}" disabled='{{buttonDisable}}'>
+            <!-- <input class='right-input' type='text' placeholder='{{roleListArray[initRoleIndex]}}'></input> -->
+            <text wx:if="{{!ifPushing}}" class='right-input'>{{roleListArray[initRoleIndex]}}</text>
+            <text wx:else class='right-input'>{{selectRole}}</text>
+        </picker>
+      </view>
+      <view class='items button-box'>
+        <button class='operate-button' bindtap='submitUserMessage' type='{{buttonType}}' disabled='{{buttonDisable}}'>{{buttonText}}</button> 
+      </view>
+    </block>
+    <block wx:if="{{userTabbarClickKey == 'index'}}">
+      <view class='items'>
+        <text class='register-title'>班级红花排行榜</text>
+      </view>
+    </block>
+    <block wx:if="{{userTabbarClickKey == 'practice'}}">
+      <view class='items'>
+        <text class='register-title'>学年知识点练习</text>
+      </view>
+    </block>
+    <block wx:if="{{userTabbarClickKey == 'test'}}">
+      <view class='items'>
+        <text class='register-title'>学年知识点测试</text>
+      </view>
+    </block>
   </view>
+  <tabbar-fake userClickKey="{{userTabbarClickKey}}" bind:navigateClick="navigateTo"></tabbar-fake>
 </view>
 

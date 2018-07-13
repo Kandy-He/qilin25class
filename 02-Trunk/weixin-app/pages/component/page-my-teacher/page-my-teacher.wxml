@@ -28,7 +28,7 @@
           <view class='teachers-message'>
             <image class='message-item teachers-headimg' src="{{item.icon}}"></image>
             <text class='message-item teachers-name'>{{item.name}}</text>
-            <text class='message-item teachers-gender'>{{item.gender == 0?"男":"女"}}</text>
+            <text class='message-item teachers-gender'>{{item.gender == 0?"女":"男"}}</text>
             <!-- 如果未审核 -->
             <view wx:if="{{item.status == 0}}" class='your-decision decision-right'>
               <text class='message-item status'>待审核</text>

@@ -27,7 +27,21 @@ const formatQuestionContent = str => {
   let questionBodyArray = str.split("$")
   return questionBodyArray;
 }
-
+//错题列表页，将错题展示在输入框中
+const formatWrongbookArray = (arr,wrongAnswer) => {
+  let newArr = arr
+  //将原本["100-20=", "(?)"] ==> ["100-20=", "80"]   wrongAnswer: "80;90;100"
+  let wrongAnswerArray = wrongAnswer.split(";")
+  let startIndex = 0
+  for(let i = 0, arrlen = arr.length; i < arrlen; i ++){
+    if (arr[i] == "(?)"){
+      arr[i] = wrongAnswerArray[startIndex];
+      startIndex += 1
+    }
+  }
+  debugger
+  return newArr;
+}
 const turnArrayToAnswerStr = arr => {
   //[undefined,4,undefined,6,undefined] ==>  "4;6"
   let answerStr = ""
@@ -42,5 +56,6 @@ const turnArrayToAnswerStr = arr => {
 module.exports = {
   formatTime: formatTime,
   formatQuestionContent: formatQuestionContent,
-  turnArrayToAnswerStr: turnArrayToAnswerStr
+  turnArrayToAnswerStr: turnArrayToAnswerStr,
+  formatWrongbookArray: formatWrongbookArray
 }

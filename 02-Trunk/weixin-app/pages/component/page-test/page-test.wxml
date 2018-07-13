@@ -1,2 +1,19 @@
 <!--pages/component/page-test/page-test.wxml-->
-<text>pages/component/page-test/page-test.wxml</text>
+<view class='items'>
+  <text class='register-title'>二年级测试卷</text>
+</view>
+<block wx:for="{{testArray}}">
+  <view class='practice-items-box'>
+    <view class='item-title align-center'>{{item.paperName}}</view>
+    <view class='align-center startTest'>
+      <button class='operate-button' data-paperKey='{{item.paperKey}}' data-paperName='{{item.paperName}}' data-quesCount='{{item.quesCount}}' data-timeLimit='{{item.timeLimit}}' bindtap="startPracticeTap">开始答题</button>
+    </view>
+    <view class='item-text'>
+      一共 <text class='numBox'>{{item.quesCount}}</text> 题
+    </view>
+    <view class='item-text'>
+      限时 <text class='numBox'>{{item.timeLimit}}</text> 分钟
+    </view>
+    <!-- <button class='operate-button list-for-wrong' data-gradeId='{{item.gradeID}}'  data-typename='{{item.paperName}}' bindtap="wrongBookTap">错题列表</button> -->
+  </view>
+</block>

@@ -9,7 +9,7 @@ Page({
     username: "",
     initImgUrl: "",//用户选择的头像地址
     isWxImage: true,//默认微信头像
-    genderListArray: ['男', '女'],//性别列表
+    genderListArray: ['女', '男'],//性别列表
     initSexIndex: 0,//默认性别
     schoolListArray: ['麒麟小学'],//学校列表
     initSchoolIndex: 0,//默认学校
@@ -28,7 +28,8 @@ Page({
     choosedClassId: 0,//选择的班级Id
     buttonText: "提交",
     buttonType: "default",
-    buttonDisable: false
+    buttonDisable: false,
+    userTabbarClickKey: "my"
   },
 
   /**
@@ -42,6 +43,8 @@ Page({
       this.setData({
         selectRole: userInfo.formatSelectRole,
         ifPushing: true,
+        initImgUrl: userInfo.icon,
+        initSexIndex: userInfo.gender,
         username: userInfo.name,
         selectedClass: userInfo.gradeName + userInfo.className,
         buttonText: "审核中",
@@ -53,7 +56,9 @@ Page({
       let loadClass = () => {
         //循环找出所有不重复的年级和班级
         let getInrepeatClasses = (res) => {
-          this.data.classData = res.data.data;
+          this.setData({
+            classData: res.data.data
+          })
           let dataLength = res.data.data.length;
           let gradeList = [];
           let gradeIdList = [];
@@ -242,5 +247,32 @@ Page({
       }
     })
 
+  },
+  navigateTo: function (e) {
+    let _this = this
+    let href = e.detail.href
+    //点击分为四种情况，如果点击我的需要做单独的设置
+    
+    this.setData({
+      userTabbarClickKey: href
+    })
+    //只有用户状态为accessed时候才可以点击,
+    if (href != "my") {
+      wx.showModal({
+        title: '温馨提示',
+        content: '只有完成注册才有权限访问当前页面，请先完成注册信息',
+        success (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            _this.setData({
+              //展示注册页，点亮我的按钮
+              userTabbarClickKey: "my",
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }
   }
 })
