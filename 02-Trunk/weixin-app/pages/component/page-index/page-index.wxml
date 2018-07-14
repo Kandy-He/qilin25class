@@ -1,2 +1,19 @@
 <!--pages/component/page-index/page-index.wxml-->
-<text>pages/component/page-index/page-index.wxml</text>
+<view class='items'>
+        <text class='register-title'>麒麟小学二年级五班</text>
+      </view>
+      <view class='align-center'>
+        <image class="range-control ctl-up" src='../../../images/last-page-enable.png'></image>
+      </view>
+      <view class='userbox'>
+        <view class='head-img align-center'>
+          <image src='../../../images/practice-unchoose.png'></image>
+        </view>
+        <view class='align-center'>
+          <text class='userMessage'>{{userObj.studentName}}有小红花{{userObj.flowerNum}}朵，超过了班上{{userObj.overedNum}}个同学</text>
+        </view>
+      </view>
+      
+      <view class='align-center'>
+        <image class="range-control ctl-up" src='../../../images/next-page-enable.png'></image>
+      </view>

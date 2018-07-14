@@ -1,6 +1,20 @@
 <!--pages/main/main.wxml-->
 <view wx:if="{{ifshow}}">
   <view class='container'><!-- 见模板注释 -->
+    <view wx:if="{{navigatorArray[0] == 'index'}}" class='inner-box'>
+      <!-- 首页  -->
+      <page-index></page-index>
+    </view>
+    <view wx:if="{{navigatorArray[0] == 'practice'}}" class='inner-box'>
+      <!-- 练习  -->
+      
+      <page-practice></page-practice>
+    </view>
+    <view wx:if="{{navigatorArray[0] == 'test'}}" class='inner-box'>
+      <!-- 测试  -->
+      
+      <page-test></page-test>
+    </view>
     <view wx:if="{{navigatorArray[0] == 'my'}}">
       <!-- 老师页面 -->
       <view wx:if="{{navigatorArray[1] == 'teacher'}}" class='inner-box'>
@@ -15,31 +29,6 @@
         <page-my-admin></page-my-admin>
       </view>
     </view>
-    <view wx:if="{{navigatorArray[0] == 'test'}}" class='inner-box'>
-      <!-- 测试  -->
-      <view class='items'>
-        <text class='register-title'>测试</text>
-      </view>
-    </view>
-    <view wx:if="{{navigatorArray[0] == 'practice'}}" class='inner-box'>
-      <!-- 练习  -->
-      <view class='items'>
-        <text class='register-title'>练习</text>
-      </view>
-    </view>
-    <view wx:if="{{navigatorArray[0] == 'index'}}" class='inner-box'>
-      <!-- 首页  -->
-      <view class='items'>
-        <text class='register-title'>麒麟小学二年级五班</text>
-      </view>
-      <view>
-        <image src='../../images/last-page-enable.png'></image>
-      </view>
-      <view>
-        <image src='../../images/last-page-enable.png'></image>
-      </view>
-    </view>
-    
   </view>
   <tabbar-fake bind:navigateClick="navigateTo"></tabbar-fake>
 </view>

@@ -1,1 +1,16 @@
 /* pages/component/page-index/page-index.wxss */
+@import "../common/common.wxss";
+.range-control{
+  width:100rpx;
+  height:60rpx;
+}
+.userbox{
+  padding: 150rpx 0;
+}
+.head-img image{
+  width: 140rpx;
+  height: 140rpx;
+}
+.userMessage{
+  font-size: 30rpx;
+}
