@@ -1,0 +1,51 @@
+<!--pages/testPage/testPage.wxml-->
+<view class='container'>
+  <view class='inner-box'>
+    <view class='items'>
+      <text class='register-title'>{{title}}</text>
+    </view>
+    <view class="question-body">
+      <form id="form1">
+        <!--题目  -->
+        <view class='question-content'>
+          <block wx:for="{{questionBodyArray}}">
+            <input class="short-input"  bindblur='bindInputAnswer' disabled='{{inputDisabled}}' wx:if="{{item == '(?)'}}" data-index="{{index}}"/>
+            <text class='question-doc' wx:else>{{item}}</text>
+          </block>
+        </view>
+        <!--只有在应用题中才显示  -->
+        <view  wx:if="{{qType == 'applicationQues'}}" class='appAnswerBox'>
+          <!--第一步  -->
+          <view class='question-content' wx:if="{{expression1 != ''}}">
+            <text>第一步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quesSteps="{{expression1}}"/>
+          </view>
+          <!--第二步  -->
+          <view class='question-content' wx:if="{{expression2 != ''}}">
+            <text>第二步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quesSteps="{{expression2}}"/>
+          </view>
+          <!--第三步  -->
+          <view class='question-content' wx:if="{{expression3 != ''}}">
+            <text>第三步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quesSteps="{{expression3}}"/>
+          </view>
+          <!--答题描述  -->
+          <view class='question-content' wx:if="{{answerDesc.length != 0}}">
+            <text>答：</text>
+            <block wx:for="{{answerDesc}}">
+              <input class="short-input"  bindblur='bindInputAnswer' disabled='{{inputDisabled}}' wx:if="{{item == '(?)'}}" data-index="{{index}}"/>
+              <text class='question-doc' wx:else>{{item}}</text>
+            </block>
+          </view>
+        </view>
+        <!--测试部分使用的操作  -->
+        <view class='operate-box'>
+          <view class='align-center'>
+            <button  class='operate-button ques-item-submit' bindtap='bindSubmitTapForTest'>测试提交</button>
+          </view>
+        </view>
+      </form>
+    </view>
+  </view>
+</view>
+
+
+

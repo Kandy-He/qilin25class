@@ -1,0 +1,143 @@
+/*此处为各组件公用样式库  */
+.fr{
+  float: right
+}
+.align-center{
+  text-align: center;
+}
+.inner-box{
+  width: 630rpx;
+  margin-left: auto;
+  margin-right: auto;
+}
+.items{
+  padding:7rpx 0;
+}
+.items .register-title{
+  color: #000;
+  font-size: 50rpx;
+  font-weight: 500;
+  line-height:120rpx;
+  vertical-align: middle;
+}
+.head-img{
+  padding-top: 20rpx;
+}
+.right-part{
+  padding-left: 104rpx;
+}
+.items .left-label{
+  display: inline-block;
+  width: 115rpx;
+  text-align: right
+}
+.items .right-input{
+  display:inline-block;
+  background-color:#fff;
+  color: #00f;
+  padding-left: 20rpx;
+  margin-top:13rpx;
+  line-height:50rpx;
+  height: 50rpx;
+  width:200rpx;
+  border-radius:30%;
+}
+.items .input-name{
+  vertical-align: bottom
+}
+.registerPickers{
+  display: inline-block;
+  /* background-color: #fff; */
+}
+
+.items .img-intro{
+  font-size: 30rpx;
+}
+.choose-img{
+  width: 288rpx;
+  height: 288rpx;
+  /* background-color: #fff; */
+  vertical-align: top; 
+  /* width: 140rpx; */
+  /* height: 140rpx; */
+  border-radius: 10%;
+  margin-top: 40rpx;
+  display: inline-block;
+  overflow: hidden;
+}
+.button-box{
+  text-align: center;
+  padding: 20rpx 0;
+}
+.operate-button{
+  display: inline-block;
+  line-height: 47rpx;
+  padding-left:6px;
+  padding-right:6px;
+  vertical-align: middle;
+  background-color: #C2C2C2;
+  color: #00f;
+}
+.operate-button text{
+  font-size: 35rpx;
+  color: #00f;
+}
+.right-multi-picker{
+  display: inline-block
+}
+.fr{
+  float: right;
+}
+.fl{
+  float: left;
+}
+.green{
+  color: #0d0;
+}
+.red{
+  color: #ac3351;
+}
+/**管理员信息******************************/
+.teacher-items{
+  color: #0d0;
+}
+.need-to-jurge{
+  color: #ac3351;
+}
+.message-item{
+  display: inline-block;
+  text-align: center;
+  font-size: 33rpx;
+}
+.teachers-headimg{
+  width: 60rpx;
+  height: 60rpx;
+  position:relative;
+  bottom:-17rpx;
+}
+.teachers-name{
+  width: 160rpx;
+}
+.teachers-gender{
+  width: 40rpx;
+}
+.teachers-school{
+  width: 200rpx;
+}
+.teachers-grade{
+  width: 100rpx;
+}
+.teachers-class{
+  width: 70rpx;
+}
+.your-decision{
+  text-align: right
+}
+.teacher-items .operate-button{
+  margin-left: 25rpx;
+}
+/***老师的信息页面***************/
+.decision-right{
+  display: inline-block;
+  width: 370rpx;
+}
