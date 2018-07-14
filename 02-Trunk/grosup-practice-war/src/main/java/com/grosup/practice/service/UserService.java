@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.grosup.practice.beans.UserBean;
 import com.grosup.practice.dao.UserDao;
+import com.grosup.practice.util.ObjectUtil;
 
 @Service
 public class UserService {
@@ -23,7 +25,15 @@ public class UserService {
 	 * @return 
 	 */
 	public boolean userRegister(UserBean user) {
-		return userDao.userRegister(user);
+		boolean status = true;
+		UserBean oldUser = userDao.queryUserBywxID(user.getWxID());
+		if (ObjectUtil.isNull(oldUser)) {
+			status = userDao.userRegister(user);
+		} else {
+			user.setId(oldUser.getId());
+			userDao.updateUserInfo(user);
+		}
+		return status;
 	}
 	
 	/**

@@ -24,6 +24,21 @@
 	<select id="queryUserByUnionId" resultMap="BaseResultMap">
 		select * from t_student where wxID = #{unionID}
 	</select>
+	<!-- 查询是否已经存在注册信息 -->
+	<select id="queryIsExists" parameterType="java.lang.String">
+		select count(*) from t_student
+		<if test="wxID != null and wxID != ''">
+			<where>
+				wxID = #{wxID}
+			</where>
+		</if>
+	</select>
+	
+	<update id="updateUserInfo" parameterType="com.grosup.practice.beans.UserBean">
+		update t_student 
+		set	name = #{name},gender=#{gender},classID=#{classID},icon=#{icon},status=1,userType=#{userType}
+		where id = #{id}
+	</update>
 	
 	<!-- 获取老师对应班级下所有学生信息 -->
 	<!-- param：老师ID -->

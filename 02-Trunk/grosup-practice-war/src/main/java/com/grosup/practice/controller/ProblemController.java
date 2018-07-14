@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.grosup.practice.beans.ProblemBean;
 import com.grosup.practice.service.ProblemService;
+import com.grosup.practice.util.ObjectUtil;
 
 
 @Controller
@@ -27,24 +28,21 @@ public class ProblemController {
 	public JSONObject getRandomOne(@RequestParam int typeID) throws IOException {
 		JSONObject result = new JSONObject();
 		ProblemBean bean = problemService.getRandomOne(typeID);
-//		data.put("id", bean.getId());
-//		//知识点ID
-//		data.put("typeID", bean.getTypeID());
-//		//所属类别关键字(口算、应用)
-//		data.put("categoryKey", bean.getCategoryKey());
-//		data.put
-		
+		if(ObjectUtil.isNull(bean)) {
+			result.put("data", "");
+		} else {
+			result.put("data", JSONObject.fromObject(bean));
+		}
 		result.put("code", "success");
-		result.put("data", JSONObject.fromObject(bean));
 		return result;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET,value = "checkAnswer")
 	@ResponseBody
 	public JSONObject checkAnswer(@RequestParam int id,@RequestParam String answer,@RequestParam int userID,
-			@RequestParam int typeID) throws Exception {
+			@RequestParam String expression1,@RequestParam String expression2,@RequestParam String expression3) throws Exception {
 		JSONObject result = new JSONObject();
-		boolean checkResult = problemService.checkAnswer(id, answer, userID, typeID);
+		boolean checkResult = problemService.checkAnswer(id, answer, userID, expression1, expression2, expression3);
 		if (checkResult) {
 			result.put("data", 1);//做对了
 		} else {

@@ -1,11 +1,13 @@
 package com.grosup.practice.beans;
 
 
-public class ProblemBean {
+public class ProblemForTestBean {
 	//题目ID
 	private int id;
 	//题型关键字
 	private String proKey;
+	//
+	private int quesPosition;
 //	//题型所属类别关键字
 //	private String categoryKey;
 //	//题型子类别关键字
@@ -24,19 +26,9 @@ public class ProblemBean {
 	private String answerDesc;
 	//题目答案
 	private String answer;
+	//题目分数
+	private int quesScore;
 	
-//	public String getCategoryKey() {
-//		return categoryKey;
-//	}
-//	public void setCategoryKey(String categoryKey) {
-//		this.categoryKey = categoryKey;
-//	}
-//	public String getCategoryChildKey() {
-//		return categoryChildKey;
-//	}
-//	public void setCategoryChildKey(String categoryChildKey) {
-//		this.categoryChildKey = categoryChildKey;
-//	}
 	public String getExpression1() {
 		return expression1;
 	}
@@ -91,5 +83,17 @@ public class ProblemBean {
 	}
 	public void setProKey(String proKey) {
 		this.proKey = proKey;
+	}
+	public int getQuesScore() {
+		return quesScore;
+	}
+	public void setQuesScore(int quesScore) {
+		this.quesScore = quesScore;
+	}
+	public int getQuesPosition() {
+		return quesPosition;
+	}
+	public void setQuesPosition(int quesPosition) {
+		this.quesPosition = quesPosition;
 	}
 }

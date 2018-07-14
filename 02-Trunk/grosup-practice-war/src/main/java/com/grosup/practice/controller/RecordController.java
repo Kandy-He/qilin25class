@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.grosup.practice.beans.RecordBean;
 import com.grosup.practice.service.RecordService;
+import com.grosup.practice.util.ObjectUtil;
 
 
 @Controller
@@ -24,23 +25,16 @@ public class RecordController {
 	
 	@RequestMapping(method = RequestMethod.GET,value = "getOneRecord")
 	@ResponseBody
-	public JSONObject getOneRecord(@RequestParam int typeID, @RequestParam int userID) throws IOException {
+	public JSONObject getOneRecord(@RequestParam int typeID, @RequestParam int userID, @RequestParam int rownum) throws IOException {
 		JSONObject result = new JSONObject();
-		RecordBean bean = recordService.getOneRecord(typeID, userID);
+		RecordBean bean = recordService.getOneRecord(typeID, userID, rownum);
+		int count = recordService.queryUserWrongCountByTypeID(typeID, userID);
 		result.put("code", "success");
-		result.put("data", JSONObject.fromObject(bean));
-		return result;
-	}
-	
-	@RequestMapping(method = RequestMethod.GET,value = "correction")
-	@ResponseBody
-	public JSONObject correction(@RequestParam int id, @RequestParam int userID) throws IOException {
-		JSONObject result = new JSONObject();
-		boolean status = recordService.correction(id, userID);
-		if (status) {
-			result.put("code", "success");
+		result.put("wrongCount", count);
+		if (ObjectUtil.isNull(bean)) {
+			result.put("data", "");
 		} else {
-			result.put("code", "error");
+			result.put("data", JSONObject.fromObject(bean));
 		}
 		return result;
 	}

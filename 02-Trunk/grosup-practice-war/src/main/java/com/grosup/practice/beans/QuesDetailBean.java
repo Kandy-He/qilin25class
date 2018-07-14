@@ -1,17 +1,17 @@
 package com.grosup.practice.beans;
 
 
-public class ProblemBean {
+public class QuesDetailBean {
 	//题目ID
 	private int id;
-	//题型关键字
-	private String proKey;
-//	//题型所属类别关键字
-//	private String categoryKey;
-//	//题型子类别关键字
-//	private String categoryChildKey;
-	//所属知识点ID
-	private int typeID;
+	
+	private int userID;
+	
+	private String paperKey;
+	
+	private int quesPosition;
+	
+	private int quesID;
 	//表达式123
 	private String expression1;
 	
@@ -24,19 +24,13 @@ public class ProblemBean {
 	private String answerDesc;
 	//题目答案
 	private String answer;
+	//答题人所填答案
+	private String userAnswer;
+	//题目分数
+	private int quesScore;
 	
-//	public String getCategoryKey() {
-//		return categoryKey;
-//	}
-//	public void setCategoryKey(String categoryKey) {
-//		this.categoryKey = categoryKey;
-//	}
-//	public String getCategoryChildKey() {
-//		return categoryChildKey;
-//	}
-//	public void setCategoryChildKey(String categoryChildKey) {
-//		this.categoryChildKey = categoryChildKey;
-//	}
+	private int quesToScore;
+	
 	public String getExpression1() {
 		return expression1;
 	}
@@ -62,12 +56,6 @@ public class ProblemBean {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getTypeID() {
-		return typeID;
-	}
-	public void setTypeID(int typeID) {
-		this.typeID = typeID;
-	}
 	public String getDescription() {
 		return description;
 	}
@@ -86,10 +74,46 @@ public class ProblemBean {
 	public void setAnswerDesc(String answerDesc) {
 		this.answerDesc = answerDesc;
 	}
-	public String getProKey() {
-		return proKey;
+	public String getUserAnswer() {
+		return userAnswer;
 	}
-	public void setProKey(String proKey) {
-		this.proKey = proKey;
+	public void setUserAnswer(String userAnswer) {
+		this.userAnswer = userAnswer;
+	}
+	public int getQuesScore() {
+		return quesScore;
+	}
+	public void setQuesScore(int quesScore) {
+		this.quesScore = quesScore;
+	}
+	public int getUserID() {
+		return userID;
+	}
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+	public String getPaperKey() {
+		return paperKey;
+	}
+	public void setPaperKey(String paperKey) {
+		this.paperKey = paperKey;
+	}
+	public int getQuesPosition() {
+		return quesPosition;
+	}
+	public void setQuesPosition(int quesPosition) {
+		this.quesPosition = quesPosition;
+	}
+	public int getQuesID() {
+		return quesID;
+	}
+	public void setQuesID(int quesID) {
+		this.quesID = quesID;
+	}
+	public int getQuesToScore() {
+		return quesToScore;
+	}
+	public void setQuesToScore(int quesToScore) {
+		this.quesToScore = quesToScore;
 	}
 }

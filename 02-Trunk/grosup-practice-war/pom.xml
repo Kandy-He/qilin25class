@@ -165,37 +165,37 @@
 		</plugins>
 		<finalName>practice</finalName>
 	</build>
-<!-- 	<profiles> -->
-<!-- 		<profile> -->
-<!-- 			<id>dev</id> -->
-<!-- 			<activation> -->
-<!-- 				<activeByDefault>true</activeByDefault> -->
-<!-- 			</activation> -->
-<!-- 			<build> -->
-<!-- 				<filters> -->
-<!-- 					<filter>env/dev/jdbc.properties</filter> -->
-<!-- 				</filters> -->
-<!-- 				<resources> -->
-<!-- 					<resource> -->
-<!-- 						<directory>src/main/resources</directory> -->
-<!-- 						<filtering>true</filtering> -->
-<!-- 					</resource> -->
-<!-- 				</resources> -->
-<!-- 			</build> -->
-<!-- 		</profile> -->
-<!-- 		<profile> -->
-<!-- 			<id>pro</id> -->
-<!-- 			<build> -->
-<!-- 				<filters> -->
-<!-- 					<filter>env/pro/jdbc.properties</filter> -->
-<!-- 				</filters> -->
-<!-- 				<resources> -->
-<!-- 					<resource> -->
-<!-- 						<directory>src/main/resources</directory> -->
-<!-- 						<filtering>true</filtering> -->
-<!-- 					</resource> -->
-<!-- 				</resources> -->
-<!-- 			</build> -->
-<!-- 		</profile> -->
-<!-- 	</profiles> -->
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<filters>
+					<filter>env/dev/jdbc.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>pro</id>
+			<build>
+				<filters>
+					<filter>env/pro/jdbc.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+	</profiles>
 </project>

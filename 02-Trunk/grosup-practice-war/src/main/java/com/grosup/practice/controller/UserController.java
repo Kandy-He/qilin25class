@@ -49,6 +49,7 @@ private static Logger logger = Logger.getLogger(UserController.class);
 		try {
 			String openId = sessionService.getOpenIdByThirdSession(third_session);
 			userBean.setWxID(openId);
+			//TODO 判断是否是被拒绝之后再次提交
 			boolean status = userService.userRegister(userBean);
 			if (status) {
 				result.put("code", "success");
@@ -56,7 +57,7 @@ private static Logger logger = Logger.getLogger(UserController.class);
 				result.put("code", "fail");
 			}
 		} catch (Exception e) {
-			logger.error("注册失败");
+			logger.error("注册失败" + e);
 			e.printStackTrace();
 			result.put("code", "error");
 		} finally {

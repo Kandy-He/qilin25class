@@ -12,8 +12,8 @@ public class RecordService {
 	@Autowired
 	private RecordDao recordDao;
 	
-	public RecordBean getOneRecord(int typeID, int userID) {
-		return recordDao.getOneRecord(typeID, userID);
+	public RecordBean getOneRecord(int typeID, int userID, int rownum) {
+		return recordDao.getOneRecord(typeID, userID, rownum);
 	}
 	/**
 	 * 订正
@@ -21,11 +21,20 @@ public class RecordService {
 	 * @param userID
 	 * @return
 	 */
-	public boolean correction(int id, int userID) {
+	public int correction(int id, int userID) {
 		return recordDao.correction(id, userID);
 	}
 	
 	public boolean removeRecord(int id, int userID) {
 		return recordDao.removeRecord(id, userID);
+	}
+	/**
+	 * 通过userID，typeID查询错题总数
+	 * @param typeID
+	 * @param userID
+	 * @return 当前类型错题数
+	 */
+	public int queryUserWrongCountByTypeID(int typeID, int userID) {
+		return recordDao.queryUserWrongCountByTypeID(typeID, userID);
 	}
 }

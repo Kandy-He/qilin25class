@@ -19,13 +19,17 @@
 	
 	<context:annotation-config />
 	<!-- 默认的注解映射的支持 -->  
-<mvc:annotation-driven />  
+	<mvc:annotation-driven />  
+	
 	<context:component-scan base-package="com.grosup.practice.controller"></context:component-scan>
 	<context:component-scan base-package="com.grosup.practice.service"></context:component-scan>
 	<context:component-scan base-package="com.grosup.practice.dao"></context:component-scan>
+	<!-- 配置定时任务 -->
+	<task:annotation-driven/>
+	<context:component-scan base-package="com.grosup.practice.task"></context:component-scan>
 	
 	<!-- 引入jdbc.properties -->
-	<context:property-placeholder location="classpath:jdbc.properties"/>
+<!-- 	<context:property-placeholder location="classpath:jdbc.properties"/> -->
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		 <property name="driverClassName" value="${jdbc.driver}" />

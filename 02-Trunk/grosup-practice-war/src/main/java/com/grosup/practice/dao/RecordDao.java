@@ -44,23 +44,19 @@ public class RecordDao extends AbstractDao {
 		this.getSession().update("com.grosup.practice.record.updateRecord",record);
 	}
 	
-	public RecordBean getOneRecord(int typeID, int userID) {
+	public RecordBean getOneRecord(int typeID, int userID, int rownum) {
 		Map<String, Integer> paramMap = new HashMap<String, Integer>();
 		paramMap.put("userID", userID);
 		paramMap.put("typeID", typeID);
+		paramMap.put("rownum", rownum);
 		return this.getSession().selectOne("com.grosup.practice.record.getOneRecord", paramMap);
 	}
 	
-	public boolean correction(int id, int userID) {
-		boolean statu = false;
+	public int correction(int id, int userID) {
 		Map<String, Integer> paramMap = new HashMap<String, Integer>();
 		paramMap.put("userID", userID);
 		paramMap.put("id", id);
-		int rows = this.getSession().insert("com.grosup.practice.record.correction",paramMap);
-		if (rows > 0) {
-			statu = true;
-		}
-		return statu;
+		return this.getSession().update("com.grosup.practice.record.correction",paramMap);
 	}
 	
 	public boolean removeRecord(int id, int userID) {
@@ -73,5 +69,17 @@ public class RecordDao extends AbstractDao {
 			statu = true;
 		}
 		return statu;
+	}
+	/**
+	 * 通过userID，typeID查询错题总数
+	 * @param typeID
+	 * @param userID
+	 * @return 当前类型错题数
+	 */
+	public int queryUserWrongCountByTypeID(int typeID, int userID) {
+		Map<String, Integer> paramMap = new HashMap<String, Integer>();
+		paramMap.put("userID", userID);
+		paramMap.put("typeID", typeID);
+		return this.getSession().selectOne("com.grosup.practice.record.queryUserWrongCountByTypeID",paramMap);
 	}
 }

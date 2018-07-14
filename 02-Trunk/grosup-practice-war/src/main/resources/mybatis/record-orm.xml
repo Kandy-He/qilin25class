@@ -2,21 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.grosup.practice.record">
 
-	<resultMap type="com.grosup.practice.beans.RecordBean" id="BaseResultMap">
-		<result column="id" jdbcType="INTEGER" property="id"/>
-		<result column="userID" jdbcType="INTEGER" property="userID"/>
-		<result column="recordTime" jdbcType="VARCHAR" property="recordTime"/>
-		<result column="typeID" jdbcType="INTEGER" property="typeID"/>
-		<result column="description" jdbcType="VARCHAR" property="description"/>
-		<result column="options" jdbcType="VARCHAR" property="options"/>
-		<result column="result" jdbcType="VARCHAR" property="result"/>
-		<result column="correct" jdbcType="VARCHAR" property="correct"/>
-		<result column="status" jdbcType="INTEGER" property="status"/>
-	</resultMap>
+<!-- 	<resultMap type="com.grosup.practice.beans.RecordBean" id="BaseResultMap"> -->
+<!-- 		<result column="id" jdbcType="INTEGER" property="id"/> -->
+<!-- 		<result column="userID" jdbcType="INTEGER" property="userID"/> -->
+<!-- 		<result column="recordTime" jdbcType="VARCHAR" property="recordTime"/> -->
+<!-- 		<result column="typeID" jdbcType="INTEGER" property="typeID"/> -->
+<!-- 		<result column="description" jdbcType="VARCHAR" property="description"/> -->
+<!-- 		<result column="result" jdbcType="VARCHAR" property="result"/> -->
+<!-- 		<result column="correct" jdbcType="VARCHAR" property="correct"/> -->
+<!-- 		<result column="status" jdbcType="INTEGER" property="status"/> -->
+<!-- 	</resultMap> -->
 	
 	<insert id="addRecord" parameterType="com.grosup.practice.beans.RecordBean">
-		insert into t_record (id,userID,recordTime,typeID,description,options,result,correct,status)
-		values (#{id},#{userID},#{recordTime},#{typeID},#{description},#{options},#{result},#{correct},#{status})
+		insert into t_record (id,userID,recordTime,typeID,proKey,description,expression1,expression2,expression3,result,answerDesc,correct,status)
+		values (#{id},#{userID},#{recordTime},#{typeID},#{proKey},#{description},#{expression1},#{expression2},#{expression3},#{result},#{answerDesc},#{correct},#{status})
 	</insert>
 	<!-- 	查看错题是否存在 -->
 	<select id="checkIsExist" parameterType="com.grosup.practice.beans.RecordBean" resultType="int">
@@ -24,13 +23,25 @@
 	</select>
 	<!-- 	更新错题记录 -->
 	<update id="updateRecord" parameterType="com.grosup.practice.beans.RecordBean">
-		update t_record set recordTime = #{recordTime},result = #{result},status = 0
+		update t_record set recordTime = #{recordTime},expression1 = #{expression1},expression2 = #{expression2},
+		expression3 = #{expression3},result = #{result},status = 0
+		where userID = #{userID} AND id = #{id}
 	</update>
 	
-	<select id="getOneRecord" parameterType="int" resultMap="BaseResultMap">
-		select * from t_record
-		WHERE id >= (SELECT FLOOR( MAX(id) * RAND()) FROM t_record ) AND t_record.typeID = #{typeID} AND t_record.userID = #{userID}
-		order by id limit 1
+	<select id="getOneRecord" parameterType="int" resultType="com.grosup.practice.beans.RecordBean">
+	select middle.id,middle.userID,middle.recordTime,middle.proKey,middle.typeID,middle.description,middle.expression1,middle.expression2,middle.expression3,
+    middle.result,middle.answerDesc,middle.correct,middle.status
+	from (SELECT
+	obj.*,@rownum := @rownum + 1 AS rownum
+	FROM
+	(
+	SELECT
+	*
+	FROM
+	`t_record`
+	where userID=#{userID} and typeID = #{typeID}
+	) AS obj,(SELECT @rownum := 0) r) as middle
+	where rownum = #{rownum}
 	</select>
 	<!-- 订正 -->
 	<update id="correction" parameterType="int">
@@ -40,4 +51,8 @@
 	<delete id="removeRecord" parameterType="int">
 		delete from t_record where id = #{id} AND userID = #{userID}
 	</delete>
+	<!-- 通过userID，typeID查询错题总数 -->
+	<select id="queryUserWrongCountByTypeID" resultType="int">
+		select count(*) from t_record where t_record.typeID = #{typeID} AND t_record.userID = #{userID}
+	</select>
 </mapper>

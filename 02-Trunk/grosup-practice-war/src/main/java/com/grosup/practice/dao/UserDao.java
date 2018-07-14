@@ -16,6 +16,10 @@ public class UserDao extends AbstractDao{
 	public UserBean queryTest(int id) {
 		return this.getSession().selectOne("com.practice.test.queryTest", id);
 	}
+	
+	public void updateUserInfo(UserBean user) {
+		this.getSession().update("com.grosup.practice.user.updateUserInfo", user);
+	}
 	/**
 	 * 人员注册
 	 */

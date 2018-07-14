@@ -3,7 +3,7 @@
 <mapper namespace="com.grosup.practice.statistics">
 
 	<update id="updateUserDoneByCorrect" parameterType="int">
-		UPDATE t_statistics tst SET tst.haveDone = tst.haveDone + 1,tst.flower = tst.flower + 1
+		UPDATE t_statistics tst SET tst.haveDone = tst.haveDone + 1,tst.flower = tst.flower + 1,tst.onceRight = tst.onceRight + 1
 		where tst.userID = #{userID} and tst.typeID = #{typeID}
 	</update>
 	
@@ -12,4 +12,56 @@
 		where tst.userID = #{userID} and tst.typeID = #{typeID}
 	</update>
 	
+	<select id="checkIsExist" parameterType="int" resultType="int">
+		select count(*) from t_statistics tst where tst.userID = #{userID} and tst.typeID = #{typeID}
+	</select>
+	
+	<insert id="addOneRecord" parameterType="java.util.Map">
+		insert into t_statistics (userID,typeID,haveDone,onceRight,flower) values (#{userID},#{typeID},#{havaDone},#{onceRight},#{flower})
+	</insert>
+	
+	<select id="getUsersRankInfo" resultType="com.grosup.practice.beans.StatisticsBean">
+	SELECT
+	obj.userID,obj.flower,@rownum := @rownum + 1 AS rank
+	FROM
+	(
+	SELECT
+	userID,
+	flower
+	FROM
+	`t_statistics`
+	GROUP BY userID
+	ORDER BY
+	flower DESC
+	) AS obj,
+	(SELECT @rownum := 0) r
+	</select>
+	
+	<insert id="usersRankInfoAdd" parameterType="java.util.List">
+	   insert into t_user_rank
+	   (userID,flower,classID,rank)
+	    values
+	   <foreach collection="list" item="item" index="index" separator=",">
+	       (#{item.userID},#{item.flower},#{item.classID},#{item.rank})
+	   </foreach>
+	   on duplicate key update 
+	   flower = values(flower),rank = values(rank)
+	</insert>
+	
+	<select id="getUserRankInfo" parameterType="java.util.Map" resultType="com.grosup.practice.beans.StatisticsBean">
+	   select tur.userID,tur.rank,tur.flower,ts.name,ts.icon
+	    from t_user_rank tur
+	    left join t_student ts on tur.userID = ts.id
+	     where 
+	   <if test="userID != null and userID != ''">
+	        userID = #{userID}
+	   </if>
+	  <if test="rank != null and rank != ''">
+            rank = #{rank}
+       </if>
+	</select>
+	
+	<select id="getMaxRank" resultType="int">
+	   select max(rank) from t_user_rank 
+	</select>
 </mapper>

@@ -18,11 +18,19 @@ public class RecordBean {
 	
 	private int typeID;
 	
+	private String proKey;
+	
 	private String description;
 	
-	private String options;
+	private String expression1;
+	
+	private String expression2;
+	
+	private String expression3;
 	
 	private String result;
+	
+	private String answerDesc;
 	
 	private String correct;
 	
@@ -68,14 +76,6 @@ public class RecordBean {
 		this.description = description;
 	}
 
-	public String getOptions() {
-		return options;
-	}
-
-	public void setOptions(String options) {
-		this.options = options;
-	}
-
 	public String getResult() {
 		return result;
 	}
@@ -98,5 +98,45 @@ public class RecordBean {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public String getExpression1() {
+		return expression1;
+	}
+
+	public void setExpression1(String expression1) {
+		this.expression1 = expression1;
+	}
+
+	public String getExpression2() {
+		return expression2;
+	}
+
+	public void setExpression2(String expression2) {
+		this.expression2 = expression2;
+	}
+
+	public String getExpression3() {
+		return expression3;
+	}
+
+	public void setExpression3(String expression3) {
+		this.expression3 = expression3;
+	}
+
+	public String getProKey() {
+		return proKey;
+	}
+
+	public void setProKey(String proKey) {
+		this.proKey = proKey;
+	}
+
+	public String getAnswerDesc() {
+		return answerDesc;
+	}
+
+	public void setAnswerDesc(String answerDesc) {
+		this.answerDesc = answerDesc;
 	}
 }
