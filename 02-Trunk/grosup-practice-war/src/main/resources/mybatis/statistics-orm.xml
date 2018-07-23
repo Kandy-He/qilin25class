@@ -2,66 +2,95 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.grosup.practice.statistics">
 
-	<update id="updateUserDoneByCorrect" parameterType="int">
+	<update id="updateUserDoneByCorrect" parameterType="map">
 		UPDATE t_statistics tst SET tst.haveDone = tst.haveDone + 1,tst.flower = tst.flower + 1,tst.onceRight = tst.onceRight + 1
-		where tst.userID = #{userID} and tst.typeID = #{typeID}
+		where tst.userID = #{userID} and tst.knowledgeKey = #{knowledgeKey}
 	</update>
 	
-	<update id="updateUserDoneByUnCorrect" parameterType="int">
+	<update id="updateUserDoneByUnCorrect" parameterType="map">
 		UPDATE t_statistics tst SET tst.haveDone = tst.haveDone + 1 
-		where tst.userID = #{userID} and tst.typeID = #{typeID}
+		where tst.userID = #{userID} and tst.knowledgeKey = #{knowledgeKey}
 	</update>
 	
-	<select id="checkIsExist" parameterType="int" resultType="int">
-		select count(*) from t_statistics tst where tst.userID = #{userID} and tst.typeID = #{typeID}
+	<select id="checkIsExist" parameterType="map" resultType="int">
+		select count(*) from t_statistics tst where tst.userID = #{userID} and tst.knowledgeKey = #{knowledgeKey}
 	</select>
 	
 	<insert id="addOneRecord" parameterType="java.util.Map">
-		insert into t_statistics (userID,typeID,haveDone,onceRight,flower) values (#{userID},#{typeID},#{havaDone},#{onceRight},#{flower})
+		insert into t_statistics (userID,knowledgeKey,haveDone,onceRight,flower) values (#{userID},#{knowledgeKey},#{havaDone},#{onceRight},#{flower})
 	</insert>
 	
 	<select id="getUsersRankInfo" resultType="com.grosup.practice.beans.StatisticsBean">
 	SELECT
-	obj.userID,obj.flower,@rownum := @rownum + 1 AS rank
-	FROM
-	(
-	SELECT
-	userID,
-	flower
-	FROM
-	`t_statistics`
-	GROUP BY userID
-	ORDER BY
-	flower DESC
-	) AS obj,
-	(SELECT @rownum := 0) r
+            obj.userID,
+            obj.flower,
+            obj.quesTotalDone,
+            obj.quesOnceRightTotal,
+            (
+                quesTotalDone - quesOnceRightTotal
+            ) AS quesWrongTotal,
+            (
+                (
+                    quesTotalDone - quesOnceRightTotal
+                ) / quesTotalDone
+            ) * 100 AS quesCorrectionRate ,@rownum := @rownum + 1 AS rank
+        FROM
+            (
+                SELECT
+                    userID,
+                    flower,
+                    SUM(haveDone) AS quesTotalDone,
+                    SUM(onceRight) AS quesOnceRightTotal
+                FROM
+                    `t_statistics`
+                where userID NOT in (select t_student.id FROM t_student where userType != 0)
+                GROUP BY
+                    userID
+                ORDER BY
+                    flower DESC
+            ) AS obj,
+            (SELECT @rownum := 0) r
 	</select>
 	
 	<insert id="usersRankInfoAdd" parameterType="java.util.List">
 	   insert into t_user_rank
-	   (userID,flower,classID,rank)
+	   (userID,flower,classID,rank,quesTotalDone,quesOnceRightTotal,quesWrongTotal,quesCorrectionRate,highestWrongType)
 	    values
 	   <foreach collection="list" item="item" index="index" separator=",">
-	       (#{item.userID},#{item.flower},#{item.classID},#{item.rank})
+	       (#{item.userID},#{item.flower},#{item.classID},#{item.rank},#{item.quesTotalDone},#{item.quesOnceRightTotal},#{item.quesWrongTotal},#{item.quesCorrectionRate}
+	       ,#{item.highestWrongType})
 	   </foreach>
 	   on duplicate key update 
-	   flower = values(flower),rank = values(rank)
+	   flower = values(flower),rank = values(rank),quesTotalDone = values(quesTotalDone),quesOnceRightTotal = values(quesOnceRightTotal),quesWrongTotal = values(quesWrongTotal),
+	   quesCorrectionRate = values(quesCorrectionRate)
 	</insert>
 	
 	<select id="getUserRankInfo" parameterType="java.util.Map" resultType="com.grosup.practice.beans.StatisticsBean">
 	   select tur.userID,tur.rank,tur.flower,ts.name,ts.icon
 	    from t_user_rank tur
 	    left join t_student ts on tur.userID = ts.id
-	     where 
+	     where 1 = 1
 	   <if test="userID != null and userID != ''">
-	        userID = #{userID}
+	       and userID = #{userID}
 	   </if>
 	  <if test="rank != null and rank != ''">
-            rank = #{rank}
+           and rank = #{rank}
        </if>
 	</select>
 	
 	<select id="getMaxRank" resultType="int">
-	   select max(rank) from t_user_rank 
+	   select count(*) from t_user_rank 
 	</select>
+	
+	<select id="getUserHighestWrong" parameterType="int" resultType="java.lang.String">
+	select quesTypeName FROM
+	(select quesTypeKey,userID,COUNT(*) AS count FROM t_record
+	WHERE userID = #{userID}
+	GROUP BY quesTypeKey
+	ORDER BY count DESC
+	limit 1) AS obj LEFT JOIN
+	t_ques_type ON
+	obj.quesTypeKey = t_ques_type.quesTypeKey
+	</select>
+	
 </mapper>

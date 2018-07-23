@@ -6,23 +6,37 @@
 		<result column="gradeID" jdbcType="INTEGER" property="gradeID"/>
 		<result column="gradeName" jdbcType="VARCHAR" property="gradeName"/>
 		<collection property="subjects" ofType="com.grosup.practice.beans.SubjectDetail">
-			<result column="subID" jdbcType="INTEGER" property="subID"/>
-			<result column="subName" jdbcType="VARCHAR" property="subName"/>
-			<collection property="types" ofType="com.grosup.practice.beans.TypeDetail">
-				<result column="typeID" jdbcType="INTEGER" property="typeID"/>
-				<result column="typeName" jdbcType="VARCHAR" property="typeName"/>
+			<result column="subjectID" jdbcType="INTEGER" property="subjectID"/>
+			<result column="subjectName" jdbcType="VARCHAR" property="subjectName"/>
+			<collection property="knowledges" ofType="com.grosup.practice.beans.KnowledgeDTO">
+				<result column="knowledgeKey" jdbcType="VARCHAR" property="knowledgeKey"/>
+				<result column="knowledgeName" jdbcType="VARCHAR" property="knowledgeName"/>
 				<result column="haveDone" jdbcType="INTEGER" property="haveDone"/>
 				<result column="onceRight" jdbcType="INTEGER" property="onceRight"/>
 				<result column="flower" jdbcType="INTEGER" property="flower"/>
 			</collection>
 		</collection>
 	</resultMap>
-	<!-- 查询题型 -->
-	<select id="queryTypeDetail" parameterType="int" resultMap="BaseResultMap">
-		SELECT tty.typeID,tty.`name` AS typeName,tst.haveDone,tst.onceRight,tst.flower,
-	tsu.id AS sunID,tsu.`name` AS subName,tgr.id AS gradeID,tgr.`name` AS gradeName
-	FROM t_type tty LEFT JOIN t_statistics tst ON
-	tty.typeID = tst.typeID AND tst.userID = #{userID},t_subject tsu,t_grade tgr 
-	WHERE tty.subjectID = tsu.id AND tsu.gradeID = tgr.id
+	<!-- 根据学生ID查询知识点及学生该知识点统计情况 -->
+	<select id="queryKnowledges" parameterType="int" resultMap="BaseResultMap">
+	SELECT
+	tkn.knowledgeKey,
+	tkn.knowledgeName,
+	tst.haveDone,
+	tst.onceRight,
+	tst.flower,
+	tsu.id AS subjectID,
+	tsu.`name` AS subName,
+	tgr.id AS gradeID,
+	tgr.`name` AS gradeName
+	FROM
+	t_knowledge tkn
+	LEFT JOIN t_statistics tst ON tkn.knowledgeKey = tst.knowledgeKey AND
+	tst.userID = #{userID},
+	t_subject tsu,
+	t_grade tgr
+	WHERE
+	tkn.subjectID = tsu.id
+	AND tsu.gradeID = tgr.id
 	</select>
 </mapper>

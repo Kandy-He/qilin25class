@@ -17,7 +17,7 @@
 	</resultMap>
 	<!-- 人员注册 -->
 	<insert id="register" parameterType="com.grosup.practice.beans.UserBean">
-		insert into t_student (name,gender,classID,icon,wxID,status,userType) values (#{name},#{gender},#{classID},#{icon},#{wxID},#{status},#{userType})
+		insert into t_student (name,gender,classID,icon,wxID,status,userType) values (#{name},#{gender},#{classID},#{icon},#{wxID},1,#{userType})
 	</insert>
 	
 	<!-- 通过wxID即unionID获取用户信息 -->

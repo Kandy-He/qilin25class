@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.grosup.practice.beans.StatisticsBean;
 import com.grosup.practice.service.StatisticsService;
+import com.grosup.practice.util.CodeUtil;
+import com.grosup.practice.util.GrosupException;
 import com.grosup.practice.util.ObjectUtil;
 
 @Controller
@@ -28,7 +30,7 @@ private static Logger logger = Logger.getLogger(StatisticsController.class);
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/userRank",produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public JSONObject studentAdd(@RequestParam String userID, @RequestParam String rank) {
+	public JSONObject getUserRankInfo(@RequestParam String userID, @RequestParam String rank) {
 		JSONObject result = new JSONObject();
 		JSONObject data = new JSONObject();
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -37,21 +39,22 @@ private static Logger logger = Logger.getLogger(StatisticsController.class);
 			params.put("rank", rank);
 			int maxRank = statisticsService.getMaxRank();
 			StatisticsBean statisticsBean = statisticsService.getUserRankInfo(params);
-			if (ObjectUtil.isNull(statisticsBean)) {
-				result.put("code", "success");
+			if (ObjectUtil.isNull(statisticsBean) || maxRank == 0) {
+				result.put("code", CodeUtil.NODATA);
+				result.put("msg", "暂无排名信息");
+			} else {
+				result.put("code", "1");
+				data.put("name", statisticsBean.getName());
+				data.put("icon", statisticsBean.getIcon());
+				data.put("flower", statisticsBean.getFlower());
+				data.put("maxRank", maxRank);
+				data.put("rank", statisticsBean.getRank());
+				result.put("code", CodeUtil.SUCCESS);
 				result.put("data", data);
 			}
-			data.put("name", statisticsBean.getUserBean().getName());
-			data.put("icon", statisticsBean.getUserBean().getIcon());
-			data.put("flower", statisticsBean.getFlower());
-			data.put("over", maxRank - statisticsBean.getRank());
-			data.put("maxRank", maxRank);
-			result.put("code", "success");
-			result.put("data", data);
-		} catch (Exception e) {
-			logger.error("获取排名信息失败" + e);
-			e.printStackTrace();
-			result.put("code", "error");
+		} catch (GrosupException e) {
+			logger.error("获取排名信息失败" ,e);
+			result.put("code", CodeUtil.ERROR);
 		}
 		return result; 
 	}

@@ -1,10 +1,10 @@
 package com.grosup.practice.beans;
 
-public class TypeDetail {
+public class KnowledgeDTO {
 	
-	private int typeID;
+	private String knowledgeKey;
 	
-	private String typeName;
+	private String knowledgeName;
 	
 	private int haveDone;
 	
@@ -12,20 +12,20 @@ public class TypeDetail {
 	
 	private int flower;
 
-	public int getTypeID() {
-		return typeID;
+	public String getKnowledgeKey() {
+		return knowledgeKey;
 	}
 
-	public void setTypeID(int typeID) {
-		this.typeID = typeID;
+	public void setKnowledgeKey(String knowledgeKey) {
+		this.knowledgeKey = knowledgeKey;
 	}
 
-	public String getTypeName() {
-		return typeName;
+	public String getKnowledgeName() {
+		return knowledgeName;
 	}
 
-	public void setTypeName(String typeName) {
-		this.typeName = typeName;
+	public void setKnowledgeName(String knowledgeName) {
+		this.knowledgeName = knowledgeName;
 	}
 
 	public int getHaveDone() {

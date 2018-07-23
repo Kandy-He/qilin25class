@@ -4,33 +4,35 @@ import java.util.List;
 
 public class SubjectDetail {
 	
-	private int subID;
+	private List<KnowledgeDTO> knowledges;
 	
-	private String subName;
+	private int subjectID;
 	
-	private List<TypeDetail> types;
-
-	public int getSubID() {
-		return subID;
+	public int getSubjectID() {
+		return subjectID;
 	}
 
-	public void setSubID(int subID) {
-		this.subID = subID;
+	public void setSubjectID(int subjectID) {
+		this.subjectID = subjectID;
 	}
 
-	public String getSubName() {
-		return subName;
+	public String getSubjectName() {
+		return subjectName;
 	}
 
-	public void setSubName(String subName) {
-		this.subName = subName;
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
 	}
 
-	public List<TypeDetail> getTypeDetails() {
-		return types;
+	private String subjectName;
+
+	public List<KnowledgeDTO> getKnowledges() {
+		return knowledges;
 	}
 
-	public void setTypeDetails(List<TypeDetail> typeDetails) {
-		this.types = typeDetails;
+	public void setKnowledges(List<KnowledgeDTO> knowledges) {
+		this.knowledges = knowledges;
 	}
+	
+
 }

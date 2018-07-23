@@ -5,13 +5,23 @@ public class QuesDetailBean {
 	//题目ID
 	private int id;
 	
+	private String isDone;
+	
+	public String getIsDone() {
+		return isDone;
+	}
+	public void setIsDone(String isDone) {
+		this.isDone = isDone;
+	}
 	private int userID;
 	
 	private String paperKey;
 	
 	private int quesPosition;
 	
-	private int quesID;
+	private String problemKey;
+	
+	private String quesTypeKey;
 	//表达式123
 	private String expression1;
 	
@@ -104,11 +114,17 @@ public class QuesDetailBean {
 	public void setQuesPosition(int quesPosition) {
 		this.quesPosition = quesPosition;
 	}
-	public int getQuesID() {
-		return quesID;
+	public String getProblemKey() {
+		return problemKey;
 	}
-	public void setQuesID(int quesID) {
-		this.quesID = quesID;
+	public void setProblemKey(String problemKey) {
+		this.problemKey = problemKey;
+	}
+	public String getQuesTypeKey() {
+		return quesTypeKey;
+	}
+	public void setQuesTypeKey(String quesTypeKey) {
+		this.quesTypeKey = quesTypeKey;
 	}
 	public int getQuesToScore() {
 		return quesToScore;

@@ -9,36 +9,42 @@
     
     <!-- 用户还没有作答 -->
     <select id="getQuesUserUnDone" parameterType="java.util.Map" resultType="com.grosup.practice.beans.ProblemForTestBean">
-        select ttpd.quesID, ttpd.quesScore,ttpd.quesPosition,tpr.* 
+        select ttpd.quesScore,ttpd.quesPosition,tpr.* 
         from t_test_paper_detail ttpd 
         left join t_problem tpr
-        on ttpd.quesID = tpr.id
+        on ttpd.problemKey = tpr.problemKey
         where ttpd.quesPosition = #{quesPosition}
         and ttpd.paperKey = #{paperKey}
     </select>
     
     <select id="getQuesUserHaveDone" parameterType="java.util.Map" resultType="com.grosup.practice.beans.QuesDetailBean">
-        SELECT tutr.id,
-        tutr.quesID,
-        tutr.expression1,
-        tutr.expression2,
-        tutr.expression3,
-        tutr.answerDesc,
-        tutr.quesScore,
-        tutr.userAnswer
-        FROM t_user_test_record tutr
-        where userID = #{userID} 
-        and paperKey = #{paperKey}
-        and quesPosition = #{quesPosition}
+	SELECT tutr.id,
+	tutr.problemKey,
+	tutr.paperKey,
+	tutr.quesPosition,
+	tutr.expression1,
+	tutr.expression2,
+	tutr.expression3,
+	tutr.quesScore,
+	tutr.userAnswer,
+	tpr.quesTypeKey,
+	tpr.answerDesc,
+	tpr.description
+	FROM t_user_test_record tutr
+	LEFT JOIN t_problem tpr ON tutr.problemKey = tpr.problemKey
+	where userID =
+	#{userID}
+	and paperKey = #{paperKey}
+	and quesPosition = #{quesPosition}
     </select>	
     
     <!-- 插入一条答题记录 -->	
     <insert id="userRecordAdd" parameterType="com.grosup.practice.beans.QuesDetailBean">
         insert into t_user_test_record
-        (userID,paperKey,quesPosition,quesID,
-        expression1,expression2,expression3,answerDesc,answer,quesScore,quesToScore,userAnswer)
-        values(#{userID},#{paperKey},#{quesPosition},#{quesID},#{expression1},#{expression2},#{expression3},
-        #{answerDesc},#{answer},#{quesScore},#{quesToScore},#{userAnswer})
+        (userID,paperKey,quesPosition,problemKey,
+        expression1,expression2,expression3,quesScore,quesToScore,userAnswer)
+        values(#{userID},#{paperKey},#{quesPosition},#{problemKey},#{expression1},#{expression2},#{expression3},
+        #{quesScore},#{quesToScore},#{userAnswer})
     </insert>
     
     <update id="updateUserRecord" parameterType="com.grosup.practice.beans.QuesDetailBean">
@@ -53,18 +59,27 @@
     
     <select id="getPaperTotalInfo" parameterType="java.util.Map" resultType="com.grosup.practice.beans.PaperInfoBean">
         select sum(quesToScore) as totalScore, count(*) as  quesCount
-        from t_user_test_record where
-        where userID = {userID} and paperKey = #{paperKey}
+        from t_user_test_record
+        where userID = #{userID} and paperKey = #{paperKey}
+    </select>
+    
+    <select id="getRightCount"  parameterType="java.util.Map" resultType="int">
+        select count(*) from t_user_test_record
+        where userID = #{userID} and paperKey = #{paperKey} and quesToScore > 0
     </select>
     
     <select id="getPaperQuesCountUnRight" parameterType="java.util.Map" resultType="int">
         select count(1) from t_user_test_record 
-        where userID = {userID} and paperKey = #{paperKey} and quesToCount = 0
+        where userID = #{userID} and paperKey = #{paperKey} and quesToScore = 0
     </select>
     
     <!-- 提交试卷之后将数据转移到历史表 -->
     <insert id="moveRecordToHistory" parameterType="java.util.Map">
         insert into t_user_test_record_history select * from t_user_test_record
-        where userID = {userID} and paperKey = #{paperKey}
+        where userID = #{userID} and paperKey = #{paperKey}
     </insert>
+    
+    <delete id="removeUserTestData" parameterType="java.util.Map">
+        delete from t_user_test_record_history where userID = #{userID} and paperKey = #{paperKey}
+    </delete>
 </mapper>

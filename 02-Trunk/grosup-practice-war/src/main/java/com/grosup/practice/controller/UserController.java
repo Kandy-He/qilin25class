@@ -22,6 +22,7 @@ import com.grosup.practice.beans.UserBean;
 import com.grosup.practice.service.ClassInfoService;
 import com.grosup.practice.service.SessionService;
 import com.grosup.practice.service.UserService;
+import com.grosup.practice.util.GrosupException;
 import com.grosup.practice.util.ObjectUtil;
 import com.grosup.practice.util.PracticeUtil;
 
@@ -38,12 +39,10 @@ private static Logger logger = Logger.getLogger(UserController.class);
 	@Autowired
 	private ClassInfoService classInfoService;
 	
-	@SuppressWarnings("finally")
 	@RequestMapping(method = RequestMethod.POST, value = "/add",produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public JSONObject studentAdd(HttpServletRequest request ,@RequestBody UserBean userBean) {
+	public JSONObject userRegister(HttpServletRequest request ,@RequestBody UserBean userBean) {
 		//打印出前台接收到的学生信息
-		logger.info(userBean.toString());
 		JSONObject result = new JSONObject();
 		String third_session = request.getHeader("third_session");
 		try {
@@ -56,13 +55,11 @@ private static Logger logger = Logger.getLogger(UserController.class);
 			} else {
 				result.put("code", "fail");
 			}
-		} catch (Exception e) {
-			logger.error("注册失败" + e);
-			e.printStackTrace();
+		} catch (GrosupException e) {
+			logger.error("注册失败", e);
 			result.put("code", "error");
-		} finally {
-			return result;
-		}
+		} 
+		return result;
 	}
 	/**
 	 * 人员审核通过

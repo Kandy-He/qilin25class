@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.grosup.practice.beans.RecordBean;
 import com.grosup.practice.util.AbstractDao;
+import com.grosup.practice.util.GrosupException;
 
 @Repository
 public class RecordDao extends AbstractDao {
@@ -44,42 +45,37 @@ public class RecordDao extends AbstractDao {
 		this.getSession().update("com.grosup.practice.record.updateRecord",record);
 	}
 	
-	public RecordBean getOneRecord(int typeID, int userID, int rownum) {
-		Map<String, Integer> paramMap = new HashMap<String, Integer>();
+	public RecordBean getOneRecord(int userID ,String knowledgeKey ,int rownum) throws GrosupException{
+		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userID", userID);
-		paramMap.put("typeID", typeID);
+		paramMap.put("knowledgeKey", knowledgeKey);
 		paramMap.put("rownum", rownum);
 		return this.getSession().selectOne("com.grosup.practice.record.getOneRecord", paramMap);
 	}
 	
-	public int correction(int id, int userID) {
-		Map<String, Integer> paramMap = new HashMap<String, Integer>();
+	public int correction(int userID, String problemKey) throws GrosupException{
+		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userID", userID);
-		paramMap.put("id", id);
+		paramMap.put("problemKey", problemKey);
 		return this.getSession().update("com.grosup.practice.record.correction",paramMap);
 	}
 	
-	public boolean removeRecord(int id, int userID) {
+	public boolean removeRecord(String problemKey, int userID) throws GrosupException{
 		boolean statu = false;
-		Map<String, Integer> paramMap = new HashMap<String, Integer>();
+		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userID", userID);
-		paramMap.put("id", id);
+		paramMap.put("problemKey", problemKey);
 		int rows = this.getSession().insert("com.grosup.practice.record.removeRecord",paramMap);
 		if (rows > 0) {
 			statu = true;
 		}
 		return statu;
 	}
-	/**
-	 * 通过userID，typeID查询错题总数
-	 * @param typeID
-	 * @param userID
-	 * @return 当前类型错题数
-	 */
-	public int queryUserWrongCountByTypeID(int typeID, int userID) {
-		Map<String, Integer> paramMap = new HashMap<String, Integer>();
+	
+	public int queryUserWrongCount(int userID, String knowledgeKey) throws GrosupException{
+		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userID", userID);
-		paramMap.put("typeID", typeID);
-		return this.getSession().selectOne("com.grosup.practice.record.queryUserWrongCountByTypeID",paramMap);
+		paramMap.put("knowledgeKey", knowledgeKey);
+		return this.getSession().selectOne("com.grosup.practice.record.queryUserWrongCount",paramMap);
 	}
 }

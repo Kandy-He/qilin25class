@@ -6,7 +6,7 @@ public class PaperInfoBean {
 	//总题数
 	private int quesCount;
 	//做对题数
-	private int quesCountUnRight;
+	private int quesCountRight;
 	public int getTotalScore() {
 		return totalScore;
 	}
@@ -19,10 +19,10 @@ public class PaperInfoBean {
 	public void setQuesCount(int quesCount) {
 		this.quesCount = quesCount;
 	}
-	public int getQuesCountUnRight() {
-		return quesCountUnRight;
+	public int getQuesCountRight() {
+		return quesCountRight;
 	}
-	public void setQuesCountUnRight(int quesCountUnRight) {
-		this.quesCountUnRight = quesCountUnRight;
+	public void setQuesCountRight(int quesCountRight) {
+		this.quesCountRight = quesCountRight;
 	}
 }

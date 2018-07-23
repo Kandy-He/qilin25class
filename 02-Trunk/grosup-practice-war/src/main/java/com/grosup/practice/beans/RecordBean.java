@@ -10,17 +10,15 @@ public class RecordBean {
 		this.status = 0;
 	}
 	
-	private int id;
+	private String problemKey;
 	
 	private int userID;
 	
+	private String knowledgeKey;
+	
+	private String quesTypeKey;
+	
 	private String recordTime;
-	
-	private int typeID;
-	
-	private String proKey;
-	
-	private String description;
 	
 	private String expression1;
 	
@@ -28,20 +26,21 @@ public class RecordBean {
 	
 	private String expression3;
 	
-	private String result;
+	private String userAnswer;
 	
+	// 题目描述
+	private String description;
+	// 答案描述
 	private String answerDesc;
-	
-	private String correct;
 	
 	private int status;
 
-	public int getId() {
-		return id;
+	public String getProblemKey() {
+		return problemKey;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setProblemKey(String problemKey) {
+		this.problemKey = problemKey;
 	}
 
 	public int getUserID() {
@@ -58,46 +57,6 @@ public class RecordBean {
 
 	public void setRecordTime(String recordTime) {
 		this.recordTime = recordTime;
-	}
-
-	public int getTypeID() {
-		return typeID;
-	}
-
-	public void setTypeID(int typeID) {
-		this.typeID = typeID;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getResult() {
-		return result;
-	}
-
-	public void setResult(String result) {
-		this.result = result;
-	}
-
-	public String getCorrect() {
-		return correct;
-	}
-
-	public void setCorrect(String correct) {
-		this.correct = correct;
-	}
-
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
 	}
 
 	public String getExpression1() {
@@ -124,12 +83,44 @@ public class RecordBean {
 		this.expression3 = expression3;
 	}
 
-	public String getProKey() {
-		return proKey;
+	public String getUserAnswer() {
+		return userAnswer;
 	}
 
-	public void setProKey(String proKey) {
-		this.proKey = proKey;
+	public void setUserAnswer(String userAnswer) {
+		this.userAnswer = userAnswer;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public String getKnowledgeKey() {
+		return knowledgeKey;
+	}
+
+	public void setKnowledgeKey(String knowledgeKey) {
+		this.knowledgeKey = knowledgeKey;
+	}
+
+	public String getQuesTypeKey() {
+		return quesTypeKey;
+	}
+
+	public void setQuesTypeKey(String quesTypeKey) {
+		this.quesTypeKey = quesTypeKey;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getAnswerDesc() {
@@ -139,4 +130,5 @@ public class RecordBean {
 	public void setAnswerDesc(String answerDesc) {
 		this.answerDesc = answerDesc;
 	}
+
 }

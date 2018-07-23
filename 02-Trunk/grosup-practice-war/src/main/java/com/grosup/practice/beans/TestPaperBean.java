@@ -11,6 +11,8 @@ public class TestPaperBean {
 	private int timeLimit;
 	
 	private int quesCount;
+	//试卷总分
+	private int totalScore;
 
 	public String getPaperKey() {
 		return paperKey;
@@ -50,6 +52,14 @@ public class TestPaperBean {
 
 	public void setQuesCount(int quesCount) {
 		this.quesCount = quesCount;
+	}
+
+	public int getTotalScore() {
+		return totalScore;
+	}
+
+	public void setTotalScore(int totalScore) {
+		this.totalScore = totalScore;
 	}
 }
   

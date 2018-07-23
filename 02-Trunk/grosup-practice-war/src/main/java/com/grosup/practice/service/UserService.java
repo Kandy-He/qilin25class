@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.grosup.practice.beans.UserBean;
 import com.grosup.practice.dao.UserDao;
+import com.grosup.practice.util.GrosupException;
 import com.grosup.practice.util.ObjectUtil;
 
 @Service
@@ -23,8 +24,9 @@ public class UserService {
 	 * 人员注册
 	 * @param user
 	 * @return 
+	 * @throws GrosupException 
 	 */
-	public boolean userRegister(UserBean user) {
+	public boolean userRegister(UserBean user) throws GrosupException {
 		boolean status = true;
 		UserBean oldUser = userDao.queryUserBywxID(user.getWxID());
 		if (ObjectUtil.isNull(oldUser)) {
