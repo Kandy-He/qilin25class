@@ -41,7 +41,7 @@ input.long-input{
 .operate-button{
   margin-left: 20rpx;
 }
-.operate-box image{
+.operate-box .icon-image{
   position:relative;
   display: block;
   bottom:150rpx;
@@ -55,4 +55,18 @@ input.long-input{
 }
 .appAnswerBox .question-content{
   padding:10rpx 50rpx; 
+}
+/*分页控制  */
+.paging-box{
+  color: #333;
+  margin: 30rpx 0rpx 0;
+}
+.pagingIcon{
+  width: 48rpx;
+  height: 48rpx;
+  margin: 0 30rpx;
+  vertical-align: middle;
+}
+.paging-right{
+  margin-right: 0
 }

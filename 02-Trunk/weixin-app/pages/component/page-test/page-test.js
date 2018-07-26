@@ -42,9 +42,9 @@ Component({
       //点击试题的名称
       let clickedTestName = e.target.dataset.papername
       //题目总数
-      let quesCount = e.target.dataset.quesCount
+      let quesCount = e.target.dataset.quescount
       //题目限时
-      let timeLimit = e.target.dataset.timeLimit
+      let timeLimit = e.target.dataset.timelimit
       wx.navigateTo({
         url: '../../pages/testPage/testPage?paperKey=' + clickedPaperKey + '&paperName=' + clickedTestName + '&quesCount=' + quesCount + '&timeLimit=' + timeLimit
       })

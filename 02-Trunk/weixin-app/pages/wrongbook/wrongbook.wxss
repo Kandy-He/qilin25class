@@ -36,12 +36,12 @@ input.long-input{
   box-sizing: border-box;
   width: 100%;
   padding: 0 50rpx;
-  bottom: 50rpx;
+  bottom: 20rpx;
 }
 .operate-button{
   margin-left: 20rpx;
 }
-.operate-box image{
+.operate-box .rightOrWrongImg{
   position:relative;
   display: block;
   bottom:150rpx;
@@ -52,7 +52,23 @@ input.long-input{
 .appAnswerBox{
   padding-left: 20rpx;
   padding-top: 30rpx;
+  padding-bottom:200rpx;
 }
 .appAnswerBox .question-content{
   padding:10rpx 50rpx; 
+}
+
+/*分页控制  */
+.paging-box{
+  color: #333;
+  margin: 30rpx -30rpx 0;
+}
+.pagingIcon{
+  width: 48rpx;
+  height: 48rpx;
+  margin: 0 30rpx;
+  vertical-align: middle;
+}
+.paging-right{
+  margin-right: 0
 }

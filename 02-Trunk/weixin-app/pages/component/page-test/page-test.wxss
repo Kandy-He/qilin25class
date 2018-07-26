@@ -13,9 +13,9 @@
   font-size:45rpx;
   padding:40rpx 0 10rpx;
 }
-.startTest{
+/* .startTest{
   margin-bottom: 40rpx
-}
+} */
 .item-text{
   color: #555;
   font-size: 33rpx;

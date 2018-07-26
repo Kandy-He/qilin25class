@@ -86,8 +86,6 @@ Page({
               'third_session': app.globalData.userId
             },
             success: res => {
-              //本地存储识别码
-              console.log(res.data.data)
               //循环找出所有不重复的年级和班级
               getInrepeatClasses(res)
             }
@@ -225,27 +223,36 @@ Page({
       classID: this.data.multiIdArrayForAllGradesAndClassed[1][this.data.multiClassIndex[1]],
       userType: this.data.roleIdListArray[this.data.initRoleIndex]
     };
-    wx.request({
-      url: 'https://www.grosup.com/practice/user/add.do',
-      method: 'post',
-      header: {
-        'content-type': 'application/json;charset=UTF-8',
-        // 'content-type': 'application/x-www-form-urlencoded',
-        'third_session': app.globalData.userId
-      },
-      //注意这里头像有可能用户选用微信图像，需要做个判断
-      data: sendData,
-      success: (res) => {
-        if (res.data.code == "success") {
-          this.setData({
-            buttonText: "信息已提交，正在审核中",
-            buttonType: "primary",
-            buttonDisable: true
-          })
-        }
+    if (sendData.name){
+      wx.request({
+        url: 'https://www.grosup.com/practice/user/add.do',
+        method: 'post',
+        header: {
+          'content-type': 'application/json;charset=UTF-8',
+          // 'content-type': 'application/x-www-form-urlencoded',
+          'third_session': app.globalData.userId
+        },
+        //注意这里头像有可能用户选用微信图像，需要做个判断
+        data: sendData,
+        success: (res) => {
+          if (res.data.code == "success") {
+            this.setData({
+              // buttonText: "信息已提交，正在审核中",
+              buttonText: "信息已提交，待审核后,重新进小程序体验",
+              buttonType: "primary",
+              buttonDisable: true
+            })
+          }
 
-      }
-    })
+        }
+      })
+    }else{
+      wx.showToast({
+        title: '请将用户名称补充完整',
+        icon: 'none'
+      })
+    }
+    
 
   },
   navigateTo: function (e) {
@@ -263,7 +270,6 @@ Page({
         content: '只有完成注册才有权限访问当前页面，请先完成注册信息',
         success (res) {
           if (res.confirm) {
-            console.log('用户点击确定')
             _this.setData({
               //展示注册页，点亮我的按钮
               userTabbarClickKey: "my",

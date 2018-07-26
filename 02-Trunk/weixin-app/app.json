@@ -5,7 +5,8 @@
     "pages/register/register",
     "pages/questions/questions",
     "pages/wrongbook/wrongbook",
-    "pages/testPage/testPage"
+    "pages/testPage/testPage",
+    "pages/previewData/previewData"
   ],
   "window": {
     "backgroundColor": "#0091dc",

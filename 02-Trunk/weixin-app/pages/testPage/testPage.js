@@ -7,32 +7,49 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title: "",
-    // questionBodyArray: ["100分=", "(?)","角"]
-    questionBodyArray: [],//题目主干数组
+    /**
+     * 来自上一个页面
+     */
+    paperName: "",//测试卷名称
+    paperKey: "",//测试题关键字
+    quesCount: "",//一共多少道题
+    timeLimit: "",//限时多长时间
+
+    howToAnswer: "",//答题规范
+    showExpression1: false,//是否展示第一步
+    showExpression2: false,//是否展示第二步
+    showExpression3: false,//是否展示第三步
+    showAnswerDesc: false,//是否展示答题描述
+    
+    questionBodyArray: [],//题目主干数组  questionBodyArray: ["100分=", "(?)","角"]
     expression1: "",//填写的表达式1
     expression2: "",//填写的表达式2
     expression3: "",//填写的表达式3
     answerDesc: [],//答题描述的主干数组
-    answer: [],//填写的答案,用数组保存。eg:[undefined,4,undefined,6,undefined], 提交之前再拼成 "4;6"提交
-    qID: "",//题目id
-    qType: "calculate",
-    typeID: "",//题型id
-    qType: "",//题型
+    answer: [],//用户填写的答案,用数组保存。eg:[undefined,4,undefined,6,undefined], 提交之前再拼成 "4;6"提交
+
+    quesPosition: 1,//默认从哪一道题开始
+
     inputDisabled: false,//input输入状态，当点击提交时候修改为true,其他按钮点击则为false
     answerStatus: -1,//回答状态：-1未回答，0答题错误，1答题正确
 
-    //测试页进来
-    paperKey: "",
-    quesPosition: 1,
-    //一共多少道题
-    quesCount: "",
-    //限时多长时间
-    timeLimit: "",
+    
     //是否作过
-    isDone: false,
+    isDone: "N",
     //问题答案
-    quesScore: ""
+    quesScore: "",
+    userAnswer: "",
+    // 如果此题已经做过
+    /**
+     * 引入错题页展示之前答案的逻辑
+     */
+    wrongAnswerArray: [],
+
+    //没有提交测试吗？
+    unsubmit: true,
+    totalScore: "",
+    quesCount: "",
+    quesCountRight: ""
   },
   /**
    * 生命周期函数--监听页面加载
@@ -40,21 +57,32 @@ Page({
   onLoad: function (options) {
     //同步顶部标签
     this.setData({
-      title: options.paperName,
+      paperName: options.paperName,
       paperKey: options.paperKey,
+      //题目总数
       quesCount: options.quesCount,
+      //时间限制
       timeLimit: options.timeLimit,
     })
     //调用本组件共用方法
     this.queryQuesBodyForTest()
-
-
   },
   //本页面共用方法-请求测试题主体
   queryQuesBodyForTest() {
+    this.setData({
+      //初始化数据
+      questionBodyArray: [],//题目主干数组
+      expression1: "",//填写的表达式1
+      expression2: "",//填写的表达式2
+      expression3: "",//填写的表达式3
+      answerDesc: [],//答题描述的主干数组
+      answer: [],//填写的答案,用数组保存。eg:[undefined,4,undefined,6,undefined], 提交之前再拼成 "4;6"提交
+      //错题答案数组也要清空
+      wrongAnswerArray: [],
+    })
     //请求知识点主体
     wx.request({
-      url: 'https://www.grosup.com/practice/testPaper/getQues.do',
+      url: 'https://www.grosup.com/practice/testPaper/getQuesByPosition.do',
       header: {
         'content-type': 'application/x-www-form-urlencoded',
         'third_session': app.globalData.userId
@@ -67,84 +95,114 @@ Page({
       success: res => {
         //返回知识点id,answer,description
         let questionDetail = res.data.data
-        //保存此题是否做过
+        //题目展示配置对象
+        let configStepsObj = util.quesTypeKeyFilter(questionDetail)
+        //题目主体显示数组
+        let questionBodyArray = util.formatQuestionContent(questionDetail.description)
+        //答题描述显示数组
+        let answerDesc = util.formatQuestionContent(questionDetail.answerDesc)
         this.setData({
-          isDone: res.data.isDone,
-          quesScore: res.data.quesScore || ""
+          quesTypeKey: questionDetail.quesTypeKey,
+          problemKey: questionDetail.problemKey,
+
+          questionBodyArray: questionBodyArray,
+          answerDesc: answerDesc,
+          howToAnswer: configStepsObj.howToAnswer || "",//答题规范
+          showExpression1: configStepsObj.showExpression1 || "",//是否展示第一步
+          showExpression2: configStepsObj.showExpression2 || "",//是否展示第二步
+          showExpression3: configStepsObj.showExpression3 || "",//是否展示第三步
+          showAnswerDesc: configStepsObj.showAnswerDesc || "",//是否展示答题描述
         })
-        //根据返回的proKey判断是否是应用题
-        if (questionDetail.proKey == "calculateQues") {//计算题
+        // 判断此题是否做过
+        if (questionDetail.isDone == "N"){ //没做过
+          //保存此题没做过，页面渲染提交按钮
           this.setData({
-            qID: questionDetail.id,
-            questionBodyArray: util.formatQuestionContent(questionDetail.description),
-            qType: questionDetail.proKey
+            isDone: questionDetail.isDone
           })
-        } else if (questionDetail.proKey == "applicationQues") {//应用题
+        } else if (questionDetail.isDone == "Y") {
+          //保存此题做过，页面渲染确定修改按钮
           this.setData({
-            qID: questionDetail.id,
-            questionBodyArray: util.formatQuestionContent(questionDetail.description),
-            qType: questionDetail.proKey,
-            qType: "application",
-            expression1: questionDetail.expression1,
-            expression2: questionDetail.expression2,
-            expression3: questionDetail.expression3,
-            answerDesc: util.formatQuestionContent(questionDetail.answerDesc)
-
+            isDone: questionDetail.isDone,
+            quesScore: questionDetail.quesScore,
+            userAnswer: questionDetail.userAnswer,
+            expression1: questionDetail.expression1,//填写的表达式1
+            expression2: questionDetail.expression2,//填写的表达式2
+            expression3: questionDetail.expression3,//填写的表达式3
           })
+          //此处判断答题框是在题干中还是答题描述中
+          if (questionBodyArray.length > 1) {//在题干中
+            this.setData({
+              //跟普通题的展示不一样,再带个错误答案进去  将原本["100-20=","(?)"] ==> ["100-20=", "80"]  80是错误答案中拿出来的
+              wrongAnswerArray: util.formatWrongbookArray(questionBodyArray, questionDetail.userAnswer)
+            })
+          } else {
+            this.setData({
+              wrongAnswerArray: util.formatWrongbookArray(answerDesc, questionDetail.userAnswer)
+            })
+          }
         }
-
       }
     })
   },
-  //点击测试提交按钮
-  bindSubmitTapForTest: function () {
-    //首先将quesPosition修改为下一题
+  //点击提交或者确认修改
+  bindSubmitclick () {
     //计算题，应用题统一传参格式
-    let sendData;
-    sendData = {
+    let sendData = {
       userID: app.globalData.userInfoInOurSystem.personInfo.id,
       isDone: this.data.isDone,
       paperKey: this.data.paperKey,
-      quesID: this.data.qID,
+      problemKey: this.data.problemKey,
       quesScore: this.data.quesScore,
       quesPosition: this.data.quesPosition,
-      // typeID: this.data.typeID,
-      userAnswer: util.turnArrayToAnswerStr(this.data.answer),//主题目答案
-      expression1: this.data.expression1,//分步1答案
-      expression2: this.data.expression2,//分步2答案
-      expression3: this.data.expression3,//分步3答案
+      userAnswer: util.formatAnswerToRightStyle(util.turnArrayToAnswerStr(this.data.answer)) || this.data.userAnswer,//主题目答案,如果用户没有输入就查看他之前错题答案
+      expression1: util.formatExpressionToRightStyle(this.data.expression1),//分步1答案
+      expression2: util.formatExpressionToRightStyle(this.data.expression2),//分步2答案
+      expression3: util.formatExpressionToRightStyle(this.data.expression3),//分步3答案
     }
     //验证答案是否正确
     wx.request({
-      url: 'https://www.grosup.com/practice/testPaper/checkQues.do',//做下一题之前检查当前题
+      url: 'https://www.grosup.com/practice/testPaper/checkQues.do',
       method: 'post',
       header: {
-        'content-type': 'application/x-www-form-urlencoded',
+        'content-type': 'application/json',
         'third_session': app.globalData.userId
       },
       data: sendData,
       success: res => {
-        //成功返回，进入下一题
-        if (res.data.code != "success") {
-          this.setData({
-            //修改当前答题index
-            quesPosition: this.data.quesPosition + 1,
-            //初始化数据
-            questionBodyArray: [],//题目主干数组
-            expression1: "",//填写的表达式1
-            expression2: "",//填写的表达式2
-            expression3: "",//填写的表达式3
-            answerDesc: [],//答题描述的主干数组
-            answer: [],//填写的答案,用数组保存。eg:[undefined,4,undefined,6,undefined], 提交之前再拼成 "4;6"提交
-            qID: "",//题目id
-            qType: "calculate",
-            qType: ""//题型
-          })
-          //调用本组件共用方法
-          this.queryQuesBodyForTest()
-        }
+        this.setData({
+          isDone: "Y"
+        })
       }
     })
+  },
+  //点击两个切换题按钮
+  bindTurnQues (e) {
+    //点击的是上一题还是下一题
+    let testQuesTurnKey = e.target.dataset.testquesturn
+    /**
+    * 将quesPosition修改为指定题
+    */
+    let quesPositionNow = testQuesTurnKey == "last" ? this.data.quesPosition - 1 : this.data.quesPosition + 1
+    // 判断当前题是否合法
+    if (quesPositionNow == 0) {
+      wx.showToast({
+        title: '已经是第一道题了',
+        icon: "none"
+      })
+    } else if (quesPositionNow > this.data.quesCount) {
+      wx.showToast({
+        title: '已经是最后道题了',
+        icon: "none"
+      })
+    }else{//positon合法
+      this.setData({
+        //输入答案清零，重置题目信息
+        quesPosition: quesPositionNow
+      })
+      //调用本组件共用方法
+      this.queryQuesBodyForTest()
+    }
+    
   },
   //主题目输入答案事件,由于答案可能有多个输入框，所以将答案按照数组储存 
   bindInputAnswer: function (e) {
@@ -155,10 +213,44 @@ Page({
   },
   //应用题的分步输入答案
   bindInputQuesStep: function (e) {
-    let quesItem = e.target.dataset.quesSteps
+    let quesItem = e.target.dataset.quessteps
     //修改对应答案
     this.setData({
       [quesItem]: e.detail.value
+    })
+  },
+  //点击返回检查
+  bindbackToRecheck () {
+    this.setData({
+      quesPosition: 1
+    })
+    //重新请求题目主体
+    this.queryQuesBodyForTest()
+  },
+  //点击交卷
+  bindSendSubmitPaper () {
+    //计算题，应用题统一传参格式
+    let sendData = {
+      userID: app.globalData.userInfoInOurSystem.personInfo.id,
+      paperKey: this.data.paperKey,
+    }
+    //验证答案是否正确
+    wx.request({
+      url: 'https://www.grosup.com/practice/testPaper/paperSubmit.do',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'third_session': app.globalData.userId
+      },
+      data: sendData,
+      success: res => {
+        let backData = res.data.data
+        this.setData({
+          unsubmit: false,
+          totalScore: backData.totalScore,
+          quesCount: backData.quesCount,
+          quesCountRight: backData.quesCountRight
+        })
+      }
     })
   }
 })

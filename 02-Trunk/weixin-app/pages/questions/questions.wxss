@@ -52,6 +52,7 @@ input.long-input{
 .appAnswerBox{
   padding-left: 20rpx;
   padding-top: 30rpx;
+  padding-bottom:200rpx;
 }
 .appAnswerBox .question-content{
   padding:10rpx 50rpx; 

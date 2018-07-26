@@ -1,0 +1,12 @@
+<!--pages/previewData/previewData.wxml-->
+<!--pages/wrongbook/wrongbook.wxml-->
+<view class='container'>
+  <view class='inner-box'>
+    <view class='items'>
+      <text class='register-title'>个人成绩统计表</text>
+    </view>
+    <view class="question-body">
+    </view>
+  </view>
+</view>
+
