@@ -38,7 +38,7 @@
             (
                 SELECT
                     userID,
-                    flower,
+                    SUM(flower) as flower,
                     SUM(haveDone) AS quesTotalDone,
                     SUM(onceRight) AS quesOnceRightTotal
                 FROM
@@ -92,5 +92,40 @@
 	t_ques_type ON
 	obj.quesTypeKey = t_ques_type.quesTypeKey
 	</select>
-	
+	<!-- 根据学生ID获取学生的练习统计情况 -->
+	<select id="getStatInfoByUserID" parameterType="int" resultType="com.grosup.practice.beans.KnowledgeDTO">
+	select tst.*,ROUND((onceRight/haveDone)*100) AS
+	onceRightRate,tkn.knowledgeName FROM t_statistics tst
+	LEFT JOIN t_knowledge tkn ON tst.knowledgeKey = tkn.knowledgeKey
+	where userID = #{userID}
+	</select>
+	<!-- 获取学生练习题综合统计 -->
+	<select id="getQuesTotalStatInfo" parameterType="int" resultType="com.grosup.practice.beans.StatisticsBean">
+	SELECT
+	tst.userID,
+	SUM(tst.haveDone) AS quesTotalDone,
+	SUM(tst.onceRight) AS quesOnceRightTotal
+	FROM
+	t_statistics tst
+	WHERE userID = #{userID}
+	</select>
+	<!-- 获取学生测试卷综合统计 -->
+    <select id="getPaperTotalStatInfo" parameterType="int" resultType="com.grosup.practice.beans.PaperStatBean">
+    select count(1) AS paperDoneTotal ,SUM(userScore) AS score,(SUM(quesCount)-SUM(doneRight)) AS wrongCount  FROM t_user_paper_done
+    WHERE userID = #{userID}
+    </select>
+	<!-- 获取试卷haveDone信息 -->
+	<select id="getPaperHaveDoneInfo" parameterType="int" resultType="com.grosup.practice.beans.PaperStatBean">
+	select
+	tupd.userID,tupd.paperKey,tupd.userScore as score,tupd.useTime,(tupd.quesCount-tupd.doneRight)
+	AS wrongCount,ttp.paperName from t_user_paper_done tupd
+	LEFT JOIN t_test_paper ttp
+	ON tupd.paperKey = ttp.paperKey
+	where userID = #{userID}
+	</select>
+	<!-- 增加指定数量小红花 -->
+	<update id="flowrIncrease" parameterType="map">
+	   update t_statistics set flower = (flower + #{increase})
+	   where userID = #{userID} and knowledgeKey = #{knowledgeKey}
+	</update>
 </mapper>

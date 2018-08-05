@@ -11,6 +11,19 @@ public class KnowledgeDTO {
 	private int onceRight;
 	
 	private int flower;
+	/**
+	 * 一次做对正确率
+	 */
+	private int onceRightRate;
+
+
+	public int getOnceRightRate() {
+		return onceRightRate;
+	}
+
+	public void setOnceRightRate(int onceRightRate) {
+		this.onceRightRate = onceRightRate;
+	}
 
 	public String getKnowledgeKey() {
 		return knowledgeKey;

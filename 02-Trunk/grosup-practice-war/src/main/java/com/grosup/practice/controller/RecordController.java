@@ -34,6 +34,7 @@ public class RecordController {
 			if (ObjectUtil.isNull(bean)) {
 				result.put("code", CodeUtil.NODATA);
 				result.put("msg", CodeUtil.NODATA_MSG);
+				return result;
 			}
 			int wrongCount = recordService.queryUserWrongCount(userID, knowledgeKey);
 			result.put("code", CodeUtil.SUCCESS);

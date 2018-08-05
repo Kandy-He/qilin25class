@@ -21,7 +21,7 @@ public class RankingTask {
 	private StatisticsDao statisticsDao;
 	
 //	@Scheduled(cron="0 0 6 * * ?") //每天早上六点触发
-	 @Scheduled(cron="0/30 * * * * ? ") //间隔5秒执行  
+	 @Scheduled(cron="0 0/5 * * * ? ") //间隔5分执行  
 	public void getRanking() {
 		logger.debug("定时任务开始啦 哈哈哈");
 		System.out.println("定时任务开始啦 哈哈哈");

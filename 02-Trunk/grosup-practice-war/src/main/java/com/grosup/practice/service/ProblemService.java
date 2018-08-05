@@ -60,33 +60,33 @@ public class ProblemService {
 		}
 		
 		//判断错题表是否存在此题
-		boolean checkIsExistInRecord = false;
-		
+		RecordBean record = new RecordBean();
+		record.setProblemKey(problemKey);
+		record.setUserID(userID);
+		record.setUserAnswer(answer);
+		record.setExpression1(expression1);
+		record.setExpression2(expression2);
+		record.setExpression3(expression3);
+		boolean checkIsExistInRecord = recordDao.checkIsExist(record);
 		//判断做题结果更新做题记录及错误结果
 		if (!result) {
-			RecordBean record = new RecordBean();
-			record.setProblemKey(problemKey);
-			record.setUserID(userID);
-			record.setUserAnswer(answer);
-			record.setExpression1(expression1);
-			record.setExpression2(expression2);
-			record.setExpression3(expression3);
-			//更新做题记录并添加到错题集
 			//TODO 可以优化为存在即更新
-			if (recordDao.checkIsExist(record)) {//如果错题存在则更新，否则添加一条新记录 
-				checkIsExistInRecord = true;
+			if (checkIsExistInRecord) {//如果错题存在则更新，否则添加一条新记录 
 				recordDao.updateRecord(record);
 			} else {
 				recordDao.addRecord(record);
+				statisticsDao.updateUserDoneByUnCorrect(userID, problemBean.getKnowledgeKey());
 			}
-			statisticsDao.updateUserDoneByUnCorrect(userID, problemBean.getKnowledgeKey());
+		} else {
+			// 更正错题状态
+			if (checkIsExistInRecord) {
+				recordDao.correction(userID, problemBean.getProblemKey());
+				statisticsDao.flowrIncrease(userID, problemBean.getKnowledgeKey(), 1);
+			} else {
+				statisticsDao.updateUserDoneByCorrect(userID, problemBean.getKnowledgeKey());
+			}
 		}
-		// 更正错题状态
-		if (checkIsExistInRecord) {
-			recordDao.correction(userID, problemBean.getProblemKey());
-		} 
-		statisticsDao.updateUserDoneByCorrect(userID, problemBean.getKnowledgeKey());
-		return result;
+		return result; 
 	}
 	
 	

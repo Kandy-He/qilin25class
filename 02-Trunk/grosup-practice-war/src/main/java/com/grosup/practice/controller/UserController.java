@@ -142,7 +142,7 @@ private static Logger logger = Logger.getLogger(UserController.class);
 	}
 	@RequestMapping(method = RequestMethod.GET,value = "query")
 	@ResponseBody
-	public JSONObject queryClass() throws IOException {
+	public JSONObject queryClass() {
 		JSONObject result = new JSONObject();
 		JSONArray data = new JSONArray();
 		List<ClassInfoBean> list = classInfoService.queryClass();

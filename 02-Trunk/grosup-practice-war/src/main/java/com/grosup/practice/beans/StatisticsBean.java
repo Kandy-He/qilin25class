@@ -32,6 +32,10 @@ public class StatisticsBean {
 	private String quesCorrectionRate;
 	
 	private String highestWrongType;
+	/**
+	 * 错题订正率
+	 */
+	private int wrongCorrection;
 	
 	public String getHighestWrongType() {
 		return highestWrongType;
@@ -119,5 +123,13 @@ public class StatisticsBean {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+	public int getWrongCorrection() {
+		return wrongCorrection;
+	}
+
+	public void setWrongCorrection(int wrongCorrection) {
+		this.wrongCorrection = wrongCorrection;
 	}
 }
