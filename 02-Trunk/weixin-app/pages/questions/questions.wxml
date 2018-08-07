@@ -8,6 +8,7 @@
       </view>
     </view>
     <view class="question-body">
+    <view class='leftTime'>{{timePast}}</view>
       <form id="form1">
         <!--题目  -->
         <view class='question-content'>

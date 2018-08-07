@@ -1,8 +1,8 @@
-<!--pages/wrongbook/wrongbook.wxml-->
+<!--pages/paperWrongBook/paperWrongBook.wxml-->
 <view class='container'>
   <view class='inner-box'>
     <view class='items'>
-      <text class='register-title'>错题列表-{{knowledgename}}</text>
+      <text class='register-title'>{{papername}}-错题</text>
       <view>
         <text class='howtoanswer'>{{howToAnswer}}</text>
       </view>
@@ -72,3 +72,4 @@
     </view>
   </view>
 </view>
+

@@ -70,3 +70,10 @@ input.long-input{
 .paging-right{
   margin-right: 0
 }
+.leftTime{
+  position: absolute;
+  top: 15rpx;
+  width: 100%;
+  text-align: center;
+  font-size: 35rpx;
+}

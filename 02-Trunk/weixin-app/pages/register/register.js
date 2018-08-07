@@ -36,70 +36,88 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let userInfo = app.globalData.userInfoInOurSystem.personInfo
-    let userStatus = userInfo.status
-    // let userStatus = -1
-    if (userStatus == 0) {//审核中, 同步所选班级
-      this.setData({
-        selectRole: userInfo.formatSelectRole,
-        ifPushing: true,
-        initImgUrl: userInfo.icon,
-        initSexIndex: userInfo.gender,
-        username: userInfo.name,
-        selectedClass: userInfo.gradeName + userInfo.className,
-        buttonText: "审核中",
-        buttonType: "primary",
-        buttonDisable: true
+    //如果是从修改信息按钮进来
+    if (options.resetMessage) {
+      wx.request({
+        url: 'https://www.grosup.com/practice/user/info.do',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'third_session': app.globalData.userId
+        },
+        success: res => {
+          this.loadClass()
+          this.setData({
+            username: res.data.data.name
+          })
+        }
       })
-    }else{//未提交审核或者审核被拒
-      //由于query接口加载顺序问题，将本页面的js执行放到app.js中
-      let loadClass = () => {
-        //循环找出所有不重复的年级和班级
-        let getInrepeatClasses = (res) => {
-          this.setData({
-            classData: res.data.data
-          })
-          let dataLength = res.data.data.length;
-          let gradeList = [];
-          let gradeIdList = [];
-          let classList = [];
-          let classIdList = [];
-          for (let i = 0; i < dataLength; i++) {
-            gradeList.push(this.data.classData[i].gradeName);
-            gradeIdList.push(this.data.classData[i].gradeID);
-            classList.push(this.data.classData[i].className);
-            classIdList.push(this.data.classData[i].classID);
-          }
-          //
-          this.setData({
-            multiArrayForAllGradesAndClassed: [app.globalData.filterRepeatArray(gradeList), app.globalData.filterRepeatArray(classList)],
-            multiIdArrayForAllGradesAndClassed: [app.globalData.filterRepeatArray(gradeIdList), app.globalData.filterRepeatArray(classIdList)],
-            BackupClassArray: [app.globalData.filterRepeatArray(gradeList), app.globalData.filterRepeatArray(classList)],
-            BackupClassIdArray: [app.globalData.filterRepeatArray(gradeIdList), app.globalData.filterRepeatArray(classIdList)]
-          })
-        }
-        if (userStatus == -1 | 2) {
-          wx.request({
-            url: 'https://www.grosup.com/practice/user/query.do',
-            header: {
-              'content-type': 'application/x-www-form-urlencoded',
-              'third_session': app.globalData.userId
-            },
-            success: res => {
-              //循环找出所有不重复的年级和班级
-              getInrepeatClasses(res)
-            }
-          })
-        }
-      }
-      loadClass()//加载可选择列表
-      //如果是审核未通过，应该告知用户重新提交
-      if (userStatus == 2) {
+    }else{
+      let userInfo = app.globalData.userInfoInOurSystem.personInfo
+      let userStatus = userInfo.status
+      // let userStatus = -1
+      if (userStatus == 0) {//审核中, 同步所选班级
         this.setData({
-          buttonText: "点击重新提交（审核被拒绝）",
-          buttonType: "warn"
+          selectRole: userInfo.formatSelectRole,
+          ifPushing: true,
+          initImgUrl: userInfo.icon,
+          initSexIndex: userInfo.gender,
+          username: userInfo.name,
+          selectedClass: userInfo.gradeName + userInfo.className,
+          buttonText: "审核中",
+          buttonType: "primary",
+          buttonDisable: true
         })
+      } else {//未提交审核或者审核被拒
+        //由于query接口加载顺序问题，将本页面的js执行放到app.js中
+        this.loadClass(userStatus)//加载可选择列表
+        //如果是审核未通过，应该告知用户重新提交
+        if (userStatus == 2) {
+          this.setData({
+            buttonText: "点击重新提交（审核被拒绝）",
+            buttonType: "warn"
+          })
+        }
       }
+    }
+    
+  },
+  loadClass(userStatus) {
+    //循环找出所有不重复的年级和班级
+    let getInrepeatClasses = (res) => {
+      this.setData({
+        classData: res.data.data
+      })
+      let dataLength = res.data.data.length;
+      let gradeList = [];
+      let gradeIdList = [];
+      let classList = [];
+      let classIdList = [];
+      for (let i = 0; i < dataLength; i++) {
+        gradeList.push(this.data.classData[i].gradeName);
+        gradeIdList.push(this.data.classData[i].gradeID);
+        classList.push(this.data.classData[i].className);
+        classIdList.push(this.data.classData[i].classID);
+      }
+      //
+      this.setData({
+        multiArrayForAllGradesAndClassed: [app.globalData.filterRepeatArray(gradeList), app.globalData.filterRepeatArray(classList)],
+        multiIdArrayForAllGradesAndClassed: [app.globalData.filterRepeatArray(gradeIdList), app.globalData.filterRepeatArray(classIdList)],
+        BackupClassArray: [app.globalData.filterRepeatArray(gradeList), app.globalData.filterRepeatArray(classList)],
+        BackupClassIdArray: [app.globalData.filterRepeatArray(gradeIdList), app.globalData.filterRepeatArray(classIdList)]
+      })
+    }
+    if (userStatus == -1 | 2) {
+      wx.request({
+        url: 'https://www.grosup.com/practice/user/query.do',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'third_session': app.globalData.userId
+        },
+        success: res => {
+          //循环找出所有不重复的年级和班级
+          getInrepeatClasses(res)
+        }
+      })
     }
   },
   bindInputName: function (e) {
@@ -238,7 +256,7 @@ Page({
           if (res.data.code == "success") {
             this.setData({
               // buttonText: "信息已提交，正在审核中",
-              buttonText: "信息已提交，待审核后,重新进小程序体验",
+              buttonText: "信息已提交，待审核后，重新进小程序体验",
               buttonType: "primary",
               buttonDisable: true
             })

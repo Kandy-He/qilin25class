@@ -52,6 +52,11 @@ Component({
       wx.navigateTo({
         url: '../../pages/previewData/previewData'
       })
+    },
+    clickEdit () {
+      wx.navigateTo({
+        url: '../../pages/register/register?resetMessage=student'
+      })
     }
   }
 })

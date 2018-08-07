@@ -17,12 +17,13 @@
     <view class='items'>
       <text class='left-label'>姓名：</text>
       <text>{{studentName}}</text>
-      <button class='message-item operate-button fr'><text>修改</text></button>
+      <button class='message-item operate-button fr' bindtap='clickEdit'><text>修改</text></button>
     </view>
-     <view class='items'>
+    <!-- <view class='items'>
       <text class=''>我的战绩统计报表：</text>
-    </view>
+    </view> -->
     <view class='items'>
-      <text class=''>2018年7月12日0点更新</text>
+      <!-- <text class=''>2018年7月12日0点更新</text> -->
+      <text class=''>我的战绩统计报表：</text>
       <button class='message-item operate-button fr' bindtap='bindPreviewDataclick'>查看</button>
     </view>

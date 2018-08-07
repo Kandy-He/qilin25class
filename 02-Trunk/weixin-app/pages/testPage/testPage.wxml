@@ -8,6 +8,7 @@
       </view>
     </view>
     <view class="question-body" wx:if="{{unsubmit}}">
+      <view class='leftTime'>{{timeLeft}}</view>
       <form id="form1">
         <!--题目  -->
         <view class='question-content'>

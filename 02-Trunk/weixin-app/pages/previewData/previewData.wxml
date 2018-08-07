@@ -6,6 +6,93 @@
       <text class='register-title'>个人成绩统计表</text>
     </view>
     <view class="question-body">
+      <view class='items-title'>
+        <text class="items {{initShow == 'practice'?'active':''}}" bindtap='practiceClick'>练习题</text>
+        <text class="items {{initShow == 'practice'?'':'active'}}" bindtap='testClick'>测试题</text>
+      </view>
+      <!-- 练习模块 -->
+      <view class='preview-body' wx:if="{{initShow == 'practice'}}">
+        <view class="items-box-class">
+          <view>
+            <text class="small-item-title">共做练习题：</text>{{quesTotalInfo.quesTotalDone}}道
+          </view>
+          <view>
+            <text class="small-item-title">一次正确率：</text>{{quesTotalInfo.quesCorrectionRate}}%
+          </view>
+          <view>
+            <text class="small-item-title">错题：</text>{{quesTotalInfo.wrongTotal}}道
+          </view>
+          <view>
+            <text class="small-item-title">错题订正：</text>
+            <!-- {{quesTotalInfo.wrongCorrectionRate}} -->
+          </view>
+          <view>
+            <text class="small-item-title">最高错误题型：</text>
+            <!-- {{quesTotalInfo.wrongHighest}} -->
+          </view>
+        </view>
+        <block wx:for="{{knowledgeInfo}}">
+          <view class="items-box-class">
+            <view>
+              <text class="small-item-title">{{item.knowledgeName}}：</text>{{item.haveDone}}道
+            </view>
+            <view>
+              <text class="small-item-title">一次正确率：</text>{{item.onceRightRate}}%
+            </view>
+            <view>
+              <text class="small-item-title">错题：</text>{{item.haveDone - item.onceRight}}道
+            </view>
+            <view>
+              <text class="small-item-title">错题订正：</text>
+              <!-- 600题 -->
+            </view>
+            <view>
+              <text class="small-item-title">最高错误题型：</text>
+              <!-- 600题 -->
+            </view>
+          </view>
+        </block>
+      </view>
+      <!-- 测试模块 -->
+      <view class='preview-body' wx:else>
+        <view class="items-box-class">
+          <view>
+            <text class="small-item-title">共做测试卷：</text>{{paperTotalInfo.paperDoneTotal}}套
+          </view>
+          <view>
+            <text class="small-item-title">平均得分：</text>{{paperTotalInfo.scoreAvg}}分
+          </view>
+          <view>
+            <text class="small-item-title">错题：</text>{{paperTotalInfo.wrongTotal}}题
+          </view>
+          <view>
+            <text class="small-item-title">错题订正：</text>
+            <!-- 600题 -->
+          </view>
+          <view>
+            <text class="small-item-title">最高错误题型：</text>
+            <!-- 600题 -->
+          </view>
+        </view>
+        <block wx:for="{{paperHaveDoneInfo}}">
+          <view class="items-box-class">
+            <view>
+              <text class="small-item-title">{{item.paperName}}：</text>{{item.score}}分
+            </view>
+            <view>
+              <text class="small-item-title">错题：</text>{{item.wrongCount}}道
+            </view>
+            <view>
+              <text class="small-item-title">错题订正：</text>
+              <!-- 600题 -->
+            </view>
+            <view>
+              <text class="small-item-title">最高错误题型：</text>
+              <!-- 600题 -->
+            </view>
+          </view>
+        </block>
+      </view>
     </view>
   </view>
 </view>

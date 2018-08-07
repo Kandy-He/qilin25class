@@ -15,6 +15,7 @@ Page({
 
     quesTypeKey: "",//题型关键字，再来一题用
     problemKey: "",//问题关键字,提交答案用
+    timePast: "",
 
     howToAnswer: "",//答题规范
     showExpression1: false,//是否展示第一步
@@ -45,6 +46,35 @@ Page({
         knowledgename: options.knowledgename,
         knowledgekey: options.knowledgekey
       })
+      //开始计时
+      let time = 0;//30分钟换算成1800秒
+      let timer = setInterval(() => {
+        time = time + 1;
+        var minute = parseInt(time / 60);
+        var second = parseInt(time % 60);
+        this.setData({
+          timePast: '你已经做了' + minute + '分' + second + '秒'
+        }) 
+        if (minute != 0 && minute % 20 == 0){
+          wx.showModal({
+            title: '温馨提示',
+            content: '你已经做了20分钟，让眼睛休息一下吧',
+            success: function (res) {
+              if (res.confirm) {
+                clearInterval(timer)
+                wx.navigateBack({
+                  delta: 1
+                })
+                // wx.navigateTo({
+                //   url: '../../pages/main/main'
+                // })
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }, 1000);
       //调用本组件共用方法
       this.queryQuesBody()
   },

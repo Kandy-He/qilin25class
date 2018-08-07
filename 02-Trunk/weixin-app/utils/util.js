@@ -123,11 +123,11 @@ const formatExpressionToRightStyle = (expressionStr) => {
   let answerArr = expressionStr.split("")
   for (let i = 0, answerArrLen = answerArr.length; i < answerArrLen; i++) {
     switch (answerArr[i]) {
-      case "（":
-        answerArr[i] = "("
+      case "(":
+        answerArr[i] = "（"
         break;
-      case "）":
-        answerArr[i] = ")"
+      case ")":
+        answerArr[i] = "）"
         break;
       case "×":
         answerArr[i] = "*"

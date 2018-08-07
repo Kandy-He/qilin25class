@@ -12,8 +12,10 @@ Page({
      */
     paperName: "",//测试卷名称
     paperKey: "",//测试题关键字
+    
     quesCount: "",//一共多少道题
     timeLimit: "",//限时多长时间
+    timeLeft: "",//剩余多长时间
 
     howToAnswer: "",//答题规范
     showExpression1: false,//是否展示第一步
@@ -64,8 +66,43 @@ Page({
       //时间限制
       timeLimit: options.timeLimit,
     })
-    //调用本组件共用方法
-    this.queryQuesBodyForTest()
+    //开始倒计时
+    let time = options.timeLimit * 60;//30分钟换算成1800秒
+    let timer = setInterval(() => {
+      if (time < 0){
+        clearInterval(timer)
+        //提交试卷
+        this.bindSendSubmitPaper()
+      }else{
+        time = time - 1;
+        var minute = parseInt(time / 60);
+        var second = parseInt(time % 60);
+        this.setData({
+          timeLeft: '还剩' + minute + '分' + second + '秒'
+        })
+      }
+    }, 1000);
+    //测试开始时候调用的接口
+    this.userTestStart()
+    
+  },
+  userTestStart () {
+    //调用开始测试接口
+    wx.request({
+      url: 'https://www.grosup.com/practice/testPaper/userTestStartTime.do',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'third_session': app.globalData.userId
+      },
+      data: {
+        userID: app.globalData.userInfoInOurSystem.personInfo.id,
+        paperKey: this.data.paperKey
+      },
+      success: res => {
+        //调用本组件共用方法
+        this.queryQuesBodyForTest()
+      }
+    })
   },
   //本页面共用方法-请求测试题主体
   queryQuesBodyForTest() {
@@ -104,6 +141,7 @@ Page({
         this.setData({
           quesTypeKey: questionDetail.quesTypeKey,
           problemKey: questionDetail.problemKey,
+          quesScore: questionDetail.quesScore,
 
           questionBodyArray: questionBodyArray,
           answerDesc: answerDesc,
@@ -123,7 +161,6 @@ Page({
           //保存此题做过，页面渲染确定修改按钮
           this.setData({
             isDone: questionDetail.isDone,
-            quesScore: questionDetail.quesScore,
             userAnswer: questionDetail.userAnswer,
             expression1: questionDetail.expression1,//填写的表达式1
             expression2: questionDetail.expression2,//填写的表达式2
@@ -169,14 +206,16 @@ Page({
       },
       data: sendData,
       success: res => {
-        this.setData({
-          isDone: "Y"
-        })
+        //污染数据，注掉
+        // this.setData({
+        //   isDone: "Y"
+        // })
       }
     })
   },
   //点击两个切换题按钮
   bindTurnQues (e) {
+    this.bindSubmitclick()
     //点击的是上一题还是下一题
     let testQuesTurnKey = e.target.dataset.testquesturn
     /**
@@ -202,7 +241,6 @@ Page({
       //调用本组件共用方法
       this.queryQuesBodyForTest()
     }
-    
   },
   //主题目输入答案事件,由于答案可能有多个输入框，所以将答案按照数组储存 
   bindInputAnswer: function (e) {
@@ -233,6 +271,7 @@ Page({
     let sendData = {
       userID: app.globalData.userInfoInOurSystem.personInfo.id,
       paperKey: this.data.paperKey,
+      useTime: this.data.timeLimit - parseInt(this.data.timeLeft.slice(2,4)),
     }
     //验证答案是否正确
     wx.request({
@@ -246,9 +285,9 @@ Page({
         let backData = res.data.data
         this.setData({
           unsubmit: false,
-          totalScore: backData.totalScore,
+          totalScore: backData.userScore,
           quesCount: backData.quesCount,
-          quesCountRight: backData.quesCountRight
+          quesCountRight: backData.doneRight
         })
       }
     })

@@ -1,1 +1,19 @@
 /* pages/previewData/previewData.wxss */
+.items-title{
+  text-align: center;
+  padding: 10rpx 0 40rpx;
+}
+.items-title .items{
+  padding:0 80rpx;
+  color: #ddd;
+}
+.items.active{
+  color: #fff;
+}
+.items-box-class{
+  margin-bottom: 100rpx;
+}
+.items-box-class .small-item-title{
+  display: inline-block;
+  width: 500rpx;
+}
