@@ -114,9 +114,15 @@ private static Logger logger = Logger.getLogger(StatisticsController.class);
 		JSONObject data = new JSONObject();
 		try {
 			PaperStatBean paperStatBean = statisticsService.getPaperTotalStatInfo(userID);
-			paperTotalInfo.put("paperDoneTotal", paperStatBean.getPaperDoneTotal());
-			paperTotalInfo.put("scoreAvg", Math.ceil((double)paperStatBean.getScore()/(double)paperStatBean.getPaperDoneTotal()));
-			paperTotalInfo.put("wrongTotal", paperStatBean.getWrongCount());
+			if(ObjectUtil.isNull(paperStatBean.getPaperDoneTotal()) || paperStatBean.getPaperDoneTotal() == 0) {
+				paperTotalInfo.put("paperDoneTotal", 0);
+				paperTotalInfo.put("scoreAvg", 0);
+				paperTotalInfo.put("wrongTotal", 0);
+			} else {
+				paperTotalInfo.put("paperDoneTotal", paperStatBean.getPaperDoneTotal());
+				paperTotalInfo.put("scoreAvg", Math.ceil((double)paperStatBean.getScore()/(double)paperStatBean.getPaperDoneTotal()));
+				paperTotalInfo.put("wrongTotal", paperStatBean.getWrongCount());
+			}
 			paperTotalInfo.put("wrongCorrectionRate", "无");
 			paperTotalInfo.put("wrongHighest", "无");
 			data.put("paperTotalInfo", paperTotalInfo);

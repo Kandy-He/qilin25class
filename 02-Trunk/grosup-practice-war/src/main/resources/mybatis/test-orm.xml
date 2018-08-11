@@ -105,6 +105,11 @@
     <delete id="removeUserTestData" parameterType="java.util.Map">
         delete from t_user_test_record where userID = #{userID} and paperKey = #{paperKey}
     </delete>
+    
+     <delete id="deleteRecord" parameterType="java.util.Map">
+        delete from t_user_test_record where userID = #{userID} and paperKey = #{paperKey}
+        and quesPosition = #{quesPosition}
+    </delete>
     <!-- 记录开始测试时间 -->
     <insert id="userTestStartTime" parameterType="map">
         insert into t_user_test_timestamp 
