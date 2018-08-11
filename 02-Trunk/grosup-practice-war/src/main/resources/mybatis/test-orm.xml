@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grosup.practice.test">
+
+    <select id="queryTestPaper" parameterType="java.lang.String" resultType="com.grosup.practice.beans.TestPaperBean">
+        select * from t_test_paper
+        where paperKey = #{paperKey}
+    </select>
+    
+    <select id="queryTestPaperList" parameterType="java.util.Map" resultType="com.grosup.practice.beans.TestPaperBean">
+        select * from t_test_paper where gradeID = #{gradeID} 
+<!--         AND paperKey not in (SELECT paperKey FROM t_user_paper_done WHERE userID = #{userID}) -->
+    </select>
+    
+    <!-- 用户还没有作答 -->
+    <select id="getQuesUserUnDone" parameterType="java.util.Map" resultType="com.grosup.practice.beans.ProblemForTestBean">
+        select ttpd.quesScore,ttpd.quesPosition,tpr.* 
+        from t_test_paper_detail ttpd 
+        left join t_problem tpr
+        on ttpd.problemKey = tpr.problemKey
+        where ttpd.quesPosition = #{quesPosition}
+        and ttpd.paperKey = #{paperKey}
+    </select>
+    
+    <select id="getQuesUserHaveDone" parameterType="java.util.Map" resultType="com.grosup.practice.beans.QuesDetailBean">
+	SELECT tutr.id,
+	tutr.problemKey,
+	tutr.paperKey,
+	tutr.quesPosition,
+	tutr.expression1,
+	tutr.expression2,
+	tutr.expression3,
+	tutr.quesScore,
+	tutr.userAnswer,
+	tpr.quesTypeKey,
+	tpr.answerDesc,
+	tpr.description
+	FROM t_user_test_record tutr
+	LEFT JOIN t_problem tpr ON tutr.problemKey = tpr.problemKey
+	where userID =
+	#{userID}
+	and paperKey = #{paperKey}
+	and quesPosition = #{quesPosition}
+    </select>	
+    
+    <!-- 插入一条答题记录 -->	
+    <insert id="userRecordAdd" parameterType="com.grosup.practice.beans.QuesDetailBean">
+        insert into t_user_test_record
+        (userID,paperKey,quesPosition,problemKey,
+        expression1,expression2,expression3,quesScore,quesToScore,userAnswer)
+        values(#{userID},#{paperKey},#{quesPosition},#{problemKey},#{expression1},#{expression2},#{expression3},
+        #{quesScore},#{quesToScore},#{userAnswer})
+    </insert>
+    
+    <update id="updateUserRecord" parameterType="com.grosup.practice.beans.QuesDetailBean">
+        update t_user_test_record set
+        expression1 = #{expression1},
+        expression2 = #{expression2},
+        expression3 = #{expression3},
+        userAnswer = #{userAnswer},
+        quesToScore = #{quesToScore}
+        where userID = #{userID} and paperKey = #{paperKey} and quesPosition = #{quesPosition}
+    </update>
+    
+    <select id="getPaperTotalInfo" parameterType="java.util.Map" resultType="com.grosup.practice.beans.TestPaperHaveDoneBean">
+	select ttp.paperKey,ttp.paperName,ttp.quesCount FROM t_test_paper ttp
+    where ttp.paperKey=#{paperKey}
+    </select>
+    <select id="getUserScore" parameterType="java.util.Map" resultType="int">
+        select SUM(quesToScore) from t_user_test_record
+        where userID = #{userID} and paperKey = #{paperKey}
+    </select>
+    <select id="getDoneRight" parameterType="java.util.Map" resultType="int">
+        select count(1) from t_user_test_record
+        where userID = #{userID} and paperKey = #{paperKey} and quesToScore > 0
+    </select>
+    
+    <insert id="userPaperDoneInfoAdd" parameterType="com.grosup.practice.beans.TestPaperHaveDoneBean">
+        INSERT INTO `t_user_paper_done` (`userID`, `paperKey`, `useTime`, `isDone`, `userScore`, `doneRight`, `quesCount`) 
+        VALUES (#{userID}, #{paperKey}, #{useTime}, #{isDone}, #{userScore}, #{doneRight}, #{quesCount})
+    </insert>
+    <!--  从试卷结果表获取学生已经做过的试卷信息 -->
+    <select id="queryUserHaveDone"  parameterType="int" resultType="com.grosup.practice.beans.TestPaperHaveDoneBean">
+	select tutd.*,ttp.paperName from t_user_paper_done tutd
+	LEFT JOIN t_test_paper ttp ON tutd.paperKey = ttp.paperKey
+	where userID = #{userID} 
+    </select>
+    
+    <select id="getRightCount"  parameterType="java.util.Map" resultType="int">
+        select count(*) from t_user_test_record
+        where userID = #{userID} and paperKey = #{paperKey} and quesToScore > 0
+    </select>
+    
+    <select id="getPaperQuesCountUnRight" parameterType="java.util.Map" resultType="int">
+        select count(1) from t_user_test_record 
+        where userID = #{userID} and paperKey = #{paperKey} and quesToScore = 0
+    </select>
+    
+    <!-- 提交试卷之后将数据转移到结果表 -->
+    <insert id="moveRecordToHistory" parameterType="java.util.Map">
+        insert into t_user_test_record_history select * from t_user_test_record
+        where userID = #{userID} and paperKey = #{paperKey}
+    </insert>
+    
+    <delete id="removeUserTestData" parameterType="java.util.Map">
+        delete from t_user_test_record where userID = #{userID} and paperKey = #{paperKey}
+    </delete>
+    <!-- 记录开始测试时间 -->
+    <insert id="userTestStartTime" parameterType="map">
+        insert into t_user_test_timestamp 
+        (userID,paperKey,startTime,endTime)
+        values 
+        (#{userID},#{paperKey},#{startTime},#{endTime})
+        on duplicate key update
+        startTime = values(startTime),endTime=values(endTime)
+    </insert>
+    
+    <select id="getTestEndTime" parameterType="map" resultType="String">
+        select endTime from t_user_test_timestamp
+        where userID = #{userID} and paperKey = #{paperKey}
+    </select>
+</mapper>

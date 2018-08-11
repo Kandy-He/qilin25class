@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grosup.practice.type">
+	
+	<resultMap type="com.grosup.practice.beans.GradeDetail" id="BaseResultMap">
+		<result column="gradeID" jdbcType="INTEGER" property="gradeID"/>
+		<result column="gradeName" jdbcType="VARCHAR" property="gradeName"/>
+		<collection property="subjects" ofType="com.grosup.practice.beans.SubjectDetail">
+			<result column="subjectID" jdbcType="INTEGER" property="subjectID"/>
+			<result column="subjectName" jdbcType="VARCHAR" property="subjectName"/>
+			<collection property="knowledges" ofType="com.grosup.practice.beans.KnowledgeDTO">
+				<result column="knowledgeKey" jdbcType="VARCHAR" property="knowledgeKey"/>
+				<result column="knowledgeName" jdbcType="VARCHAR" property="knowledgeName"/>
+				<result column="haveDone" jdbcType="INTEGER" property="haveDone"/>
+				<result column="onceRight" jdbcType="INTEGER" property="onceRight"/>
+				<result column="flower" jdbcType="INTEGER" property="flower"/>
+			</collection>
+		</collection>
+	</resultMap>
+	<!-- 根据学生ID查询知识点及学生该知识点统计情况 -->
+	<select id="queryKnowledges" parameterType="int" resultMap="BaseResultMap">
+	SELECT
+	tkn.knowledgeKey,
+	tkn.knowledgeName,
+	tst.haveDone,
+	tst.onceRight,
+	tst.flower,
+	tsu.id AS subjectID,
+	tsu.`name` AS subName,
+	tgr.id AS gradeID,
+	tgr.`name` AS gradeName
+	FROM
+	t_knowledge tkn
+	LEFT JOIN t_statistics tst ON tkn.knowledgeKey = tst.knowledgeKey AND
+	tst.userID = #{userID},
+	t_subject tsu,
+	t_grade tgr
+	WHERE
+	tkn.subjectID = tsu.id
+	AND tsu.gradeID = tgr.id
+	</select>
+</mapper>

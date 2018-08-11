@@ -22,6 +22,7 @@ import com.grosup.practice.beans.UserBean;
 import com.grosup.practice.service.ClassInfoService;
 import com.grosup.practice.service.SessionService;
 import com.grosup.practice.service.UserService;
+import com.grosup.practice.util.GrosupException;
 import com.grosup.practice.util.ObjectUtil;
 import com.grosup.practice.util.PracticeUtil;
 
@@ -38,30 +39,27 @@ private static Logger logger = Logger.getLogger(UserController.class);
 	@Autowired
 	private ClassInfoService classInfoService;
 	
-	@SuppressWarnings("finally")
 	@RequestMapping(method = RequestMethod.POST, value = "/add",produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public JSONObject studentAdd(HttpServletRequest request ,@RequestBody UserBean userBean) {
+	public JSONObject userRegister(HttpServletRequest request ,@RequestBody UserBean userBean) {
 		//打印出前台接收到的学生信息
-		logger.info(userBean.toString());
 		JSONObject result = new JSONObject();
 		String third_session = request.getHeader("third_session");
 		try {
 			String openId = sessionService.getOpenIdByThirdSession(third_session);
 			userBean.setWxID(openId);
+			//TODO 判断是否是被拒绝之后再次提交
 			boolean status = userService.userRegister(userBean);
 			if (status) {
 				result.put("code", "success");
 			} else {
 				result.put("code", "fail");
 			}
-		} catch (Exception e) {
-			logger.error("注册失败");
-			e.printStackTrace();
+		} catch (GrosupException e) {
+			logger.error("注册失败", e);
 			result.put("code", "error");
-		} finally {
-			return result;
-		}
+		} 
+		return result;
 	}
 	/**
 	 * 人员审核通过
@@ -144,7 +142,7 @@ private static Logger logger = Logger.getLogger(UserController.class);
 	}
 	@RequestMapping(method = RequestMethod.GET,value = "query")
 	@ResponseBody
-	public JSONObject queryClass() throws IOException {
+	public JSONObject queryClass() {
 		JSONObject result = new JSONObject();
 		JSONArray data = new JSONArray();
 		List<ClassInfoBean> list = classInfoService.queryClass();

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grosup.practice.statistics">
+
+	<update id="updateUserDoneByCorrect" parameterType="map">
+		UPDATE t_statistics tst SET tst.haveDone = tst.haveDone + 1,tst.flower = tst.flower + 1,tst.onceRight = tst.onceRight + 1
+		where tst.userID = #{userID} and tst.knowledgeKey = #{knowledgeKey}
+	</update>
+	
+	<update id="updateUserDoneByUnCorrect" parameterType="map">
+		UPDATE t_statistics tst SET tst.haveDone = tst.haveDone + 1 
+		where tst.userID = #{userID} and tst.knowledgeKey = #{knowledgeKey}
+	</update>
+	
+	<select id="checkIsExist" parameterType="map" resultType="int">
+		select count(*) from t_statistics tst where tst.userID = #{userID} and tst.knowledgeKey = #{knowledgeKey}
+	</select>
+	
+	<insert id="addOneRecord" parameterType="java.util.Map">
+		insert into t_statistics (userID,knowledgeKey,haveDone,onceRight,flower) values (#{userID},#{knowledgeKey},#{havaDone},#{onceRight},#{flower})
+	</insert>
+	
+	<select id="getUsersRankInfo" resultType="com.grosup.practice.beans.StatisticsBean">
+	SELECT
+            obj.userID,
+            obj.flower,
+            obj.quesTotalDone,
+            obj.quesOnceRightTotal,
+            (
+                quesTotalDone - quesOnceRightTotal
+            ) AS quesWrongTotal,
+            (
+                (
+                    quesTotalDone - quesOnceRightTotal
+                ) / quesTotalDone
+            ) * 100 AS quesCorrectionRate ,@rownum := @rownum + 1 AS rank
+        FROM
+            (
+                SELECT
+                    userID,
+                    SUM(flower) as flower,
+                    SUM(haveDone) AS quesTotalDone,
+                    SUM(onceRight) AS quesOnceRightTotal
+                FROM
+                    `t_statistics`
+                where userID NOT in (select t_student.id FROM t_student where userType != 0)
+                GROUP BY
+                    userID
+                ORDER BY
+                    flower DESC
+            ) AS obj,
+            (SELECT @rownum := 0) r
+	</select>
+	
+	<insert id="usersRankInfoAdd" parameterType="java.util.List">
+	   insert into t_user_rank
+	   (userID,flower,classID,rank,quesTotalDone,quesOnceRightTotal,quesWrongTotal,quesCorrectionRate,highestWrongType)
+	    values
+	   <foreach collection="list" item="item" index="index" separator=",">
+	       (#{item.userID},#{item.flower},#{item.classID},#{item.rank},#{item.quesTotalDone},#{item.quesOnceRightTotal},#{item.quesWrongTotal},#{item.quesCorrectionRate}
+	       ,#{item.highestWrongType})
+	   </foreach>
+	   on duplicate key update 
+	   flower = values(flower),rank = values(rank),quesTotalDone = values(quesTotalDone),quesOnceRightTotal = values(quesOnceRightTotal),quesWrongTotal = values(quesWrongTotal),
+	   quesCorrectionRate = values(quesCorrectionRate)
+	</insert>
+	
+	<select id="getUserRankInfo" parameterType="java.util.Map" resultType="com.grosup.practice.beans.StatisticsBean">
+	   select tur.userID,tur.rank,tur.flower,ts.name,ts.icon
+	    from t_user_rank tur
+	    left join t_student ts on tur.userID = ts.id
+	     where 1 = 1
+	   <if test="userID != null and userID != ''">
+	       and userID = #{userID}
+	   </if>
+	  <if test="rank != null and rank != ''">
+           and rank = #{rank}
+       </if>
+	</select>
+	
+	<select id="getMaxRank" resultType="int">
+	   select count(*) from t_user_rank 
+	</select>
+	
+	<select id="getUserHighestWrong" parameterType="int" resultType="java.lang.String">
+	select quesTypeName FROM
+	(select quesTypeKey,userID,COUNT(*) AS count FROM t_record
+	WHERE userID = #{userID}
+	GROUP BY quesTypeKey
+	ORDER BY count DESC
+	limit 1) AS obj LEFT JOIN
+	t_ques_type ON
+	obj.quesTypeKey = t_ques_type.quesTypeKey
+	</select>
+	<!-- 根据学生ID获取学生的练习统计情况 -->
+	<select id="getStatInfoByUserID" parameterType="int" resultType="com.grosup.practice.beans.KnowledgeDTO">
+	select tst.*,ROUND((onceRight/haveDone)*100) AS
+	onceRightRate,tkn.knowledgeName FROM t_statistics tst
+	LEFT JOIN t_knowledge tkn ON tst.knowledgeKey = tkn.knowledgeKey
+	where userID = #{userID}
+	</select>
+	<!-- 获取学生练习题综合统计 -->
+	<select id="getQuesTotalStatInfo" parameterType="int" resultType="com.grosup.practice.beans.StatisticsBean">
+	SELECT
+	tst.userID,
+	SUM(tst.haveDone) AS quesTotalDone,
+	SUM(tst.onceRight) AS quesOnceRightTotal
+	FROM
+	t_statistics tst
+	WHERE userID = #{userID}
+	</select>
+	<!-- 获取学生测试卷综合统计 -->
+    <select id="getPaperTotalStatInfo" parameterType="int" resultType="com.grosup.practice.beans.PaperStatBean">
+    select count(1) AS paperDoneTotal ,SUM(userScore) AS score,(SUM(quesCount)-SUM(doneRight)) AS wrongCount  FROM t_user_paper_done
+    WHERE userID = #{userID}
+    </select>
+	<!-- 获取试卷haveDone信息 -->
+	<select id="getPaperHaveDoneInfo" parameterType="int" resultType="com.grosup.practice.beans.PaperStatBean">
+	select
+	tupd.userID,tupd.paperKey,tupd.userScore as score,tupd.useTime,(tupd.quesCount-tupd.doneRight)
+	AS wrongCount,ttp.paperName from t_user_paper_done tupd
+	LEFT JOIN t_test_paper ttp
+	ON tupd.paperKey = ttp.paperKey
+	where userID = #{userID}
+	</select>
+	<!-- 增加指定数量小红花 -->
+	<update id="flowrIncrease" parameterType="map">
+	   update t_statistics set flower = (flower + #{increase})
+	   where userID = #{userID} and knowledgeKey = #{knowledgeKey}
+	</update>
+</mapper>

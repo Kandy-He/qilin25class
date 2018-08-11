@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.grosup.practice.beans.UserBean;
 import com.grosup.practice.util.AbstractDao;
+import com.grosup.practice.util.GrosupException;
 
 @Repository
 public class UserDao extends AbstractDao{
@@ -16,10 +17,14 @@ public class UserDao extends AbstractDao{
 	public UserBean queryTest(int id) {
 		return this.getSession().selectOne("com.practice.test.queryTest", id);
 	}
+	
+	public void updateUserInfo(UserBean user) {
+		this.getSession().update("com.grosup.practice.user.updateUserInfo", user);
+	}
 	/**
 	 * 人员注册
 	 */
-	public boolean userRegister(UserBean user) {
+	public boolean userRegister(UserBean user) throws GrosupException{
 		logger.info(user.getName());
 		int rows = this.getSession().insert("com.grosup.practice.user.register", user);
 		if (rows > 0) {
