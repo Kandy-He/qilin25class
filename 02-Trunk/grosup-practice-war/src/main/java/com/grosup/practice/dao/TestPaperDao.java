@@ -47,6 +47,7 @@ public class TestPaperDao extends AbstractDao {
 	}
 	
 	public void userRecordAdd(QuesDetailBean quesDetailBean) throws GrosupException{
+		this.getSession().delete("com.grosup.practice.test.deleteRecord", quesDetailBean);
 		this.getSession().insert("com.grosup.practice.test.userRecordAdd", quesDetailBean);
 	}
 	
