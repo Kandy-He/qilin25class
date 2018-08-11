@@ -1,4 +1,11 @@
 /*此处为各组件公用样式库  */
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
 .fr{
   float: right
 }
@@ -19,6 +26,9 @@
   font-weight: 500;
   line-height:120rpx;
   vertical-align: middle;
+}
+.items .howtoanswer{
+  font-size: 34rpx;
 }
 .head-img{
   padding-top: 20rpx;

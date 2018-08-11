@@ -16,7 +16,7 @@ Component({
   },
   attached: function () {
     wx.request({
-      url: 'https://www.grosup.com/practice/type/detail.do',
+      url: 'https://www.grosup.com/practice/knowledge/type.do',
       // method: 'post',
       header: {
         'content-type': 'application/x-www-form-urlencoded',
@@ -29,7 +29,7 @@ Component({
         let gradeSubjectItemMessage = res.data.data
         //拿出二年级数学科目下的所有习题
         this.setData({
-          practiceArray: gradeSubjectItemMessage[0].subjects[0].typeDetails
+          practiceArray: gradeSubjectItemMessage[0].subjects[0].knowledges
         })
       }
     })
@@ -40,22 +40,22 @@ Component({
   methods: {
     //点击开始练习
     startPracticeTap: function (e) {
-      //点击题目类型的id
-      let clickedQuesionId = e.target.dataset.typeid
-      //点击题目的名称
-      let clickedQuesionName = e.target.dataset.typename
+      //点击题目类型的knowledgekey
+      let knowledgekey = e.target.dataset.knowledgekey
+      //点击题目名knowledgename
+      let knowledgename = e.target.dataset.knowledgename
       wx.navigateTo({
-        url: '../../pages/questions/questions?typeid=' + clickedQuesionId + '&typename=' + clickedQuesionName
+        url: '../../pages/questions/questions?knowledgekey=' + knowledgekey + '&knowledgename=' + knowledgename
       })
     },
     //点击错题列表
     wrongBookTap: function (e) {
-      //点击题目类型的id
-      let clickedQuesionId = e.target.dataset.typeid
-      //点击题目的名称
-      let clickedQuesionName = e.target.dataset.typename
+      //点击题目类型的knowledgekey
+      let knowledgekey = e.target.dataset.knowledgekey
+      //点击题目名knowledgename
+      let knowledgename = e.target.dataset.knowledgename
       wx.navigateTo({
-        url: '../../pages/wrongbook/wrongbook?typeid=' + clickedQuesionId + '&typename=' + clickedQuesionName
+        url: '../../pages/wrongbook/wrongbook?knowledgekey=' + knowledgekey + '&knowledgename=' + knowledgename
       })
     }
 

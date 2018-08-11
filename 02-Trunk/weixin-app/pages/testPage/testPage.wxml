@@ -2,47 +2,68 @@
 <view class='container'>
   <view class='inner-box'>
     <view class='items'>
-      <text class='register-title'>{{title}}</text>
+      <text class='register-title'>{{paperName}}</text>
+      <view>
+        <text class='howtoanswer'>{{howToAnswer}}</text>
+      </view>
     </view>
-    <view class="question-body">
+    <view class="question-body" wx:if="{{unsubmit}}">
+      <view class='leftTime'>{{timeLeft}}</view>
       <form id="form1">
         <!--题目  -->
         <view class='question-content'>
           <block wx:for="{{questionBodyArray}}">
-            <input class="short-input"  bindblur='bindInputAnswer' disabled='{{inputDisabled}}' wx:if="{{item == '(?)'}}" data-index="{{index}}"/>
+            <input class="short-input"  bindblur='bindInputAnswer' disabled='{{inputDisabled}}' wx:if="{{item == '(?)'}}" data-index="{{index}}" value="{{wrongAnswerArray[index]}}"/>
             <text class='question-doc' wx:else>{{item}}</text>
           </block>
         </view>
-        <!--只有在应用题中才显示  -->
-        <view  wx:if="{{qType == 'applicationQues'}}" class='appAnswerBox'>
+        <!--应用题答题步骤  -->
+        <view class='appAnswerBox'>
           <!--第一步  -->
-          <view class='question-content' wx:if="{{expression1 != ''}}">
-            <text>第一步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quesSteps="{{expression1}}"/>
+          <view class='question-content' wx:if="{{showExpression1}}">
+            <text>第一步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quesSteps="expression1" value='{{expression1}}'/>
           </view>
           <!--第二步  -->
-          <view class='question-content' wx:if="{{expression2 != ''}}">
-            <text>第二步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quesSteps="{{expression2}}"/>
+          <view class='question-content' wx:if="{{showExpression2}}">
+            <text>第二步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quesSteps="expression2" value='{{expression2}}'/>
           </view>
           <!--第三步  -->
-          <view class='question-content' wx:if="{{expression3 != ''}}">
-            <text>第三步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quesSteps="{{expression3}}"/>
+          <view class='question-content' wx:if="{{showExpression3}}">
+            <text>第三步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quesSteps="expression3" value='{{expression3}}'/>
           </view>
           <!--答题描述  -->
-          <view class='question-content' wx:if="{{answerDesc.length != 0}}">
+          <view class='question-content' wx:if="{{showAnswerDesc}}">
             <text>答：</text>
             <block wx:for="{{answerDesc}}">
-              <input class="short-input"  bindblur='bindInputAnswer' disabled='{{inputDisabled}}' wx:if="{{item == '(?)'}}" data-index="{{index}}"/>
+              <input class="short-input"  bindblur='bindInputAnswer' disabled='{{inputDisabled}}' wx:if="{{item == '(?)'}}" data-index="{{index}}" value="{{wrongAnswerArray[index]}}"/>
               <text class='question-doc' wx:else>{{item}}</text>
             </block>
           </view>
         </view>
-        <!--测试部分使用的操作  -->
+        <!--测试操作  -->
         <view class='operate-box'>
-          <view class='align-center'>
-            <button  class='operate-button ques-item-submit' bindtap='bindSubmitTapForTest'>测试提交</button>
+          <!--最后一题显示交卷  -->
+           <view class='align-center'>
+             <button wx:if="{{isDone == 'N'}}" class='operate-button ques-item-submit' bindtap='bindSubmitclick'>提交</button>
+             <button wx:if="{{isDone == 'Y'}}" class='operate-button ques-item-submit' bindtap='bindSubmitclick'>确定修改</button>
+             <button wx:if="{{quesPosition == quesCount}}" class='operate-button ques-item-submit' bindtap='bindSendSubmitPaper'>结束交卷</button>
+             <button wx:if="{{quesPosition == quesCount}}" class='operate-button ques-item-submit' bindtap='bindbackToRecheck'>返回检查</button>
+          </view>  
+          <!--测试题分页内容  -->
+          <view class='paging-box'>
+            <text>共{{quesCount}}题</text>
+            <view class='fr'>
+              <image class="pagingIcon" src='../../images/paging-last.png' data-testquesturn="last" bindtap='bindTurnQues'></image>
+              <text>第 {{quesPosition}} 题 </text>
+              <image class="pagingIcon paging-right" src='../../images/paging-next.png' data-testquesturn="next" bindtap='bindTurnQues'></image>
+            </view>
           </view>
         </view>
+        
       </form>
+    </view>
+    <view class='question-body' wx:if="{{!unsubmit}}">
+      <text>亲爱的同学，你本次【{{paperName}}】，共用时{{timeLimit}}分钟，答题{{quesCount}}题，正确{{quesCountRight}}题，错误{{quesCount - quesCountRight}}题，得分{{totalScore}}分，奖励小红花{{quesCountRight}}朵。</text>
     </view>
   </view>
 </view>

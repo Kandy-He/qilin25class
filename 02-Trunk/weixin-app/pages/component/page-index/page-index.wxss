@@ -5,7 +5,10 @@
   height:60rpx;
 }
 .userbox{
-  padding: 150rpx 0;
+  padding: 100rpx 0 130rpx;
+}
+.icon-control-box{
+  padding: 30rpx 0;
 }
 .head-img image{
   width: 140rpx;

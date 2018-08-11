@@ -1,3 +1,4 @@
+// pages/paperWrongBook/paperWrongBook.js
 // pages/wrongbook/wrongbook.js
 let util = require("../../utils/util");
 const app = getApp()
@@ -8,8 +9,12 @@ Page({
    */
   data: {
     //由上个页面传过来的知识点名称和知识点关键字
-    knowledgename: "",
-    knowledgekey: "",
+    papername: "",
+    paperkey: "",
+    knowledgeKey: "",
+
+    quesTypeKey: "",
+    problemKey: "",
 
     howToAnswer: "",//答题规范
     showExpression1: false,//是否展示第一步
@@ -25,7 +30,7 @@ Page({
     answerDesc: [],//答题描述的主干数组
     answer: [],//填写的答案,用数组保存。eg:[undefined,4,undefined,6,undefined], 提交之前再拼成 "4;6"提交
 
-    
+
     inputDisabled: false,//input输入状态，当点击提交时候修改为true,其他按钮点击则为false
     answerStatus: -1,//回答状态：-1未回答，0答题错误，1答题正确
 
@@ -43,13 +48,13 @@ Page({
   onLoad: function (options) {
     //同步顶部标签
     this.setData({
-      knowledgename: options.knowledgename,
-      knowledgekey: options.knowledgekey
+      paperkey: options.paperkey,
+      papername: options.papername
     })
     this.queryQuesBodyFunction()
   },
   //请求题目主体
-  queryQuesBodyFunction () {
+  queryQuesBodyFunction() {
     //初始化上一道题的数据
     this.setData({
       quesTypeKey: "",
@@ -70,14 +75,14 @@ Page({
     })
     //请求知识点主体
     wx.request({
-      url: 'https://www.grosup.com/practice/record/getOneRecord.do',
+      url: 'https://www.grosup.com/practice/testPaper/getOneRecord.do',
       // method: 'post',
       header: {
         'content-type': 'application/x-www-form-urlencoded',
         'third_session': app.globalData.userId
       },
       data: {
-        knowledgeKey: this.data.knowledgekey,
+        paperKey: this.data.paperkey,
         userID: app.globalData.userInfoInOurSystem.personInfo.id,
         rownum: this.data.rownum
       },
@@ -91,10 +96,10 @@ Page({
         //答题描述显示数组
         let answerDesc = util.formatQuestionContent(questionDetail.answerDesc)
         // let questionBodyArray = util.formatQuestionContent(questionDetail.description, questionDetail.result)
-        
         this.setData({
           quesTypeKey: questionDetail.quesTypeKey,
           problemKey: questionDetail.problemKey,
+          knowledgeKey: questionDetail.knowledgeKey,
 
           wrongCount: res.data.wrongCount,//当前错题集一起有多少道错题
           //展示题目
@@ -126,7 +131,7 @@ Page({
     })
   },
 
-  
+
   //主题目或者答题描述输入答案事件,由于答案可能有多个输入框，所以将答案按照数组储存 
   bindInputAnswer: function (e) {
     let answerItem = 'answer[' + e.target.dataset.index + ']'
@@ -145,6 +150,7 @@ Page({
   //点击订正按钮
   bindSubmitTap: function () {
     let sendData = {
+      paperKey: this.data.paperkey,
       problemKey: this.data.problemKey,
       //如果用户没有修改主题干或者答题描述的答案，将原来他的答案发到后台
       answer: this.data.answer.length == 0 ? this.data.userAnswer : util.formatAnswerToRightStyle(util.turnArrayToAnswerStr(this.data.answer)),//主题目答案
@@ -155,7 +161,7 @@ Page({
     }
     //验证答案是否正确
     wx.request({
-      url: 'https://www.grosup.com/practice/problem/checkAnswer.do',
+      url: 'https://www.grosup.com/practice/testPaper/checkAnswer.do',
       // method: 'post',
       header: {
         'content-type': 'application/x-www-form-urlencoded',
@@ -172,7 +178,7 @@ Page({
     })
   },
   //点击修改
-  bindModifiedAgainTap () {
+  bindModifiedAgainTap() {
     this.setData({
       //更新答题状态
       answerStatus: -1,
@@ -201,12 +207,12 @@ Page({
   // 点击下一题按钮
   bindNextQuesTap() {
     let rownum = parseInt(this.data.rownum) + 1
-    if (rownum > this.data.wrongCount){
+    if (rownum > this.data.wrongCount) {
       wx.showToast({
         title: '已经是最后一道错题了',
         icon: "none"
       })
-    }else{
+    } else {
       this.setData({
         //更新当前答题数
         rownum: rownum,
@@ -215,19 +221,19 @@ Page({
       })
       this.queryQuesBodyFunction()
     }
-    
+
   },
   // 点击再来一题
-  bindAnotherQuesTap () {
+  bindAnotherQuesTap() {
     //路由到练习页，传入制定的题型
     wx.navigateTo({
-      url: '../questions/questions?knowledgekey=' + this.data.knowledgekey + '&knowledgename=' + this.data.knowledgename,
+      url: '../questions/questions?knowledgekey=' + this.data.knowledgeKey + '&knowledgename=' + this.data.papername,
     })
   },
   // 点击移除错题
   removeWrongQues() {
     wx.request({
-      url: 'https://www.grosup.com/practice/record/removeRecord.do',
+      url: 'https://www.grosup.com/practice/testPaper/removeRecord.do',
       // method: 'post',
       header: {
         'content-type': 'application/x-www-form-urlencoded',
@@ -237,10 +243,12 @@ Page({
         //用户id
         userID: app.globalData.userInfoInOurSystem.personInfo.id,
         // 题目id
-        problemKey: this.data.problemKey
+        problemKey: this.data.problemKey,
+        paperKey: this.data.paperkey,
       },
       success: res => {
-        if(res.data.code == 1){
+        debugger
+        if (res.data.code == 1) {
           wx.showToast({
             title: '错题已移除',
             icon: "none"

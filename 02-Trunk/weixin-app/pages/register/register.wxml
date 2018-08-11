@@ -52,7 +52,9 @@
         </picker>
       </view>
       <view class='items button-box'>
-        <button class='operate-button' bindtap='submitUserMessage' type='{{buttonType}}' disabled='{{buttonDisable}}'>{{buttonText}}</button> 
+        <button class='operate-button' bindtap='submitUserMessage' type='{{buttonType}}' disabled='{{buttonDisable}}'>
+          <text class='button-text'>{{buttonText}}</text>
+        </button> 
       </view>
     </block>
     <block wx:if="{{userTabbarClickKey == 'index'}}">

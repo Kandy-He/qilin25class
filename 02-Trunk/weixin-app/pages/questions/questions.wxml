@@ -2,9 +2,13 @@
 <view class='container'>
   <view class='inner-box'>
     <view class='items'>
-      <text class='register-title'>{{title}}</text>
+      <text class='register-title'>{{knowledgename}}</text>
+      <view>
+        <text class='howtoanswer'>{{howToAnswer}}</text>
+      </view>
     </view>
     <view class="question-body">
+    <view class='leftTime'>{{timePast}}</view>
       <form id="form1">
         <!--题目  -->
         <view class='question-content'>
@@ -13,22 +17,21 @@
             <text class='question-doc' wx:else>{{item}}</text>
           </block>
         </view>
-        <!--只有在应用题中才显示  -->
-        <view  wx:if="{{qType == 'applicationQues'}}" class='appAnswerBox'>
+        <view class='appAnswerBox'>
           <!--第一步  -->
-          <view class='question-content' wx:if="{{expression1 != ''}}">
-            <text>第一步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quesSteps="{{expression1}}"/>
+          <view class='question-content' wx:if="{{showExpression1}}">
+            <text>第一步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quessteps="expression1"/>
           </view>
           <!--第二步  -->
-          <view class='question-content' wx:if="{{expression2 != ''}}">
-            <text>第二步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quesSteps="{{expression2}}"/>
+          <view class='question-content' wx:if="{{showExpression2}}">
+            <text>第二步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quessteps="expression2"/>
           </view>
           <!--第三步  -->
-          <view class='question-content' wx:if="{{expression3 != ''}}">
-            <text>第三步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quesSteps="{{expression3}}"/>
+          <view class='question-content' wx:if="{{showExpression3}}">
+            <text>第三步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quessteps="expression3"/>
           </view>
           <!--答题描述  -->
-          <view class='question-content' wx:if="{{answerDesc.length != 0}}">
+          <view class='question-content' wx:if="{{showAnswerDesc}}">
             <text>答：</text>
             <block wx:for="{{answerDesc}}">
               <input class="short-input"  bindblur='bindInputAnswer' disabled='{{inputDisabled}}' wx:if="{{item == '(?)'}}" data-index="{{index}}"/>
