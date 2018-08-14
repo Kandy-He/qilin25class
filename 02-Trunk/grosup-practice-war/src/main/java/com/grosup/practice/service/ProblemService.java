@@ -94,19 +94,19 @@ public class ProblemService {
 		boolean checkEx1 = false;
 		boolean checkEx2 = false;
 		boolean checkEx3 = false;
-		String expression1Str[] = problemBean.getExpression1().split(";");
+		String expression1Str[] = problemBean.getExpression1().split("||");
 		for (String ex : expression1Str) {
 			if (expression1.trim().equals(ex)) {
 				checkEx1 = true;
 			}
 		}
-		String expression2Str[] = problemBean.getExpression2().split(";");
+		String expression2Str[] = problemBean.getExpression2().split("||");
 		for (String ex : expression2Str) {
 			if (expression2.trim().equals(ex)) {
 				checkEx2 = true;
 			}
 		}
-		String expression3Str[] = problemBean.getExpression1().split(";");
+		String expression3Str[] = problemBean.getExpression1().split("||");
 		for (String ex : expression3Str) {
 			if (expression3.trim().equals(ex)) {
 				checkEx3 = true;
