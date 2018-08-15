@@ -12,7 +12,7 @@
 	</resultMap>
 	
 	<insert id="studentAdd" parameterType="com.grosup.practice.beans.StudentBean">
-		insert into t_student (name,classID,icon,wxID,status) values (#{name},#{classID},#{icon},#{wxID},#{status})
+		insert into t_student (name,classID,icon,wxID,status) values (#{name},#{classID},#{icon},#{wxID},1)
 	</insert>
 	
 	<select id="queryIsExists" parameterType="java.lang.String">
