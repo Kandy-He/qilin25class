@@ -53,7 +53,7 @@ public class TestPaperService {
 		// 如果题型是计算题
 		if (!"App-Pr-Grade2".equals(problemBean.getKnowledgeKey())) {
 			// 做题错误
-			if (!quesDetailBean.getUserAnswer().trim().equals(problemBean.getAnswer())) {
+			if (!quesDetailBean.getUserAnswer().trim().equals(problemBean.getAnswer().trim())) {
 				result = false;
 			}
 		} else {// 如果是应用题
@@ -81,7 +81,7 @@ public class TestPaperService {
 		if (!"App-Pr-Grade2".equals(problemBean.getKnowledgeKey())) {
 			// 做题错误
 			if (!quesDetailBean.getUserAnswer().trim()
-					.equals(problemBean.getAnswer())) {
+					.equals(problemBean.getAnswer().trim())) {
 				result = false;
 			}
 		} else {// 如果是应用题
@@ -194,7 +194,7 @@ public class TestPaperService {
 		//如果题型是计算题
 		if (!"App-Pr-Grade2".equals(problemBean.getKnowledgeKey())) {
 			// 做题错误
-			if (!answer.trim().equals(problemBean.getAnswer())) {
+			if (!answer.trim().equals(problemBean.getAnswer().trim())) {
 				result = false;
 			}
 		} else {// 如果是应用题
