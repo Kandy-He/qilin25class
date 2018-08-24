@@ -44,8 +44,8 @@
         <view class='operate-box'>
           <!--最后一题显示交卷  -->
            <view class='align-center'>
-             <button wx:if="{{isDone == 'N'}}" class='operate-button ques-item-submit' bindtap='bindSubmitclick'>提交</button>
-             <button wx:if="{{isDone == 'Y'}}" class='operate-button ques-item-submit' bindtap='bindSubmitclick'>确定修改</button>
+             <!-- <button wx:if="{{isDone == 'N'}}" class='operate-button ques-item-submit' bindtap='bindSubmitclick'>提交</button>
+             <button wx:if="{{isDone == 'Y'}}" class='operate-button ques-item-submit' bindtap='bindSubmitclick'>确定修改</button> -->
              <button wx:if="{{quesPosition == quesCount}}" class='operate-button ques-item-submit' bindtap='bindSendSubmitPaper'>结束交卷</button>
              <button wx:if="{{quesPosition == quesCount}}" class='operate-button ques-item-submit' bindtap='bindbackToRecheck'>返回检查</button>
           </view>  

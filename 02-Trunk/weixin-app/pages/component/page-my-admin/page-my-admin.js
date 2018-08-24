@@ -93,6 +93,11 @@ Component({
 
         }
       })
+    },
+    clickEdit() {
+      wx.navigateTo({
+        url: '../../pages/register/register?resetMessage=teacher'
+      })
     }
   }
 })

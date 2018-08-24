@@ -1,32 +1,32 @@
 <!--pages/component/tabbar/tabbar.wxml-->
 <view class='tab-items-box'>
-  <view class='tab-items {{tabbarIndexInConp == "index"?"active":""}}' data-href="index" bindtap="bindRedirectTap">
+  <view class='tab-items {{href == "index"?"active":""}}' data-href="index" bindtap="bindRedirectTap">
     <view>
-      <image class='tab-items-images' src='{{tabbarIndexInConp == "index"?"../../../images/index-choose.png":"../../../images/index-unchoose.png"}}'></image><!-- 引用的起点是当前组件 -->
+      <image class='tab-items-images' src='{{href == "index"?"../../../images/index-choose.png":"../../../images/index-unchoose.png"}}'></image><!-- 引用的起点是当前组件 -->
     </view>
     <view>
       <text class='tab-items-text'>首页</text>
     </view>
   </view>
-  <view class='tab-items {{tabbarIndexInConp == "practice"?"active":""}}' data-href="practice" bindtap="bindRedirectTap">
+  <view class='tab-items {{href == "practice"?"active":""}}' data-href="practice" bindtap="bindRedirectTap">
     <view>
-      <image class='tab-items-images' src='{{tabbarIndexInConp == "practice"?"../../../images/practice-choose.png":"../../../images/practice-unchoose.png"}}'></image>
+      <image class='tab-items-images' src='{{href == "practice"?"../../../images/practice-choose.png":"../../../images/practice-unchoose.png"}}'></image>
     </view>
     <view>
       <text class='tab-items-text'>练习</text>
     </view>
   </view>
-  <view class='tab-items {{tabbarIndexInConp == "test"?"active":""}}' data-href="test" bindtap="bindRedirectTap">
+  <view class='tab-items {{href == "test"?"active":""}}' data-href="test" bindtap="bindRedirectTap">
     <view>
-      <image class='tab-items-images' src='{{tabbarIndexInConp == "test"?"../../../images/test-choose.png":"../../../images/test-unchoose.png"}}'></image>
+      <image class='tab-items-images' src='{{href == "test"?"../../../images/test-choose.png":"../../../images/test-unchoose.png"}}'></image>
     </view>
     <view>
       <text class='tab-items-text'>测试</text>
     </view>
   </view>
-  <view class='tab-items {{tabbarIndexInConp == "my"?"active":""}}' data-href="my" bindtap="bindRedirectTap">
+  <view class='tab-items {{href == "my"?"active":""}}' data-href="my" bindtap="bindRedirectTap">
     <view>
-      <image class='tab-items-images' src='{{tabbarIndexInConp == "my"?"../../../images/my-choose.png":"../../../images/my-unchoose.png"}}'></image>
+      <image class='tab-items-images' src='{{href == "my"?"../../../images/my-choose.png":"../../../images/my-unchoose.png"}}'></image>
     </view>
     <view>
       <text class='tab-items-text'>我的</text>

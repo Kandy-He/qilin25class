@@ -187,13 +187,9 @@ Page({
   bindResetQuesTap: function () {
     this.setData({
       //初始化回答答案
-      expression1: "",//填写的表达式1
-      expression2: "",//填写的表达式2
-      expression3: "",//填写的表达式3
-      answer: [],//填写的答案,用数组保存。eg:[undefined,4,undefined,6,undefined], 提交之前再拼成 "4;6"提交
       //更新答题状态
       answerStatus: -1,
-      inputDisabled: false//不允许用户再次输入，点击订正或者再来一体才可以输入
+      inputDisabled: false
     })
   }
 })

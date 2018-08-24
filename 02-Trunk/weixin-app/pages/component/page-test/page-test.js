@@ -28,7 +28,7 @@ Component({
     testArray: []
 
   },
-  attached: function () {
+  ready: function () {
     wx.request({
       url: 'https://www.grosup.com/practice/testPaper/queryList.do',
       header: {

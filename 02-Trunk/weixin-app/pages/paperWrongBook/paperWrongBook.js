@@ -247,7 +247,6 @@ Page({
         paperKey: this.data.paperkey,
       },
       success: res => {
-        debugger
         if (res.data.code == 1) {
           wx.showToast({
             title: '错题已移除',
