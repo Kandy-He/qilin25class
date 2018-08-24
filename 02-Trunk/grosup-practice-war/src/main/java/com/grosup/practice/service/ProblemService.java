@@ -47,7 +47,7 @@ public class ProblemService {
 		//如果题型是计算题
 		if (!"App-Pr-Grade2".equals(problemBean.getKnowledgeKey())) {
 			//做题错误
-			if (!answer.trim().equals(problemBean.getAnswer())) {
+			if (!answer.trim().equals(problemBean.getAnswer().trim())) {
 				result = false;
 			} 
 		} else {//如果是应用题
@@ -94,26 +94,26 @@ public class ProblemService {
 		boolean checkEx1 = false;
 		boolean checkEx2 = false;
 		boolean checkEx3 = false;
-		String expression1Str[] = problemBean.getExpression1().split(";");
+		String expression1Str[] = problemBean.getExpression1().split("\\|\\|");
 		for (String ex : expression1Str) {
-			if (expression1.trim().equals(ex)) {
+			if (expression1.trim().equals(ex.trim())) {
 				checkEx1 = true;
 			}
 		}
-		String expression2Str[] = problemBean.getExpression2().split(";");
+		String expression2Str[] = problemBean.getExpression2().split("\\|\\|");
 		for (String ex : expression2Str) {
-			if (expression2.trim().equals(ex)) {
+			if (expression2.trim().equals(ex.trim())) {
 				checkEx2 = true;
 			}
 		}
-		String expression3Str[] = problemBean.getExpression1().split(";");
+		String expression3Str[] = problemBean.getExpression3().split("\\|\\|");
 		for (String ex : expression3Str) {
-			if (expression3.trim().equals(ex)) {
+			if (expression3.trim().equals(ex.trim())) {
 				checkEx3 = true;
 			}
 		}
 		
-		if (answer.trim().equals(problemBean.getAnswer()) && checkEx1 && checkEx2 && checkEx3) {
+		if (answer.trim().equals(problemBean.getAnswer().trim()) && checkEx1 && checkEx2 && checkEx3) {
 			return true;
 		}
 		return false;
