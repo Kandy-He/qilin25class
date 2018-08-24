@@ -16,6 +16,7 @@
       <page-test></page-test>
     </view>
     <view wx:if="{{navigatorArray[0] == 'my'}}">
+      <text class="banben">当前小程序版本：3.0.0</text>
       <!-- 老师页面 -->
       <view wx:if="{{navigatorArray[1] == 'teacher'}}" class='inner-box'>
         <page-my-teacher></page-my-teacher>
@@ -28,9 +29,10 @@
       <view wx:elif="{{navigatorArray[1] == 'admin'}}" class='inner-box'>
         <page-my-admin></page-my-admin>
       </view>
+      
     </view>
   </view>
-  <tabbar-fake bind:navigateClick="navigateTo"></tabbar-fake>
+  <tabbar-fake bind:navigateClick="navigateTo" href="{{navigatorArray[0]}}"></tabbar-fake>
 </view>
 
 

@@ -17,7 +17,7 @@
     <view class='items'>
       <text class='left-label'>姓名：</text>
       <text>{{teacherName}}</text>
-      <button class='message-item operate-button fr'><text>修改</text></button>
+      <button class='message-item operate-button fr' bindtap='clickEdit'><text >修改</text></button>
     </view>
     <view class='items'>
       <text class=''>我的学生：</text>

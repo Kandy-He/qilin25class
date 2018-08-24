@@ -47,7 +47,9 @@ Page({
         success: res => {
           this.loadClass()
           this.setData({
-            username: res.data.data.name
+            username: res.data.data.name,
+            initSexIndex: res.data.data.gender,
+            initRoleIndex: res.data.data.userType
           })
         }
       })

@@ -113,6 +113,15 @@ const formatAnswerToRightStyle = (answerStr) => {
       case "错":
         answerArr[i] = "×"
         break;
+      case "＞":
+        answerArr[i] = ">"
+        break;
+      case "＜":
+        answerArr[i] = "<"
+        break;
+      case "＝":
+        answerArr[i] = "="
+        break;
     }
   }
   return noBlankArr(answerArr).join("")
@@ -129,11 +138,35 @@ const formatExpressionToRightStyle = (expressionStr) => {
       case ")":
         answerArr[i] = "）"
         break;
+      case "＋":
+        answerArr[i] = "+"
+        break;
+      case "－":
+        answerArr[i] = "-"
+        break;
       case "×":
+        answerArr[i] = "*"
+        break;
+      case "＊":
         answerArr[i] = "*"
         break;
       case "÷":
         answerArr[i] = "/"
+        break;
+      case "／":
+        answerArr[i] = "/"
+        break;
+      case "＞":
+        answerArr[i] = ">"
+        break;
+      case "＜":
+        answerArr[i] = "<"
+        break;
+      case "＝":
+        answerArr[i] = "="
+        break;
+      case "……":
+        answerArr[i] = "......"
         break;
     }
   }

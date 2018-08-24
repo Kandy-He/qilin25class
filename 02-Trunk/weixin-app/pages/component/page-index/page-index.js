@@ -26,7 +26,7 @@ Component({
   },
   attached: function () {
     //如果是学生就传空，否则传1
-    let rank = app.globalData.userInfoInOurSystem.personInfo.userType == 0?"":1
+    let rank = app.globalData.userInfoInOurSystem.personInfo.userType == 0 ? "" : 1
     this.getRankMessage(rank)
     
   },

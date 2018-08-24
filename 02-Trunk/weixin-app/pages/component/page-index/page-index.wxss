@@ -17,3 +17,6 @@
 .userMessage{
   font-size: 30rpx;
 }
+.rang-box{
+  margin-top: 80rpx;
+}

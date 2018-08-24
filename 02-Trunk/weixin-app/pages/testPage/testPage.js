@@ -267,6 +267,8 @@ Page({
   },
   //点击交卷
   bindSendSubmitPaper () {
+    //提交当前题目
+    this.bindSubmitclick()
     //计算题，应用题统一传参格式
     let sendData = {
       userID: app.globalData.userInfoInOurSystem.personInfo.id,
