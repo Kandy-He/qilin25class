@@ -3,7 +3,7 @@
         <text class='register-title'>班级红花排行榜</text>
       </view>
       <!--排名区域，如果没有排名  -->
-      <view>
+      <view class='rang-box'>
         <view wx:if="{{ifHaveRank}}" class='align-center icon-control-box' data-turntype="last" bindtap="turnStudentTap">
           <image class="range-control ctl-up" data-turntype="last" src='../../../images/last-page-enable.png'></image>
         </view>
@@ -16,7 +16,7 @@
           </view>
         </view>
         <view wx:if="{{ifHaveRank}}" class='align-center icon-control-box' data-turntype="next" bindtap="turnStudentTap">
-          <image class="range-control ctl-up" data-turntype="next" src='../../../images/next-page-enable.png' bindtap="turnStudentTap"></image>
+          <image class="range-control ctl-up" data-turntype="next" src='../../../images/next-page-enable.png'></image>
         </view> 
       </view>
       

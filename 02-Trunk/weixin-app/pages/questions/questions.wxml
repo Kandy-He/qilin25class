@@ -52,7 +52,7 @@
           <view wx:else>
             <image src='../../images/answer-wrong.png'></image>
             <text class='returnText red'>回答错误</text>
-            <button class='operate-button fr' formType="reset" bindtap='bindResetQuesTap'>订正</button>
+            <button class='operate-button fr' bindtap='bindResetQuesTap'>订正</button>
             <button class='operate-button fr' formType="reset" bindtap='bindAnotherQuesTap'>再来一题</button>
           </view>
         </view>

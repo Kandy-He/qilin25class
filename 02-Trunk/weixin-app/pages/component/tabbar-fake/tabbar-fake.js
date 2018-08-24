@@ -12,11 +12,17 @@ Component({
           tabbarIndexInConp: now
         })
       }
+    },
+    //父级传过来的当前href
+    href: {
+      type: String,
+      value: 'my'
     }
+    
   },
   data: {
     // 这里是一些组件内部数据
-    tabbarIndexInConp: "my",//默认是4, 激活对应的tabIndexBox的active
+    tabbarIndexInConp: "",//默认是4, 激活对应的tabIndexBox的active
   },
   ready: function () {
     

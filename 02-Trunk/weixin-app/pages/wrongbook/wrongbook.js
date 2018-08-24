@@ -163,7 +163,7 @@ Page({
       },
       data: sendData,
       success: res => {
-        //返回回答正确或者错误，正确1，错误2
+        //返回回答正确或者错误:-1未回答，0答题错误，1答题正确
         this.setData({
           answerStatus: res.data.data,
           inputDisabled: true//不允许用户再次输入，点击订正或者再来一体才可以输入
@@ -192,7 +192,8 @@ Page({
         //更新当前答题数
         rownum: rownum,
         //进入下一题之后，恢复答题状态
-        answerStatus: -1
+        answerStatus: -1,
+        inputDisabled: false//可以输入
       })
       this.queryQuesBodyFunction()
     }
@@ -211,7 +212,8 @@ Page({
         //更新当前答题数
         rownum: rownum,
         //进入下一题之后，恢复答题状态
-        answerStatus: -1
+        answerStatus: -1,
+        inputDisabled: false//可以输入
       })
       this.queryQuesBodyFunction()
     }

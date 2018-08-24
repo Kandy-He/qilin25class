@@ -18,13 +18,19 @@ Page({
      *     ->联系:practice
      *     ->首页:index
      */
-    navigatorArray: ["my", ""],//默认导航到注册页
+    navigatorArray: ["index", ""],//默认导航到注册页
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    //实现单页面导航
+    if (options && options.href) {
+      this.setData({
+        navigatorArray: [options.href, ""]
+      })
+    }
     //APP启动第一步：判断app是否授权,如果授权，再根据（未注册，审核中，被拒绝）和审核通过进入不同的页面
     wx.getSetting({
       success: res => {
@@ -113,9 +119,11 @@ Page({
                         //本页面为启动页，因此当小程序启动，判断是否展示授权或注册页时候，此页已经显示，故需要把页面先隐藏，当用户审核通过时候再展示
                         let userInfo = app.globalData.userInfoInOurSystem.personInfo
                         if (userInfo.status == 1) {
+                          let navigatorArray2Value = 'navigatorArray[1]'
                           this.setData({
                             ifshow: true,
-                            navigatorArray: ["my", userInfo.formatUserRole]
+                            [navigatorArray2Value]: userInfo.formatUserRole
+                            // navigatorArray: ["my", userInfo.formatUserRole]
                           })
                         }
                       } else {
@@ -148,5 +156,8 @@ Page({
         navigatorArray: [href]
       })
     }
+  },
+  onShow() { //返回显示页面状态函数
+    this.onLoad()//再次加载，实现返回上一页页面刷新
   }
 })
