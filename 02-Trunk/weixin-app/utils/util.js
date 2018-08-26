@@ -77,14 +77,23 @@ const quesTypeKeyFilter = (questionDetail) => {
     case "App-B-Type":
       configStepsObj.showExpression1 = true
       break;
+    case "App-G-Type":
+      configStepsObj.showExpression1 = true
+      break;
     case "App-C-Type":
       configStepsObj.showExpression1 = true
       configStepsObj.showExpression2 = true
       break;
-    case "App-B-Type":
+    case "App-H-Type":
       configStepsObj.showExpression1 = true
+      configStepsObj.showExpression2 = true
       break;
     case "App-D-Type":
+      configStepsObj.showExpression1 = true
+      configStepsObj.showExpression2 = true
+      configStepsObj.showExpression3 = true
+      break;
+    case "App-I-Type":
       configStepsObj.showExpression1 = true
       configStepsObj.showExpression2 = true
       configStepsObj.showExpression3 = true
