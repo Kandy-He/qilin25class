@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grosup.practice.record">
+	
+	<insert id="addRecord" parameterType="com.grosup.practice.beans.RecordBean">
+		insert into t_record (problemKey,userID,recordTime,expression1,expression2,expression3,userAnswer,status)
+		values (#{problemKey},#{userID},#{recordTime},#{expression1},#{expression2},#{expression3},#{userAnswer},#{status})
+	</insert>
+	<!-- 	查看错题是否存在 -->
+	<select id="checkIsExist" parameterType="com.grosup.practice.beans.RecordBean" resultType="int">
+		select count(1) from t_record where userID = #{userID} AND problemKey = #{problemKey}
+	</select>
+	<!-- 	更新错题记录 -->
+	<update id="updateRecord" parameterType="com.grosup.practice.beans.RecordBean">
+		update t_record set recordTime = #{recordTime},expression1 = #{expression1},expression2 = #{expression2},
+		expression3 = #{expression3},userAnswer = #{userAnswer},status = 0
+		where userID = #{userID} AND problemKey = #{problemKey}
+	</update>
+	
+	<select id="getOneRecord" parameterType="map" resultType="com.grosup.practice.beans.RecordBean">
+	select middle.*
+    from (SELECT
+    obj.*,@rownum := @rownum + 1 AS rownum
+    FROM
+    (
+    SELECT
+    tre.*,tpr.knowledgeKey,tpr.quesTypeKey,tpr.answerDesc,tpr.description
+    FROM
+    `t_record` tre
+    LEFT JOIN t_problem tpr ON tre.problemKey = tpr.problemKey
+    where userID=#{userID} and knowledgeKey = #{knowledgeKey}
+    ) AS obj,(SELECT @rownum := 0) r) as middle
+    where rownum = #{rownum}
+	</select>
+	<!-- 订正 -->
+	<update id="correction" parameterType="map">
+		update t_record set status = 1 where userID = #{userID} AND problemKey = #{problemKey}
+	</update>
+	<!-- 	删除 -->
+	<delete id="removeRecord" parameterType="map">
+		delete from t_record where problemKey = #{problemKey} AND userID = #{userID}
+	</delete>
+	<!-- 通过userID，knowledgeKey查询错题总数 -->
+	<select id="queryUserWrongCount" parameterType="map" resultType="int">
+	SELECT count(1) from
+	(select tre.*,tpr.knowledgeKey from t_record tre
+	LEFT JOIN t_problem tpr
+	ON tre.problemKey = tpr.problemKey )
+	AS obj
+	where obj.knowledgeKey = #{knowledgeKey} AND userID = #{userID}
+	</select>
+</mapper>

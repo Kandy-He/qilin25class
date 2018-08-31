@@ -5,18 +5,37 @@
   height:60rpx;
 }
 .userbox{
-  padding: 100rpx 0 130rpx;
+  margin: 30rpx 0 80rpx;
+  padding: 0;
 }
 .icon-control-box{
   padding: 30rpx 0;
 }
-.head-img image{
+.head_img image{
+  top: 0;
+  margin: 0;
+  padding: 0;
   width: 140rpx;
   height: 140rpx;
+}
+.cap-img-show image{
+  top: 0;
+  margin: 0;
+  padding: 0;
+  width: 280rpx;
+  height: 100rpx;
+}
+.cap-img-dis image{
+  top: 0;
+  margin: 0;
+  padding: 0;
+  width: 0rpx;
+  height: 0rpx;
 }
 .userMessage{
   font-size: 30rpx;
 }
 .rang-box{
   margin-top: 80rpx;
+  padding:0;
 }

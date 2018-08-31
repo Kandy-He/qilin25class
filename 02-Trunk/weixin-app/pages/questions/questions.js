@@ -56,12 +56,13 @@ Page({
           timePast: '你已经做了' + minute + '分' + second + '秒'
         }) 
         if (minute != 0 && minute % 20 == 0){
+          clearInterval(timer)
           wx.showModal({
             title: '温馨提示',
             content: '你已经做了20分钟，让眼睛休息一下吧',
             success: function (res) {
               if (res.confirm) {
-                clearInterval(timer)
+                
                 wx.navigateBack({
                   delta: 1
                 })

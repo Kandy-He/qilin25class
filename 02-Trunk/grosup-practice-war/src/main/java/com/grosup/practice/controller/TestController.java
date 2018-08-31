@@ -1,22 +1,28 @@
 package com.grosup.practice.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.grosup.practice.beans.User;
+import com.grosup.practice.beans.ClassInfoBean;
+import com.grosup.practice.beans.SessionBean;
+import com.grosup.practice.beans.UserBean;
+import com.grosup.practice.service.ClassInfoService;
+import com.grosup.practice.service.SessionService;
 import com.grosup.practice.service.UserService;
-import com.grosup.practice.util.ActionUtil;
+import com.grosup.practice.util.PracticeUtil;
 
 @Controller
 @RequestMapping("/user")
@@ -26,6 +32,10 @@ public class TestController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ClassInfoService classInfoService;
+	@Autowired
+	private SessionService sessionService;
 	
 	@RequestMapping(method = RequestMethod.GET,value = "helloword")
 	public void helloworld(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -33,32 +43,18 @@ public class TestController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET,value = "test")
-	public void test(HttpServletRequest request,HttpServletResponse response) throws IOException {
+	@ResponseBody
+	public JSONObject test(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		JSONObject result = new JSONObject();
 		JSONObject obj = new JSONObject();
-		obj.put("imgUrl", "1");
+		obj.put("imgUrl", "51");
 		obj.put("achievement", "2");
 		obj.put("flowerNum", "3");
 		result.put("data", obj);
 		result.put("code", "success");
 		
-		ActionUtil.writeResponse(response, result);
+		return result;
 		
 	}
-	
-	@RequestMapping(method = RequestMethod.POST,name= "register")
-	public void register (@ModelAttribute("pojo")User user) throws IOException {
-		//数据库执行完毕结果
-		boolean status = true;
-		try {
-			int count = userService.userRegister(user);
-			if (count != 1) {
-				status = false;
-			}
-		} catch (Exception e) {
-			logger.error("人员注册失败");
-		} finally {
-
-		}
-	}
+		
 }

@@ -16,7 +16,7 @@
       <page-test></page-test>
     </view>
     <view wx:if="{{navigatorArray[0] == 'my'}}">
-      <text class="banben">当前小程序版本：3.0.0</text>
+      <text class="banben">当前小程序版本：3.0.1</text>
       <!-- 老师页面 -->
       <view wx:if="{{navigatorArray[1] == 'teacher'}}" class='inner-box'>
         <page-my-teacher></page-my-teacher>

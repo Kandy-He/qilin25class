@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grosup.practice.testWrongRecord">
+	
+	<insert id="addRecord" parameterType="com.grosup.practice.beans.TestWrongRecordBean">
+		insert into t_test_wrong_record (paperKey,problemKey,userID,expression1,expression2,expression3,userAnswer,status)
+		values (#{paperKey},#{problemKey},#{userID},#{expression1},#{expression2},#{expression3},#{userAnswer},0)
+	</insert>
+	
+	<select id="getWrongQues" parameterType="java.util.Map" resultType="com.grosup.practice.beans.TestWrongRecordBean">
+	   select t.*
+	   from t_user_test_record t
+	   where userID = #{userID} and paperKey = #{paperKey} and quesToScore = 0
+	</select>
+	
+	<select id="getOneRecord" parameterType="map" resultType="com.grosup.practice.beans.RecordBean">
+    select middle.*
+    from (SELECT
+    obj.*,@rownum := @rownum + 1 AS rownum
+    FROM
+    (
+    SELECT
+    tre.*,tpr.knowledgeKey,tpr.quesTypeKey,tpr.answerDesc,tpr.description
+    FROM
+    `t_test_wrong_record` tre
+    LEFT JOIN t_problem tpr ON tre.problemKey = tpr.problemKey
+    where userID=#{userID} and paperKey = #{paperKey}
+    ) AS obj,(SELECT @rownum := 0) r) as middle
+    where rownum = #{rownum}
+    </select>
+    <!-- 通过userID，paperKey查询错题总数 -->
+    <select id="queryUserWrongCount" parameterType="map" resultType="int">
+    SELECT count(1) from
+    t_test_wrong_record 
+    where paperKey = #{paperKey} AND userID = #{userID}
+    </select>
+    
+    <update id="updateWrongStatus" parameterType="map">
+        update t_test_wrong_record set
+        expression1 = #{expression1},expression2 = #{expression2},
+        expression3 = #{expression3},userAnswer = #{userAnswer},
+        status = 1
+        where paperKey = #{paperKey} AND userID = #{userID} and problemKey = #{problemKey}
+    </update>
+    
+    <!--    删除 -->
+    <delete id="removeRecord" parameterType="map">
+        delete from t_test_wrong_record 
+        where paperKey = #{paperKey} AND userID = #{userID} and problemKey = #{problemKey}
+    </delete>
+</mapper>
