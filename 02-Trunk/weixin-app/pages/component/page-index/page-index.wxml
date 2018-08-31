@@ -8,7 +8,19 @@
           <image class="range-control ctl-up" data-turntype="last" src='../../../images/last-page-enable.png'></image>
         </view>
         <view class='userbox'>
-          <view class='head-img align-center'>
+          <view class='{{cap_img_Type_4}} align-center'>
+            <image src='{{capImgUrl_4}}'></image>
+          </view>
+          <view class='{{cap_img_Type_3}} align-center'>
+            <image src='{{capImgUrl_3}}'></image>
+          </view>
+          <view class='{{cap_img_Type_2}} align-center'>
+            <image src='{{capImgUrl_2}}'></image>
+          </view>
+          <view class='{{cap_img_Type_1}} align-center'>
+            <image src='{{capImgUrl_1}}'></image>
+          </view>
+          <view class='head_img align-center'>
             <image src='{{headImgUrl}}'></image>
           </view>
           <view class='align-center'>

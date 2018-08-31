@@ -12,6 +12,11 @@ Component({
    * 组件的初始数据
    */
   data: {
+    capImgUrl_1: "",
+    capImgUrl_2: "",
+    capImgUrl_3: "",
+    capImgUrl_4: "",
+    cap_img_Type: "cap-img-dis",
     headImgUrl: "",
     studentName: "你",
     flowerNum: "0",
@@ -84,6 +89,7 @@ Component({
               realrank: userGettingMessage.rank,
               overedNum: userGettingMessage.maxRank - userGettingMessage.rank
             })
+            this.setTheCap(userGettingMessage.flower)//戴帽子
           } else if (res.data.code == 0) {//暂无排名信息
             wx.request({
               url: 'https://www.grosup.com/practice/user/info.do',
@@ -102,6 +108,42 @@ Component({
           }
         }
       })
+    },
+    setTheCap(flowers) {
+      //基于红花数量给头像戴上帽子
+      //大于500“口算达人”
+      //大于1000“口算达人”，“计算能手”
+      //大于1800“口算达人”，“计算能手”，“计算大王”
+      //大于3000“口算达人”，“计算能手”，“计算大王”，“全科王”
+      this.setData({ 
+        capImgUrl_1: "",
+        capImgUrl_2: "",
+        capImgUrl_3: "",
+        capImgUrl_4: "",
+        cap_img_Type_1: "cap-img-dis",
+        cap_img_Type_2: "cap-img-dis",
+        cap_img_Type_3: "cap-img-dis",
+        cap_img_Type_4: "cap-img-dis",
+      });
+      if (flowers >= 500) {
+        this.setData({ capImgUrl_1: "../../../images/cap-口算达人.png", 
+          cap_img_Type_1: "cap-img-show"});
+      }
+      if (flowers >= 1000) {
+        this.setData({
+          capImgUrl_2: "../../../images/cap-计算能手.png",
+          cap_img_Type_2: "cap-img-show" });
+      }
+      if (flowers >= 1800) {
+        this.setData({
+          capImgUrl_3: "../../../images/cap-计算大王.png",
+          cap_img_Type_3: "cap-img-show"});
+      }
+      if (flowers >= 3000) {
+        this.setData({
+          capImgUrl_4: "../../../images/cap-全科王.png",
+          cap_img_Type_4: "cap-img-show"});
+      }
     }
   }
 })
