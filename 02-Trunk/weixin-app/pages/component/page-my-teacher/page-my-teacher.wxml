@@ -1,0 +1,46 @@
+<!--pages/component/my-teacher/page-my-teacher.wxml-->
+<view class='items'>
+      <text class='register-title'>老师的信息</text>
+    </view>
+    <view class='items'>
+      <text class='left-label'>学校：</text>
+      <text>麒麟小学</text>
+    </view>
+    <view class='items'>
+      <text class='left-label'>年级：</text>
+      <text>{{teacherGrade}}</text>
+    </view>
+    <view class='items'>
+      <text class='left-label'>班级：</text>
+      <text>{{teacherClass}}</text>
+    </view>
+    <view class='items'>
+      <text class='left-label'>姓名：</text>
+      <text>{{teacherName}}</text>
+      <button class='message-item operate-button fr' bindtap='clickEdit'><text >修改</text></button>
+    </view>
+    <view class='items'>
+      <text class=''>我的学生：</text>
+    </view>
+    <view class='student-list-box'>
+      <block wx:for="{{studentListArray}}">
+        <view class='teacher-items {{item.status == 0?"need-to-jurge":""}}'>
+          <view class='teachers-message'>
+            <image class='message-item teachers-headimg' src="{{item.icon}}"></image>
+            <text class='message-item teachers-name'>{{item.name}}</text>
+            <text class='message-item teachers-gender'>{{item.gender == 0?"女":"男"}}</text>
+            <!-- 如果未审核 -->
+            <view wx:if="{{item.status == 0}}" class='your-decision decision-right'>
+              <text class='message-item status'>待审核</text>
+              <button class='message-item operate-button' bindtap="clickAgree" data-id="{{item.id}}" data-itemIndex="{{index}}"><text>同意</text></button>
+              <button class='message-item operate-button' bindtap="clickDisagree" data-id="{{item.id}}" data-itemIndex="{{index}}"><text>拒绝</text></button>
+            </view>
+            <!-- 如果审核已通过 -->
+            <view wx:else="{{item.jurgeStatus}}" class='your-decision decision-right'>
+              <button class='message-item operate-button'><text>查看成绩</text></button>
+            </view>
+          </view>
+          
+        </view>
+      </block>
+    </view>

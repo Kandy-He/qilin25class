@@ -4,6 +4,15 @@
 <configuration>
 	<mappers>
 		<!-- <mapper resource="mybatis/xxxx-orm.xml" /> -->
+		<mapper resource="mybatis/student-orm.xml"/>
+		<mapper resource="mybatis/class-orm.xml"/>
+		<mapper resource="mybatis/user-orm.xml"/>
+		<mapper resource="mybatis/session-orm.xml"/>
+		<mapper resource="mybatis/type-orm.xml"/>
+		<mapper resource="mybatis/problem-orm.xml"/>
+		<mapper resource="mybatis/statistics-orm.xml"/>
+		<mapper resource="mybatis/record-orm.xml"/>
 		<mapper resource="mybatis/test-orm.xml"/>
+		<mapper resource="mybatis/testWrongRecord-orm.xml"/>
 	</mappers>
 </configuration>

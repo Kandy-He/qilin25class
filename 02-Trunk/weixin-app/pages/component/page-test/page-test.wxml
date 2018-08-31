@@ -1,0 +1,26 @@
+<!--pages/component/page-test/page-test.wxml-->
+<view class='items'>
+  <text class='register-title'>学年知识点测试</text>
+</view>
+<block wx:for="{{testArray}}">
+  <view class='practice-items-box'>
+    <view class='item-title align-center'>{{item.paperName}}</view>
+    <view class='align-center startTest'>
+      <button wx:if="{{item.isDone != 'Y'}}" class='operate-button' data-quesCount='{{item.quesCount}}' data-timeLimit='{{item.timeLimit}}'  data-paperKey='{{item.paperKey}}' data-paperName='{{item.paperName}}' bindtap="startPracticeTap">开始答题</button>
+      <button wx:if="{{item.isDone == 'Y'}}" class='operate-button'  data-paperkey='{{item.paperKey}}' data-papername='{{item.paperName}}' bindtap="startWrongBookTap">错题列表</button>
+    </view>
+    <view class='item-text'>
+      一共 <text class='numBox'>{{item.quesCount}}</text> 题 
+      <block wx:if="{{item.isDone == 'Y'}}">| 你做对了 <text class='numBox'>{{item.doneRight}}</text> 题</block>
+    </view>
+    <view class='item-text'>
+      限时 <text class='numBox'>{{item.timeLimit}}</text> 分钟 
+      <block wx:if="{{item.isDone == 'Y'}}">| 你用了 <text class='numBox'>{{item.useTime}}</text> 分钟</block>
+    </view>
+    <view class='item-text'>
+      总分 <text class='numBox'>{{item.totalScore}}</text> 分 
+      <block wx:if="{{item.isDone == 'Y'}}">| 你获得了 <text class='numBox'>{{item.userScore}}</text> 分</block>
+    </view>
+    <!-- <button class='operate-button list-for-wrong' data-gradeId='{{item.gradeID}}'  data-typename='{{item.paperName}}' bindtap="wrongBookTap">错题列表</button> -->
+  </view>
+</block>

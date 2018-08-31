@@ -1,0 +1,4 @@
+/* pages/register/register.wxss */
+.button-text{
+  color: blue
+}

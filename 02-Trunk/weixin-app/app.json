@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/main/main",
+    "pages/authorization/authorization",
+    "pages/register/register",
+    "pages/questions/questions",
+    "pages/wrongbook/wrongbook",
+    "pages/testPage/testPage",
+    "pages/previewData/previewData",
+    "pages/paperWrongBook/paperWrongBook"
+  ],
+  "window": {
+    "backgroundColor": "#0091dc",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  }
+}

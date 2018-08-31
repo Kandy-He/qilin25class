@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "小学生数学知识点练习",
+  "usingComponents": {
+    "tabbar-fake": "../component/tabbar-fake/tabbar-fake"
+  }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grosup.practice.class">
+
+	<resultMap type="com.grosup.practice.beans.ClassInfoBean" id="BaseResultMap">
+		<result column="classID" jdbcType="INTEGER" property="classBean.id"/>
+		<result column="className" jdbcType="VARCHAR" property="classBean.name"/>
+		<result column="coordinator" jdbcType="VARCHAR" property="classBean.coordinator"/>
+		<result column="classDES" jdbcType="VARCHAR" property="classBean.description"/>
+		<result column="gradeID" jdbcType="INTEGER" property="classBean.gradeID"/>
+		<result column="gradeName" jdbcType="INTEGER" property="gradeBean.name"/>
+		<result column="gradeDES" jdbcType="INTEGER" property="gradeBean.description"/>
+	</resultMap>
+	
+	<select id="queryClassInfo" resultMap="BaseResultMap">
+		SELECT tc.id as classID,tc.gradeID,tc.`name` as className ,tc.coordinator,tc.description AS classDES,
+		tg.`name` AS gradeName,tg.description AS gradeDES
+		from t_class tc LEFT JOIN t_grade tg ON tc.gradeID = tg.id 
+	</select>
+</mapper>

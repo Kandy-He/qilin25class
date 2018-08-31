@@ -1,0 +1,64 @@
+<!--pages/questions/questions.wxml-->
+<view class='container'>
+  <view class='inner-box'>
+    <view class='items'>
+      <text class='register-title'>{{knowledgename}}</text>
+      <view>
+        <text class='howtoanswer'>{{howToAnswer}}</text>
+      </view>
+    </view>
+    <view class="question-body">
+    <view class='leftTime'>{{timePast}}</view>
+      <form id="form1">
+        <!--题目  -->
+        <view class='question-content'>
+          <block wx:for="{{questionBodyArray}}">
+            <input class="short-input"  bindblur='bindInputAnswer' disabled='{{inputDisabled}}' wx:if="{{item == '(?)'}}" data-index="{{index}}"/>
+            <text class='question-doc' wx:else>{{item}}</text>
+          </block>
+        </view>
+        <view class='appAnswerBox'>
+          <!--第一步  -->
+          <view class='question-content' wx:if="{{showExpression1}}">
+            <text>第一步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quessteps="expression1"/>
+          </view>
+          <!--第二步  -->
+          <view class='question-content' wx:if="{{showExpression2}}">
+            <text>第二步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quessteps="expression2"/>
+          </view>
+          <!--第三步  -->
+          <view class='question-content' wx:if="{{showExpression3}}">
+            <text>第三步</text><input class="short-input long-input"  bindblur='bindInputQuesStep' disabled='{{inputDisabled}}' data-quessteps="expression3"/>
+          </view>
+          <!--答题描述  -->
+          <view class='question-content' wx:if="{{showAnswerDesc}}">
+            <text>答：</text>
+            <block wx:for="{{answerDesc}}">
+              <input class="short-input"  bindblur='bindInputAnswer' disabled='{{inputDisabled}}' wx:if="{{item == '(?)'}}" data-index="{{index}}"/>
+              <text class='question-doc' wx:else>{{item}}</text>
+            </block>
+          </view>
+        </view>
+        <!--练习部分使用的操作  -->
+        <view class='operate-box'>
+          <view wx:if="{{answerStatus == -1}}" class='align-center'>
+            <button  class='operate-button ques-item-submit' bindtap='bindSubmitTap'>提交</button>
+          </view>
+          <view wx:elif="{{answerStatus == 1}}">
+            <image src='../../images/answer-right.png'></image>
+            <text class='returnText green'>回答正确</text>
+            <button class='operate-button fr' bindtap='bindAnotherQuesTap' formType="reset">再来一题</button>
+          </view>
+          <view wx:else>
+            <image src='../../images/answer-wrong.png'></image>
+            <text class='returnText red'>回答错误</text>
+            <button class='operate-button fr' bindtap='bindResetQuesTap'>订正</button>
+            <button class='operate-button fr' formType="reset" bindtap='bindAnotherQuesTap'>再来一题</button>
+          </view>
+        </view>
+      </form>
+    </view>
+  </view>
+</view>
+
+

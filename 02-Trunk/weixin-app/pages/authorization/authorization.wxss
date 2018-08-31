@@ -1,0 +1,23 @@
+/* pages/authorization/authorization.wxss */
+@import "../component/common/common.wxss";
+.auth-box{
+  padding-top: 120rpx;
+}
+.qilin-logo-img{
+  width: 200rpx;
+  height: 200rpx;
+}
+.operate-button{
+  line-height: 77rpx;
+  padding-left: 9rpx;
+  padding-right: 9rpx;
+}
+.green-text{
+  color: greenyellow;
+}
+.white-text{
+  color: white;
+}
+.auth-item{
+  padding-top: 25rpx;
+}

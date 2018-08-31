@@ -1,0 +1,19 @@
+<!--pages/authorization/authorization.wxml-->
+<!-- <view wx:if="{{ifshow}}"> -->
+<view class='auth-box'>
+  <view class="align-center auth-item">
+    <image src='../../images/qilin-logo.png' class='qilin-logo-img'></image>
+  </view>
+  <view class="align-center auth-item white-text">
+    <text>麒麟二五班</text>
+  </view>
+  <view class="align-center auth-item green-text">
+    <text>小学数学知识学习、练习工具软件</text>
+  </view>
+  <view class="align-center auth-item white-text">
+    <text>九天软件工作室@制作</text>
+  </view>
+  <view class="align-center auth-item">
+  <button class='operate-button' open-type='getUserInfo' bindgetuserinfo='bindgetuserinfo'><text>授权使用微信账号</text></button> 
+  </view>
+</view> 

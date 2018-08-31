@@ -1,0 +1,34 @@
+<!--pages/component/page-index/page-index.wxml-->
+<view class='items'>
+        <text class='register-title'>班级红花排行榜</text>
+      </view>
+      <!--排名区域，如果没有排名  -->
+      <view class='rang-box'>
+        <view wx:if="{{ifHaveRank}}" class='align-center icon-control-box' data-turntype="last" bindtap="turnStudentTap">
+          <image class="range-control ctl-up" data-turntype="last" src='../../../images/last-page-enable.png'></image>
+        </view>
+        <view class='userbox'>
+          <view class='{{cap_img_Type_4}} align-center'>
+            <image src='{{capImgUrl_4}}'></image>
+          </view>
+          <view class='{{cap_img_Type_3}} align-center'>
+            <image src='{{capImgUrl_3}}'></image>
+          </view>
+          <view class='{{cap_img_Type_2}} align-center'>
+            <image src='{{capImgUrl_2}}'></image>
+          </view>
+          <view class='{{cap_img_Type_1}} align-center'>
+            <image src='{{capImgUrl_1}}'></image>
+          </view>
+          <view class='head_img align-center'>
+            <image src='{{headImgUrl}}'></image>
+          </view>
+          <view class='align-center'>
+            <text class='userMessage'>{{studentName}}有小红花{{flowerNum}}朵，超过了班上{{overedNum}}个同学</text>
+          </view>
+        </view>
+        <view wx:if="{{ifHaveRank}}" class='align-center icon-control-box' data-turntype="next" bindtap="turnStudentTap">
+          <image class="range-control ctl-up" data-turntype="next" src='../../../images/next-page-enable.png'></image>
+        </view> 
+      </view>
+      

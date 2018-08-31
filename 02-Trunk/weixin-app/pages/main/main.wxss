@@ -1,0 +1,8 @@
+/* pages/main/main.wxss */
+.banben{
+  color:beige;
+  position:absolute;
+  right:20rpx;
+  top:90rpx;
+  font-size:30rpx;
+}
