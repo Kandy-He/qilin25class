@@ -126,22 +126,23 @@ Component({
         cap_img_Type_4: "cap-img-dis",
       });
       if (flowers >= 500) {
-        this.setData({ capImgUrl_1: "../../../images/cap-口算达人.png", 
+        this.setData({
+          capImgUrl_1: "../../../images/cap-Mental-Arithmetic.png", 
           cap_img_Type_1: "cap-img-show"});
       }
       if (flowers >= 1000) {
         this.setData({
-          capImgUrl_2: "../../../images/cap-计算能手.png",
+          capImgUrl_2: "../../../images/cap-calculate-Men.png",
           cap_img_Type_2: "cap-img-show" });
       }
       if (flowers >= 1800) {
         this.setData({
-          capImgUrl_3: "../../../images/cap-计算大王.png",
+          capImgUrl_3: "../../../images/cap-calculate-King.png",
           cap_img_Type_3: "cap-img-show"});
       }
       if (flowers >= 3000) {
         this.setData({
-          capImgUrl_4: "../../../images/cap-全科王.png",
+          capImgUrl_4: "../../../images/cap-All-King.png",
           cap_img_Type_4: "cap-img-show"});
       }
     }
