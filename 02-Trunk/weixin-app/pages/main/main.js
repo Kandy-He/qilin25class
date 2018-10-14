@@ -57,6 +57,9 @@ Page({
                   app.globalData.userId = res.data.third_session
                   //拿到识别码后，获取用户信息，返回用户审核状态值
                   getUsersInfo();
+                },
+                fail: () => {
+                  console.log("请求超时")
                 }
               })
             }
@@ -134,6 +137,12 @@ Page({
                       }
                     }
                     
+                  },
+                  fail: () => {
+                    wx.showToast({
+                      title: '服务器请求异常，请检查网络或联系管理员！',
+                      icon: 'none'
+                    })
                   }
                 })
               }

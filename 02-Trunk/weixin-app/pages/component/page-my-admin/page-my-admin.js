@@ -24,6 +24,12 @@ Component({
         this.setData({
           teacherListArray: res.data
         })
+      },
+      fail: () => {
+        wx.showToast({
+          title: '服务器请求异常，请检查网络或联系管理员！',
+          icon: 'none'
+        })
       }
     })
   },
@@ -62,6 +68,12 @@ Component({
           this.setData({
             [teacherItemStatus]: 1
           })
+        },
+        fail: () => {
+          wx.showToast({
+            title: '服务器请求异常，请检查网络或联系管理员！',
+            icon: 'none'
+          })
         }
       })
     },
@@ -91,6 +103,12 @@ Component({
             teacherListArray: teacherListArray
           })
 
+        },
+        fail: () => {
+          wx.showToast({
+            title: '服务器请求异常，请检查网络或联系管理员！',
+            icon: 'none'
+          })
         }
       })
     },

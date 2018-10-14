@@ -103,9 +103,21 @@ Component({
                   headImgUrl: res.data.data.icon,
                   studentName: res.data.data.name
                 })
+              },
+              fail: () => {
+                wx.showToast({
+                  title: '服务器请求异常，请检查网络或联系管理员！',
+                  icon: 'none'
+                })
               }
             })
           }
+        },
+        fail: () => {
+          wx.showToast({
+            title: '服务器请求异常，请检查网络或联系管理员！',
+            icon: 'none'
+          })
         }
       })
     },
