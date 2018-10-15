@@ -1,6 +1,7 @@
 // pages/wrongbook/wrongbook.js
 let util = require("../../utils/util");
-const app = getApp()
+const app = getApp();
+var submitClickTime = 0;
 Page({
 
   /**
@@ -19,6 +20,8 @@ Page({
 
     // questionBodyArray: ["100分=", "(?)","角"]
     questionBodyArray: [],//题目主干数组
+    //由于做错题时候，答题描述中有多个输入框，学生可能只修改一项，而无法正确同步答案，这里对多个输入框的题目做个鉴别
+    arrIndexes: [],//[1,3]含有（？）位置的数组------------------------待续
     expression1: "",//填写的表达式1
     expression2: "",//填写的表达式2
     expression3: "",//填写的表达式3
@@ -88,6 +91,13 @@ Page({
         let configStepsObj = util.quesTypeKeyFilter(questionDetail)
         //题目主体显示数组
         let questionBodyArray = util.formatQuestionContent(questionDetail.description)
+        // let arrIndexes = []
+        // //找出所有可选择的（？）位置，拼成数组 ------------------------待续
+        // for (let i = 0; i < questionBodyArray.length; i++) {
+        //   if (questionBodyArray[i] == "(?)") {
+        //     arrIndexes.push(i)
+        //   }
+        // }
         //答题描述显示数组
         let answerDesc = util.formatQuestionContent(questionDetail.answerDesc)
         // let questionBodyArray = util.formatQuestionContent(questionDetail.description, questionDetail.result)
@@ -99,6 +109,7 @@ Page({
           wrongCount: res.data.wrongCount,//当前错题集一起有多少道错题
           //展示题目
           questionBodyArray: questionBodyArray,
+          // arrIndexes: arrIndexes,
           answerDesc: answerDesc,
           howToAnswer: configStepsObj.howToAnswer || "",//答题规范
           showExpression1: configStepsObj.showExpression1 || "",//是否展示第一步
@@ -122,6 +133,12 @@ Page({
             wrongAnswerArray: util.formatWrongbookArray(answerDesc, questionDetail.userAnswer)
           })
         }
+      },
+      fail: () => {
+        wx.showToast({
+          title: '服务器请求异常，请检查网络或联系管理员！',
+          icon: 'none'
+        })
       }
     })
   },
@@ -136,7 +153,7 @@ Page({
   },
   //应用题的分步输入答案
   bindInputQuesStep: function (e) {
-    let quesItem = e.target.dataset.quesSteps
+    let quesItem = e.target.dataset.quessteps
     //修改对应答案
     this.setData({
       [quesItem]: e.detail.value
@@ -144,6 +161,13 @@ Page({
   },
   //点击订正按钮
   bindSubmitTap: function () {
+    // //如果是多个输入框只输入了一个答案则传入[undefined, " ", "dfsd", undefined]------------------------待续
+    // for (let i = 0; i < this.data.arrIndexes.length; i++) {
+    //   if (this.data.answer[this.data.arrIndexes[i]] == undefined) {
+    //     console.log(this.data.userAnswer.split(";"))
+    //     this.data.answer[this.data.arrIndexes[i]] = this.data.userAnswer.split(";")[this.data.arrIndexes[i]];
+    //   }
+    // }
     let sendData = {
       problemKey: this.data.problemKey,
       //如果用户没有修改主题干或者答题描述的答案，将原来他的答案发到后台
@@ -153,23 +177,42 @@ Page({
       expression2: util.formatExpressionToRightStyle(this.data.expression2),//分步2答案
       expression3: util.formatExpressionToRightStyle(this.data.expression3),//分步3答案
     }
-    //验证答案是否正确
-    wx.request({
-      url: 'https://www.grosup.com/practice/problem/checkAnswer.do',
-      // method: 'post',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'third_session': app.globalData.userId
-      },
-      data: sendData,
-      success: res => {
-        //返回回答正确或者错误:-1未回答，0答题错误，1答题正确
-        this.setData({
-          answerStatus: res.data.data,
-          inputDisabled: true//不允许用户再次输入，点击订正或者再来一体才可以输入
-        })
-      }
-    })
+    if (submitClickTime == 0) {
+      submitClickTime = 1;
+      //验证答案是否正确
+      wx.request({
+        url: 'https://www.grosup.com/practice/problem/checkAnswer.do',
+        // method: 'post',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'third_session': app.globalData.userId
+        },
+        data: sendData,
+        success: res => {
+          //返回回答正确或者错误:-1未回答，0答题错误，1答题正确
+          this.setData({
+            answerStatus: res.data.data,
+            inputDisabled: true//不允许用户再次输入，点击订正或者再来一体才可以输入
+          }, function () {
+            submitClickTime = 0;
+            console.log("计算后：" + submitClickTime)
+          })
+        },
+        fail: () => {
+          submitClickTime = 0;
+          wx.showToast({
+            title: '服务器请求异常，请检查网络或联系管理员！',
+            icon: 'none'
+          })
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '数据发送中，请勿重复点击！',
+        icon: 'none'
+      })
+    }
+    
   },
   //点击修改
   bindModifiedAgainTap () {
@@ -248,6 +291,12 @@ Page({
             icon: "none"
           })
         }
+      },
+      fail: () => {
+        wx.showToast({
+          title: '服务器请求异常，请检查网络或联系管理员！',
+          icon: 'none'
+        })
       }
     })
   }

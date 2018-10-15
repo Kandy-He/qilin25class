@@ -101,6 +101,12 @@ Page({
       success: res => {
         //调用本组件共用方法
         this.queryQuesBodyForTest()
+      },
+      fail: () => {
+        wx.showToast({
+          title: '服务器请求异常，请检查网络或联系管理员！',
+          icon: 'none'
+        })
       }
     })
   },
@@ -178,6 +184,12 @@ Page({
             })
           }
         }
+      },
+      fail: () => {
+        wx.showToast({
+          title: '服务器请求异常，请检查网络或联系管理员！',
+          icon: 'none'
+        })
       }
     })
   },
@@ -210,6 +222,12 @@ Page({
         // this.setData({
         //   isDone: "Y"
         // })
+      },
+      fail: () => {
+        wx.showToast({
+          title: '服务器请求异常，请检查网络或联系管理员！',
+          icon: 'none'
+        })
       }
     })
   },
@@ -290,6 +308,12 @@ Page({
           totalScore: backData.userScore,
           quesCount: backData.quesCount,
           quesCountRight: backData.doneRight
+        })
+      },
+      fail: () => {
+        wx.showToast({
+          title: '服务器请求异常，请检查网络或联系管理员！',
+          icon: 'none'
         })
       }
     })

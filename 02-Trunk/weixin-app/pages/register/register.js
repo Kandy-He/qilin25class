@@ -51,6 +51,12 @@ Page({
             initSexIndex: res.data.data.gender,
             initRoleIndex: res.data.data.userType
           })
+        },
+        fail: () => {
+          wx.showToast({
+            title: '服务器请求异常，请检查网络或联系管理员！',
+            icon: 'none'
+          })
         }
       })
     }else{
@@ -118,6 +124,12 @@ Page({
         success: res => {
           //循环找出所有不重复的年级和班级
           getInrepeatClasses(res)
+        },
+        fail: () => {
+          wx.showToast({
+            title: '服务器请求异常，请检查网络或联系管理员！',
+            icon: 'none'
+          })
         }
       })
     }

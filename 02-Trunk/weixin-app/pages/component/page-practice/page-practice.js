@@ -31,6 +31,12 @@ Component({
         this.setData({
           practiceArray: gradeSubjectItemMessage[0].subjects[0].knowledges
         })
+      },
+      fail: () => {
+        wx.showToast({
+          title: '服务器请求异常，请检查网络或联系管理员！',
+          icon: 'none'
+        })
       }
     })
   },

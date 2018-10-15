@@ -42,6 +42,12 @@ Page({
           quesTotalInfo: res.data.data.quesTotalInfo,
           knowledgeInfo: res.data.data.knowledgeInfo,
         })
+      },
+      fail: () => {
+        wx.showToast({
+          title: '服务器请求异常，请检查网络或联系管理员！',
+          icon: 'none'
+        })
       }
     })
   },
@@ -62,6 +68,12 @@ Page({
           initShow: "test",
           paperTotalInfo: res.data.data.paperTotalInfo,
           paperHaveDoneInfo: res.data.data.paperHaveDoneInfo
+        })
+      },
+      fail: () => {
+        wx.showToast({
+          title: '服务器请求异常，请检查网络或联系管理员！',
+          icon: 'none'
         })
       }
     })

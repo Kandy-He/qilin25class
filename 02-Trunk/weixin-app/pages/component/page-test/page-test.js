@@ -40,7 +40,6 @@ Component({
         userID: app.globalData.userInfoInOurSystem.personInfo.id,
       },
       success: res => {
-        
         let unDone = res.data.data.unDone
         //将做过的题目状态遍历到测试题目中
         let userHaveDoneArr = res.data.data.userHaveDone
@@ -58,6 +57,12 @@ Component({
         //二年级所有测试
         this.setData({
           testArray: unDone
+        })
+      },
+      fail: () => {
+        wx.showToast({
+          title: '服务器请求异常，请检查网络或联系管理员！',
+          icon: 'none'
         })
       }
     })

@@ -127,6 +127,12 @@ Page({
             wrongAnswerArray: util.formatWrongbookArray(answerDesc, questionDetail.userAnswer)
           })
         }
+      },
+      fail: () => {
+        wx.showToast({
+          title: '服务器请求异常，请检查网络或联系管理员！',
+          icon: 'none'
+        })
       }
     })
   },
@@ -141,7 +147,7 @@ Page({
   },
   //应用题的分步输入答案
   bindInputQuesStep: function (e) {
-    let quesItem = e.target.dataset.quesSteps
+    let quesItem = e.target.dataset.quessteps
     //修改对应答案
     this.setData({
       [quesItem]: e.detail.value
@@ -173,6 +179,12 @@ Page({
         this.setData({
           answerStatus: res.data.data,
           inputDisabled: true//不允许用户再次输入，点击订正或者再来一体才可以输入
+        })
+      },
+      fail: () => {
+        wx.showToast({
+          title: '服务器请求异常，请检查网络或联系管理员！',
+          icon: 'none'
         })
       }
     })
@@ -253,6 +265,12 @@ Page({
             icon: "none"
           })
         }
+      },
+      fail: () => {
+        wx.showToast({
+          title: '服务器请求异常，请检查网络或联系管理员！',
+          icon: 'none'
+        })
       }
     })
   }
