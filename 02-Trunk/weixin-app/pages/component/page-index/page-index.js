@@ -16,6 +16,9 @@ Component({
     capImgUrl_2: "",
     capImgUrl_3: "",
     capImgUrl_4: "",
+    capImgUrl_5: "",
+    capImgUrl_6: "",
+    capImgUrl_7: "",
     cap_img_Type: "cap-img-dis",
     headImgUrl: "",
     studentName: "你",
@@ -127,15 +130,24 @@ Component({
       //大于1000“口算达人”，“计算能手”
       //大于1800“口算达人”，“计算能手”，“计算大王”
       //大于3000“口算达人”，“计算能手”，“计算大王”，“全科王”
+      //大于4800“口算达人”，“计算能手”，“计算大王”，“全科王”，“神算子”
+      //大于7000“口算达人”，“计算能手”，“计算大王”，“全科王”，“神算子”，“小天王”
+      //大于10000“口算达人”，“计算能手”，“计算大王”，“全科王”，“神算子”，“小天王”，“大天王”
       this.setData({ 
         capImgUrl_1: "",
         capImgUrl_2: "",
         capImgUrl_3: "",
         capImgUrl_4: "",
+        capImgUrl_5: "",
+        capImgUrl_6: "",
+        capImgUrl_7: "",
         cap_img_Type_1: "cap-img-dis",
         cap_img_Type_2: "cap-img-dis",
         cap_img_Type_3: "cap-img-dis",
         cap_img_Type_4: "cap-img-dis",
+        cap_img_Type_5: "cap-img-dis",
+        cap_img_Type_6: "cap-img-dis",
+        cap_img_Type_7: "cap-img-dis",
       });
       if (flowers >= 500) {
         this.setData({
@@ -156,6 +168,24 @@ Component({
         this.setData({
           capImgUrl_4: "../../../images/cap-All-King.png",
           cap_img_Type_4: "cap-img-show"});
+      }
+      if (flowers >= 4800) {
+        this.setData({
+          capImgUrl_5: "../../../images/cap-god-caculate-kid.png",
+          cap_img_Type_5: "cap-img-show"
+        });
+      }
+      if (flowers >= 7000) {
+        this.setData({
+          capImgUrl_6: "../../../images/cap-small-Sky-King.png",
+          cap_img_Type_6: "cap-img-show"
+        });
+      }
+      if (flowers >= 10000) {
+        this.setData({
+          capImgUrl_7: "../../../images/cap-big-Sky-King.png",
+          cap_img_Type_7: "cap-img-show"
+        });
       }
     }
   }
